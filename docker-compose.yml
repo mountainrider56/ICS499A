@@ -1,0 +1,30 @@
+version: '3'
+services:
+  eagleeye-msp-service:
+    build: ./eagleeye-msp-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+    ports:
+      - '8080:8080'
+    working_dir: /root/eagleeye-msp-service
+
+  eagleeye-msp-application:
+    build: ./eagleeye-msp-application
+    command: sh -c "npm install && npm run dev"
+    environment:
+      - NUXT_HOST=0.0.0.0
+      - NUXT_PORT=3000
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./eagleeye-msp-application:/eagleeye-msp-application:rw
+#      - ./src/node_modules
+
+  web-component-library:
+    build: ./shrew-consulting-web-component-library
+    command: sh -c "npm install && npm start"
+    ports:
+      - '3333:3333'
+    volumes:
+      - ./shrew-consulting-web-component-library:/shrew-consulting-web-component-library:rw
+#      - ./src/node_modules
