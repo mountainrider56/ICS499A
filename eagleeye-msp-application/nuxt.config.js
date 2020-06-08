@@ -15,13 +15,8 @@ export default {
       }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'http://localhost:3333/build/shrew-consulting-web-component-library.css' }
-    ],
-    script: [
-      { src: 'http://localhost:3333/build/shrew-consulting-web-component-library.esm.js', type: 'module' },
-      { src: 'http://localhost:3333/build/shrew-consulting-web-component-library.js', nomodule: '' }
-    ],
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -42,7 +37,8 @@ export default {
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
-    '@nuxtjs/stylelint-module'
+    '@nuxtjs/stylelint-module',
+    '@nuxtjs/vuetify'
   ],
   /*
    ** Nuxt.js modules
