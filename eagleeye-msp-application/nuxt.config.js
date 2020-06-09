@@ -14,9 +14,7 @@ export default {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
   /*
    ** Customize the progress-bar color
@@ -43,12 +41,15 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/proxy'
-  ],
+  modules: ['@nuxtjs/axios', '@nuxtjs/proxy'],
+  axios: {
+    proxy: true
+  },
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+  },
   proxy: {
-    '/api/eagleeye-msp': {
+    '/api/eagleeye-msp/v1/customers': {
       target: 'http://localhost:8080'
     }
   },
@@ -59,6 +60,6 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) { }
+    extend(config, ctx) {}
   }
 }
