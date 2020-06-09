@@ -51,6 +51,9 @@ export default {
   proxy: {
     '/api/eagleeye-msp/v1/customers': {
       target: 'http://localhost:8080'
+    },
+    '/api/eagleeye-msp/v1/employees': {
+      target: 'http://localhost:8081'
     }
   },
   /*

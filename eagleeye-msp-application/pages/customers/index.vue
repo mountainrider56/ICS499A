@@ -1,11 +1,12 @@
 <template>
   <v-container>
     <h1>{{ title }}</h1>
+    <v-btn small to="/customers/create" color="primary">+ Add a Customer</v-btn>
     <v-data-iterator :items="customers" :items-per-page.sync="itemsPerPage">
       <template v-slot:default="props">
         <v-row>
           <v-col v-for="item in props.items" :key="item.name" lg="3">
-            <v-card>
+            <v-card :to="getCustomerDetailLink(item.id)">
               <v-card-title class="subheading font-weight-bold">
                 {{ item.name }}
               </v-card-title>
@@ -60,6 +61,11 @@ export default {
     return {
       title: 'Customers',
       itemsPerPage: 5
+    }
+  },
+  methods: {
+    getCustomerDetailLink(id) {
+      return `/customers/detail?id=${id}`
     }
   },
   head() {

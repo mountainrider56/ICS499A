@@ -3,8 +3,9 @@
     <v-app>
       <v-app-bar app>
         <v-btn text to="/">Home</v-btn>
-        <v-btn text to="/customers">Customers</v-btn>
         <v-btn text to="/quotes">Quotes</v-btn>
+        <v-btn text to="/customers">Customers</v-btn>
+        <v-btn text to="/employees">Employees</v-btn>
       </v-app-bar>
       <!-- <v-navigation-drawer app permanent>
         <v-list dense nav>
