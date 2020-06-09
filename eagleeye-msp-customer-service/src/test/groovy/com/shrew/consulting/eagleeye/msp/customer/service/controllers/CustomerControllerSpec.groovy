@@ -21,12 +21,12 @@ class CustomerControllerSpec extends Specification {
         Customer customer = new Customer()
 
         when:
-        long response = customerController.saveCustomer(customer)
+        Customer response = customerController.saveCustomer(customer)
 
         then:
         1 * customerRepository.save(customer) >> customer
         0 * _ // no more calls
-        response == 0
+        response == customer
     }
 
     def 'get customers'() {
@@ -45,7 +45,7 @@ class CustomerControllerSpec extends Specification {
 
     def 'get customer'() {
         setup:
-        Optional<Customer> optional = new Optional<>(new Customer())
+        Optional<Customer> optional = Optional.ofNullable(new Customer())
 
         when:
         Customer response = customerController.getCustomer(0)
@@ -58,7 +58,7 @@ class CustomerControllerSpec extends Specification {
 
     def 'get customer - 404'() {
         setup:
-        Optional<Customer> optional = new Optional<>()
+        Optional<Customer> optional = Optional.ofNullable(null)
 
         when:
         customerController.getCustomer(0)

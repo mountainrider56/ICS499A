@@ -15,21 +15,21 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomerController {
 
-    private final CustomerRepository clientRepository;
+    private final CustomerRepository customerRepository;
 
     @PutMapping
     public Customer saveCustomer(@ModelAttribute Customer customer) {
-        return clientRepository.save(customer);
+        return customerRepository.save(customer);
     }
 
     @GetMapping
     public List<Customer> getCustomers() {
-        return clientRepository.findAll();
+        return customerRepository.findAll();
     }
 
     @GetMapping("{customerId}")
     public Customer getCustomer(@PathVariable long customerId) {
-        Optional<Customer> customer = clientRepository.findById(customerId);
+        Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isPresent()) {
             return customer.get();
         }
