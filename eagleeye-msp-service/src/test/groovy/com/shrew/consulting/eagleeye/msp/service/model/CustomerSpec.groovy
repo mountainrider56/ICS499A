@@ -6,7 +6,7 @@ class ClientSpec extends Specification {
 
     def 'client creation'() {
         setup:
-        Client client = new Client(firstName: 'Test', lastName: 'User')
+        Customer client = new Customer(firstName: 'Test', lastName: 'User')
 
         expect:
         client // Confirm not null
