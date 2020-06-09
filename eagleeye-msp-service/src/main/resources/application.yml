@@ -1,9 +1,0 @@
-server:
-  servlet:
-    context-path: /api/eagleeye-msp
-  tomcat:
-    compression: true
-
----
-spring:
-  profiles: local
