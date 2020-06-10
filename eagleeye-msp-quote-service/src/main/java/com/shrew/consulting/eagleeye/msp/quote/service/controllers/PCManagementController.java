@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("v1/quotes/pc-management")
@@ -20,8 +18,7 @@ public class PCManagementController {
 
     @GetMapping("/items")
     public Map<String, Item> getItems() {
-        List<Item> items = itemRespository.findAll();
-        return items.stream().collect(Collectors.toMap(Item::getId, item -> item));
+        return itemRespository.findAllMap();
     }
 
 }

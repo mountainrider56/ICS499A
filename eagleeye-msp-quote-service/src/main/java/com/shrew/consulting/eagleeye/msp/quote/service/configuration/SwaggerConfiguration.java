@@ -1,4 +1,4 @@
-package com.shrew.consulting.eagleeye.msp.customer.service.configuration;
+package com.shrew.consulting.eagleeye.msp.quote.service.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

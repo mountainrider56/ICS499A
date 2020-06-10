@@ -54,6 +54,9 @@ export default {
     },
     '/api/eagleeye-msp/v1/employees': {
       target: 'http://localhost:8081'
+    },
+    '/api/eagleeye-msp/v1/quotes': {
+      target: 'http://localhost:8082'
     }
   },
   /*

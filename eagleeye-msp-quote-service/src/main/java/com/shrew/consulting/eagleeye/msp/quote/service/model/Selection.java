@@ -4,17 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
 @Data
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Item {
+public class Selection {
 
-    @Id
-    private String id;
-    private double price;
+    private long id;
+    private Item item;
+    private int quantity;
 
 }
