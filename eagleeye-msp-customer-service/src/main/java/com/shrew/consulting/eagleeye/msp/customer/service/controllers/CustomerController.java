@@ -7,18 +7,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Expose endpoints for the customers service.
+ */
 @RestController
-@RequestMapping("v1/customers")
 @RequiredArgsConstructor
+@RequestMapping("v1/customers")
 public class CustomerController {
 
     private final CustomerRepository customerRepository;
 
     @PutMapping
-    public Customer saveCustomer(@ModelAttribute Customer customer) {
+    public Customer saveCustomer(@Valid @RequestBody Customer customer) {
         return customerRepository.save(customer);
     }
 
@@ -28,7 +32,7 @@ public class CustomerController {
     }
 
     @GetMapping("{customerId}")
-    public Customer getCustomer(@PathVariable long customerId) {
+    public Customer getCustomer(@PathVariable Long customerId) {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isPresent()) {
             return customer.get();
