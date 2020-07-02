@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.shrew.consulting.eagleeye.msp.customer.service.controllers.CustomerControllerIntSpec
--------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.872 s - in com.shrew.consulting.eagleeye.msp.customer.service.controllers.CustomerControllerIntSpec
