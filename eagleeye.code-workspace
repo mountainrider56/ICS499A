@@ -1,0 +1,15 @@
+{
+  "folders": [
+    {
+      "path": "eagleeye-msp-application"
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": false,
+    "vetur.validation.template": false,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    }
+  },
+  "[json]": {},
+}
