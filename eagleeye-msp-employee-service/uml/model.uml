@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.shew.consulting.eagleeye.msp.employee.service.model</OriginalElement>
+  <nodes>
+    <node x="0.0" y="135.0">com.shew.consulting.eagleeye.msp.employee.service.model.Employee</node>
+    <node x="29.5" y="0.0">com.shew.consulting.eagleeye.msp.employee.service.model.SecurityRole</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.shew.consulting.eagleeye.msp.employee.service.model.Employee" target="com.shew.consulting.eagleeye.msp.employee.service.model.SecurityRole">
+      <point x="0.0" y="-93.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="101.5" y="185.5" />
+  <SelectedNodes>
+    <node>com.shew.consulting.eagleeye.msp.employee.service.model.Employee</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

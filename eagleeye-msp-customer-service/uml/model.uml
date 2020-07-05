@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.shew.consulting.eagleeye.msp.customer.service.model</OriginalElement>
+  <nodes>
+    <node x="0.0" y="0.0">com.shew.consulting.eagleeye.msp.customer.service.model.USState</node>
+    <node x="184.5" y="0.0">com.shew.consulting.eagleeye.msp.customer.service.model.Representative</node>
+    <node x="149.0" y="218.0">com.shew.consulting.eagleeye.msp.customer.service.model.Customer</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.shew.consulting.eagleeye.msp.customer.service.model.Customer" target="com.shew.consulting.eagleeye.msp.customer.service.model.Representative">
+      <point x="0.0" y="-126.0" />
+      <point x="0.0" y="71.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="201.0" y="353.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
