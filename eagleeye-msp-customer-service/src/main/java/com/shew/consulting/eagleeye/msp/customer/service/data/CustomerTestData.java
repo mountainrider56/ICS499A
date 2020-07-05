@@ -2,6 +2,7 @@ package com.shew.consulting.eagleeye.msp.customer.service.data;
 
 import com.shew.consulting.eagleeye.msp.customer.service.model.Customer;
 import com.shew.consulting.eagleeye.msp.customer.service.model.Representative;
+import com.shew.consulting.eagleeye.msp.customer.service.model.USState;
 import com.shew.consulting.eagleeye.msp.customer.service.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -32,7 +33,7 @@ public class CustomerTestData {
             customer.setAddress1("company" + i + " address1");
             customer.setAddress2("company" + i + " address2");
             customer.setCity("company" + i + " city");
-            customer.setState("MN");
+            customer.setState(USState.MN);
             customer.setZipcode("55438");
             Representative representative = new Representative();
             representative.setFirstName("First" + i);

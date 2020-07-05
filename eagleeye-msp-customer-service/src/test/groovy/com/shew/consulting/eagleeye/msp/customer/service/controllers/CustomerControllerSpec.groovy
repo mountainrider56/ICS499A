@@ -3,6 +3,7 @@ package com.shew.consulting.eagleeye.msp.customer.service.controllers
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.shew.consulting.eagleeye.msp.customer.service.model.Customer
 import com.shew.consulting.eagleeye.msp.customer.service.model.Representative
+import com.shew.consulting.eagleeye.msp.customer.service.model.USState
 import com.shew.consulting.eagleeye.msp.customer.service.repository.CustomerRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -79,7 +80,7 @@ class CustomerControllerSpec extends Specification {
         then:
         actions.andExpect(status().isBadRequest())
         actions.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        Map<String, String> result = mapper.readValue(actions.andReturn().response.contentAsString, HashMap.class);
+        Map<String, String> result = mapper.readValue(actions.andReturn().response.contentAsString, HashMap.class)
         result.sort() == expected.sort()
     }
 
@@ -147,7 +148,7 @@ class CustomerControllerSpec extends Specification {
         customer.email = 'customer1@gmail.com'
         customer.address1 = '1st Ave'
         customer.city = 'Minneapolis'
-        customer.state = 'MN'
+        customer.state = USState.MN
         customer.zipcode = '55438'
         customer.representative = representative
 
@@ -167,7 +168,7 @@ class CustomerControllerSpec extends Specification {
         customer.email = 'customer2@gmail.com'
         customer.address1 = '2st Ave'
         customer.city = 'Minneapolis'
-        customer.state = 'MN'
+        customer.state = USState.MN
         customer.zipcode = '55438'
         customer.representative = representative
 

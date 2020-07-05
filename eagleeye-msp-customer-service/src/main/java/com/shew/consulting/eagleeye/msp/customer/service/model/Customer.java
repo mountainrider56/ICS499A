@@ -1,6 +1,5 @@
 package com.shew.consulting.eagleeye.msp.customer.service.model;
 
-import com.shew.consulting.eagleeye.msp.customer.service.validation.ValidUSState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,9 +42,8 @@ public class Customer {
     @NotBlank(message = "City is required")
     private String city;
 
-    @ValidUSState
     @NotNull(message = "State is required")
-    private String state;
+    private USState state;
 
     @NotNull(message = "Zipcode is required")
     @Pattern(regexp = "(^\\d{5}$)|(^\\d{5}-\\d{4}$)", message = "Invalid zipcode")

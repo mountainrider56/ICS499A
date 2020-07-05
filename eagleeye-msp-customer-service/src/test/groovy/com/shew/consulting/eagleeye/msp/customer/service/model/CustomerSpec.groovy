@@ -7,7 +7,7 @@ class CustomerSpec extends Specification {
 
     def 'customer'() {
         setup:
-        Customer customer = new Customer(0, 'customer', '1234567890', 'test@gmail.com', '1111 1st Ave.', null, 'St. Paul', 'MN', '55438', null)
+        Customer customer = new Customer(0, 'customer', '1234567890', 'test@gmail.com', '1111 1st Ave.', null, 'St. Paul', USState.MN, '55438', null)
 
         expect:
         customer // Confirm not null
@@ -18,7 +18,7 @@ class CustomerSpec extends Specification {
         customer.address1 == '1111 1st Ave.'
         !customer.address2
         customer.city == 'St. Paul'
-        customer.state == 'MN'
+        customer.state == USState.MN
         customer.zipcode == '55438'
         !customer.representative
     }

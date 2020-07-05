@@ -137,13 +137,10 @@ class CustomerValidationSpec extends Specification {
         })
 
         where:
-        state  | message             | errorSize
-        null   | 'State is required' | 1
-        ''     | 'Invalid US state'  | 1
-        ' '    | 'Invalid US state'  | 1
-        'test' | 'Invalid US state'  | 1
-        'MN'   | null                | 0
-        'NY'   | null                | 0
+        state      | message             | errorSize
+        null       | 'State is required' | 1
+        USState.MN | null                | 0
+        USState.NY | null                | 0
     }
 
     @Unroll
