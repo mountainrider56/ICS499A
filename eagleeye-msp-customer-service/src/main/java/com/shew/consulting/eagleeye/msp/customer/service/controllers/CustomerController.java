@@ -40,4 +40,14 @@ public class CustomerController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "customer not found: " + customerId);
     }
 
+    @DeleteMapping("{customerId}")
+    public boolean deleteCustomer(@PathVariable Long customerId) {
+        if (customerRepository.existsById(customerId)) {
+            customerRepository.deleteById(customerId);
+            return !customerRepository.existsById(customerId);
+        } else {
+            return false;
+        }
+    }
+
 }

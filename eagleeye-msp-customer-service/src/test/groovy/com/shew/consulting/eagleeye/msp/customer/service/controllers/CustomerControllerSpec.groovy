@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import spock.lang.Specification
 import spock.lang.Unroll
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
@@ -133,6 +134,26 @@ class CustomerControllerSpec extends Specification {
         then:
         actions.andExpect(status().is4xxClientError())
         actions.andReturn().response.contentAsString == ''
+    }
+
+    @Unroll
+    def 'deleteCustomer'() {
+        setup:
+        customerRepository.save(getCustomer1())
+        customerRepository.save(getCustomer2())
+
+        when:
+        ResultActions actions = mockMvc.perform(delete("/v1/customers/${id}"))
+
+        then:
+        actions.andExpect(status().isOk())
+        actions.andReturn().response.contentAsString == deleted
+
+        where:
+        id | deleted
+        1  | 'true'
+        2  | 'true'
+        4  | 'false'
     }
 
     def getCustomer1() {

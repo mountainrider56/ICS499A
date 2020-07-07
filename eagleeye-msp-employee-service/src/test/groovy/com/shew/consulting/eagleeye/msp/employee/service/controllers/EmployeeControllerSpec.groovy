@@ -180,6 +180,26 @@ class EmployeeControllerSpec extends Specification {
         actions.andReturn().response.contentAsString == ''
     }
 
+    @Unroll
+    def 'deleteEmployee'() {
+        setup:
+        employeeRepository.save(getEmployee1())
+        employeeRepository.save(getEmployee2())
+
+        when:
+        ResultActions actions = mockMvc.perform(delete("/v1/employees/${id}"))
+
+        then:
+        actions.andExpect(status().isOk())
+        actions.andReturn().response.contentAsString == deleted
+
+        where:
+        id | deleted
+        1  | 'true'
+        2  | 'true'
+        4  | 'false'
+    }
+
     def getEmployee1() {
         Employee employee = new Employee()
         employee.username = 'username1'

@@ -53,4 +53,14 @@ public class EmployeeController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "employee not found: " + username);
     }
 
+    @DeleteMapping("{employeeId}")
+    public boolean deleteEmployee(@PathVariable Long employeeId) {
+        if (employeeRepository.existsById(employeeId)) {
+            employeeRepository.deleteById(employeeId);
+            return !employeeRepository.existsById(employeeId);
+        } else {
+            return false;
+        }
+    }
+
 }
