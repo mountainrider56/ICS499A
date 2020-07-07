@@ -140,7 +140,7 @@ class CustomerValidationSpec extends Specification {
         state      | message             | errorSize
         null       | 'State is required' | 1
         USState.MN | null                | 0
-        USState.NY | null                | 0
+        USState.WI | null                | 0
     }
 
     @Unroll

@@ -1,45 +1,47 @@
 <template>
   <v-container>
-    <h1>{{ customer.name }}</h1>
-    <v-text-field label="Name" outlined :value="customer.name"></v-text-field>
-    <v-text-field
-      label="Telephone"
-      outlined
-      :value="customer.telephone"
-    ></v-text-field>
-    <v-text-field
-      label="Address 1"
-      outlined
-      :value="customer.address1"
-    ></v-text-field>
-    <v-text-field
-      label="Address 2"
-      outlined
-      :value="customer.address2"
-    ></v-text-field>
-    <v-text-field label="City" outlined :value="customer.city"></v-text-field>
-    <v-text-field label="State" outlined :value="customer.state"></v-text-field>
-    <v-text-field
-      label="Zipcode"
-      outlined
-      :value="customer.zipcode"
-    ></v-text-field>
-    <v-btn color="primary">Update</v-btn>
-    <v-btn color="secondary">Create a quote</v-btn>
+    <v-alert v-if="success" class="mt-7 mb-7" type="success" outlined>
+      Successfully saved customer.
+    </v-alert>
+    <h1>{{ name }}</h1>
+    <CustomerForm ref="customerForm" :states="states" :customer="customer">
+      <v-btn class="mt-6 mr-3" color="primary" @click.stop.prevent="submit()">
+        Update
+      </v-btn>
+      <v-btn class="mt-6" color="secondary">Create a quote</v-btn>
+    </CustomerForm>
   </v-container>
 </template>
 
 <script>
 export default {
-  async asyncData({ $axios, route }) {
-    const customer = await $axios.$get(
-      `/api/eagleeye-msp/v1/customers/${route.query.id}`
-    )
-    return { customer }
+  async asyncData({ $customerApi, route }) {
+    const states = await $customerApi.getStates()
+    const customer = await $customerApi.getCustomer(route.query.id)
+    return { customer, states }
   },
   data() {
     return {
-      title: 'Customer'
+      title: 'Edit a Customer',
+      name: '',
+      success: false
+    }
+  },
+  mounted() {
+    this.name = this.customer.name
+    this.success = this.$route.query.success
+    const query = Object.assign({}, this.$route.query)
+    delete query.success
+    this.$router.replace({ query }).catch(() => {})
+  },
+  methods: {
+    async submit() {
+      const data = await this.$refs.customerForm.submit()
+      if (data) {
+        this.name = this.customer.name
+        this.success = true
+        window.scrollTo(0, 0)
+      }
     }
   },
   head() {

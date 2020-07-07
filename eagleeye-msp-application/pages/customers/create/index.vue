@@ -1,22 +1,34 @@
 <template>
   <v-container>
     <h1>{{ title }}</h1>
-    <v-text-field label="Name" outlined></v-text-field>
-    <v-text-field label="Telephone" outlined></v-text-field>
-    <v-text-field label="Address 1" outlined></v-text-field>
-    <v-text-field label="Address 2" outlined></v-text-field>
-    <v-text-field label="City" outlined></v-text-field>
-    <v-text-field label="State" outlined></v-text-field>
-    <v-text-field label="Zipcode" outlined></v-text-field>
-    <v-btn color="primary">Add</v-btn>
+    <CustomerForm ref="customerForm" :states="states">
+      <v-btn color="primary" class="mt-6" @click.stop.prevent="submit()">
+        Add
+      </v-btn>
+    </CustomerForm>
   </v-container>
 </template>
 
 <script>
 export default {
+  async asyncData({ $customerApi, route }) {
+    const states = await $customerApi.getStates()
+    return { states }
+  },
   data() {
     return {
       title: 'Add a Customer'
+    }
+  },
+  methods: {
+    async submit() {
+      const data = await this.$refs.customerForm.submit()
+      if (data) {
+        this.$router.push({
+          path: '/customers/detail',
+          query: { id: data.id, success: true }
+        })
+      }
     }
   },
   head() {

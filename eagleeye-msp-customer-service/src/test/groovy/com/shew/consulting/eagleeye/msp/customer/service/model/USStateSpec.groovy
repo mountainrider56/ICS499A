@@ -6,7 +6,7 @@ class USStateSpec extends Specification {
 
     def 'values'() {
         expect:
-        USState.values().size() == 50
+        USState.values().size() == 2
     }
 
 }

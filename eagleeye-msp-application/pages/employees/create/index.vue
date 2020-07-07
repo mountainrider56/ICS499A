@@ -1,26 +1,34 @@
 <template>
   <v-container>
     <h1>{{ title }}</h1>
-    <v-text-field label="First Name" outlined></v-text-field>
-    <v-text-field label="Last Name" outlined></v-text-field>
-    <v-text-field label="Email" outlined></v-text-field>
-    <v-select :items="securityRoles" label="Security Role" outlined></v-select>
-    <v-text-field label="Password" outlined></v-text-field>
-    <v-btn color="primary">Add</v-btn>
+    <EmployeeForm ref="employeeForm" :security-roles="securityRoles">
+      <v-btn color="primary" class="mt-6" @click.stop.prevent="submit()">
+        Add
+      </v-btn>
+    </EmployeeForm>
   </v-container>
 </template>
 
 <script>
 export default {
-  async asyncData({ $axios }) {
-    const securityRoles = await $axios.$get(
-      '/api/eagleeye-msp/v1/employees/security-roles'
-    )
+  async asyncData({ $employeeApi }) {
+    const securityRoles = await $employeeApi.getSecurityRoles()
     return { securityRoles }
   },
   data() {
     return {
-      title: 'Add an Employee'
+      title: 'Add a Employee'
+    }
+  },
+  methods: {
+    async submit() {
+      const data = await this.$refs.employeeForm.submit()
+      if (data) {
+        this.$router.push({
+          path: '/employees/detail',
+          query: { id: data.id, success: true }
+        })
+      }
     }
   },
   head() {

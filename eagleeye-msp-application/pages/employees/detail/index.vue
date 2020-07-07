@@ -1,46 +1,55 @@
 <template>
   <v-container>
-    <h1>{{ employee.firstName }} {{ employee.lastName }}</h1>
-    <v-text-field
-      label="First Name"
-      outlined
-      :value="employee.firstName"
-    ></v-text-field>
-    <v-text-field
-      label="Last Name"
-      outlined
-      :value="employee.lastName"
-    ></v-text-field>
-    <v-text-field label="Email" outlined :value="employee.email"></v-text-field>
-    <v-select
-      :items="securityRoles"
-      label="Security Role"
-      outlined
-      :value="employee.securityRole"
-    ></v-select>
-    <v-text-field
-      label="Password"
-      outlined
-      :value="employee.password"
-    ></v-text-field>
-    <v-btn color="primary">Update</v-btn>
+    <v-alert v-if="success" class="mt-7 mb-7" type="success" outlined>
+      Successfully saved employee.
+    </v-alert>
+    <h1>{{ displayName }}</h1>
+    <EmployeeForm
+      ref="employeeForm"
+      :security-roles="securityRoles"
+      :employee="employee"
+    >
+      <v-btn class="mt-6" color="primary" @click.stop.prevent="submit()">
+        Update
+      </v-btn>
+    </EmployeeForm>
   </v-container>
 </template>
 
 <script>
 export default {
-  async asyncData({ $axios, route }) {
-    const securityRoles = await $axios.$get(
-      '/api/eagleeye-msp/v1/employees/security-roles'
-    )
-    const employee = await $axios.$get(
-      `/api/eagleeye-msp/v1/employees/${route.query.id}`
-    )
+  async asyncData({ $employeeApi, route }) {
+    const securityRoles = await $employeeApi.getSecurityRoles()
+    const employee = await $employeeApi.getEmployee(route.query.id)
     return { securityRoles, employee }
   },
   data() {
     return {
-      title: 'Employee'
+      title: 'Edit a Employee',
+      displayName: '',
+      success: false
+    }
+  },
+  computed: {
+    name() {
+      return `${this.employee.firstName} ${this.employee.lastName}`
+    }
+  },
+  mounted() {
+    this.displayName = this.name
+    this.success = this.$route.query.success
+    const query = Object.assign({}, this.$route.query)
+    delete query.success
+    this.$router.replace({ query }).catch(() => {})
+  },
+  methods: {
+    async submit() {
+      const data = await this.$refs.employeeForm.submit()
+      if (data) {
+        this.displayName = this.name
+        this.success = true
+        window.scrollTo(0, 0)
+      }
     }
   },
   head() {

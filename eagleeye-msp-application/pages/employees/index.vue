@@ -37,13 +37,13 @@
 
 <script>
 export default {
-  async asyncData({ $axios }) {
-    const employees = await $axios.$get('/api/eagleeye-msp/v1/employees')
+  async asyncData({ $employeeApi }) {
+    const employees = await $employeeApi.getEmployees()
     return { employees }
   },
   data() {
     return {
-      title: 'Employees',
+      title: 'View all Employees',
       itemsPerPage: 5
     }
   },

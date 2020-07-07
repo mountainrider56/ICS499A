@@ -24,10 +24,17 @@ export default {
    ** Global CSS
    */
   css: [],
+  /**
+   ** Recognize components directory
+   */
+  components: true,
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    { src: '@/plugins/customer-service.js' },
+    { src: '@/plugins/employee-service.js' }
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -36,7 +43,20 @@ export default {
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
-    '@nuxtjs/vuetify'
+    [
+      '@nuxtjs/vuetify',
+      {
+        theme: {
+          themes: {
+            light: {
+              primary: '#000',
+              secondary: '#d31615',
+              error: '#d1545c'
+            }
+          }
+        }
+      }
+    ]
   ],
   /*
    ** Nuxt.js modules
