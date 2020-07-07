@@ -9,6 +9,7 @@
         Update
       </v-btn>
       <v-btn class="mt-6" color="secondary">Create a quote</v-btn>
+      <v-btn class="mt-6 float-right" @click="deleteCustomer()">Delete</v-btn>
     </CustomerForm>
   </v-container>
 </template>
@@ -30,9 +31,7 @@ export default {
   mounted() {
     this.name = this.customer.name
     this.success = this.$route.query.success
-    const query = Object.assign({}, this.$route.query)
-    delete query.success
-    this.$router.replace({ query }).catch(() => {})
+    this.$routeUtils.removeQueryParam(this, 'success')
   },
   methods: {
     async submit() {
@@ -41,6 +40,15 @@ export default {
         this.name = this.customer.name
         this.success = true
         window.scrollTo(0, 0)
+      }
+    },
+    async deleteCustomer() {
+      const data = await this.$customerApi.deleteCustomer(this.customer.id)
+      if (data) {
+        this.$router.push({
+          path: '/customers',
+          query: { success: true }
+        })
       }
     }
   },

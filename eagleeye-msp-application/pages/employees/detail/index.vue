@@ -12,6 +12,7 @@
       <v-btn class="mt-6" color="primary" @click.stop.prevent="submit()">
         Update
       </v-btn>
+      <v-btn class="mt-6 float-right" @click="deleteEmployee()">Delete</v-btn>
     </EmployeeForm>
   </v-container>
 </template>
@@ -38,9 +39,7 @@ export default {
   mounted() {
     this.displayName = this.name
     this.success = this.$route.query.success
-    const query = Object.assign({}, this.$route.query)
-    delete query.success
-    this.$router.replace({ query }).catch(() => {})
+    this.$routeUtils.removeQueryParam(this, 'success')
   },
   methods: {
     async submit() {
@@ -49,6 +48,15 @@ export default {
         this.displayName = this.name
         this.success = true
         window.scrollTo(0, 0)
+      }
+    },
+    async deleteEmployee() {
+      const data = await this.$employeeApi.deleteEmployee(this.employee.id)
+      if (data) {
+        this.$router.push({
+          path: '/employees',
+          query: { success: true }
+        })
       }
     }
   },

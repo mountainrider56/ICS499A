@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <v-alert v-if="successAlert" class="mt-7 mb-7" type="success" outlined>
+      Successfully deleted employee.
+    </v-alert>
     <h1>{{ title }}</h1>
     <v-btn small to="/employees/create" color="primary">
       + Add an Employee
@@ -44,8 +47,13 @@ export default {
   data() {
     return {
       title: 'View all Employees',
-      itemsPerPage: 5
+      itemsPerPage: 5,
+      successAlert: false
     }
+  },
+  mounted() {
+    this.successAlert = this.$route.query.success
+    this.$routeUtils.removeQueryParam(this, 'success')
   },
   methods: {
     getEmployeeDetailLink(id) {

@@ -54,6 +54,19 @@ export default (context, inject) => {
             message: 'Unable to save customer.'
           })
         })
+    },
+    async deleteCustomer(id) {
+      return await context.$axios
+        .$delete(`/api/eagleeye-msp/v1/customers/${id}`)
+        .then((response) => {
+          return response
+        })
+        .catch((e) => {
+          context.error({
+            statusCode: e.response.status,
+            message: 'Unable to delete customer.'
+          })
+        })
     }
   }
   inject('customerApi', customerApi)

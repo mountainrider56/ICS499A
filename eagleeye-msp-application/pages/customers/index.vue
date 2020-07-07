@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <v-alert v-if="successAlert" class="mt-7 mb-7" type="success" outlined>
+      Successfully deleted customer.
+    </v-alert>
     <h1>{{ title }}</h1>
     <v-btn small to="/customers/create" color="primary">+ Add a Customer</v-btn>
     <v-data-iterator :items="customers" :items-per-page.sync="itemsPerPage">
@@ -60,8 +63,13 @@ export default {
   data() {
     return {
       title: 'View all Customers',
-      itemsPerPage: 5
+      itemsPerPage: 5,
+      successAlert: false
     }
+  },
+  mounted() {
+    this.successAlert = this.$route.query.success
+    this.$routeUtils.removeQueryParam(this, 'success')
   },
   methods: {
     getCustomerDetailLink(id) {
