@@ -1,0 +1,22 @@
+1. Confirm Delete - Customer
+2. Confirm Delete - Employee
+3. Landing Page Layout
+4. Search Page Layout - Employee
+5. Search Page Layout - Customer
+6. Username Validation - Employee
+7. Form Validation Requirements - Customer
+8. Form Validation Requirements - Employee
+9. Delete Quotes When Customer Deletes
+10. Form Order - Employee
+11. Form Order - Customer
+12. Form Order - Quotes
+13. Get Customer Names Call
+14. Login Page
+15. Login Page Validation
+16. Session Storage
+17. Build PDF
+18. Audit All Actions?
+19. Update UI of 500/404 error pages 
+20. UI Tests
+21. Quote Tests
+22. Comments 

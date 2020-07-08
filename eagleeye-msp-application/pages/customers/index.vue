@@ -8,7 +8,7 @@
     <v-data-iterator :items="customers" :items-per-page.sync="itemsPerPage">
       <template v-slot:default="props">
         <v-row>
-          <v-col v-for="item in props.items" :key="item.name" lg="3">
+          <v-col v-for="item in props.items" :key="item.id" lg="3">
             <v-card :to="getCustomerDetailLink(item.id)">
               <v-card-title class="subheading font-weight-bold">
                 {{ item.name }}

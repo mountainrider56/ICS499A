@@ -34,6 +34,7 @@ export default {
   plugins: [
     { src: '@/plugins/customer-service.js' },
     { src: '@/plugins/employee-service.js' },
+    { src: '@/plugins/quote-service.js' },
     { src: '@/plugins/route-utils.js' }
   ],
   /*
