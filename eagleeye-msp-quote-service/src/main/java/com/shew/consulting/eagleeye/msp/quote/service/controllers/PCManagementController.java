@@ -23,8 +23,8 @@ public class PCManagementController {
     @GetMapping("services")
     public Map<String, BusinessService> getServices() {
         Map<String, BusinessService> services = businessServiceRespository.findAllMap();
-        Map<String, BusinessService> sortedServices = new TreeMap<>(
-                Comparator.comparingInt(key -> services.get(key).getDisplayOrder()));
+        Comparator<String> comparator = Comparator.comparingInt(key -> services.get(key).getDisplayOrder());
+        Map<String, BusinessService> sortedServices = new TreeMap<>(comparator);
         sortedServices.putAll(services);
         return sortedServices;
     }
