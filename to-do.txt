@@ -19,4 +19,5 @@
 19. Update UI of 500/404 error pages 
 20. UI Tests
 21. Quote Tests
-22. Comments 
+22. Comments
+23. Password Storage in DB 

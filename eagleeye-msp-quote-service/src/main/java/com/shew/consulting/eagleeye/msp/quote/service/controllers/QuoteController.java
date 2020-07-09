@@ -1,7 +1,6 @@
 package com.shew.consulting.eagleeye.msp.quote.service.controllers;
 
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.Quote;
-import com.shew.consulting.eagleeye.msp.quote.service.model.quote.Selection;
 import com.shew.consulting.eagleeye.msp.quote.service.repository.QuoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController

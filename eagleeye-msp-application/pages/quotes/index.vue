@@ -31,12 +31,7 @@
 export default {
   async asyncData({ $quoteApi, $customerApi }) {
     const quotes = await $quoteApi.getQuotes()
-    const customersObj = await $customerApi.getCustomers()
-    const customers = {}
-    for (const key in customersObj) {
-      const customer = customersObj[key]
-      customers[customer.id] = customer
-    }
+    const customers = await $customerApi.getCustomersIdAndName()
     return { quotes, customers }
   },
   data() {

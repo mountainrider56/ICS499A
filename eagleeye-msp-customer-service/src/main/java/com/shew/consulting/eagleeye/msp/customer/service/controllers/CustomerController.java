@@ -1,6 +1,7 @@
 package com.shew.consulting.eagleeye.msp.customer.service.controllers;
 
 import com.shew.consulting.eagleeye.msp.customer.service.model.Customer;
+import com.shew.consulting.eagleeye.msp.customer.service.model.projections.CustomerIdAndName;
 import com.shew.consulting.eagleeye.msp.customer.service.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Expose endpoints for the customers service.
@@ -29,6 +32,13 @@ public class CustomerController {
     @GetMapping
     public List<Customer> getCustomers() {
         return customerRepository.findAll();
+    }
+
+    @GetMapping("ids/names")
+    public Map<Long, CustomerIdAndName> getCustomersIdAndName() {
+        return customerRepository.getAllBy(CustomerIdAndName.class)
+                                 .parallelStream()
+                                 .collect(Collectors.toMap(CustomerIdAndName::getId, item -> item));
     }
 
     @GetMapping("{customerId}")

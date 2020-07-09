@@ -16,9 +16,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -106,6 +104,27 @@ class CustomerControllerSpec extends Specification {
         customerList                     | expectedCustomerLength
         [getCustomer1(), getCustomer2()] | 2
         []                               | 0
+    }
+
+    @Unroll
+    def 'getCustomersIdAndName'() {
+        setup:
+        customerList.forEach({ i ->
+            customerRepository.save(i)
+        })
+
+        when:
+        ResultActions actions = mockMvc.perform(get('/v1/customers/ids/names'))
+
+        then:
+        actions.andExpect(status().isOk())
+        actions.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        actions.andReturn().response.contentAsString == expectedResult
+
+        where:
+        customerList                     | expectedResult
+        [getCustomer1(), getCustomer2()] | '{"1":{"name":"test1","id":1},"2":{"name":"test2","id":2}}'
+        []                               | '{}'
     }
 
     def 'getCustomer - happy path'() {

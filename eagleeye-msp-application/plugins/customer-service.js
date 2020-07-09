@@ -67,6 +67,19 @@ export default (context, inject) => {
             message: 'Unable to delete customer.'
           })
         })
+    },
+    async getCustomersIdAndName() {
+      return await context.$axios
+        .$get('/api/eagleeye-msp/v1/customers/id/names')
+        .then((response) => {
+          return response
+        })
+        .catch((e) => {
+          context.error({
+            statusCode: e.response.status,
+            message: 'Unable to get customers.'
+          })
+        })
     }
   }
   inject('customerApi', customerApi)
