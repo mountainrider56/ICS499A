@@ -70,7 +70,7 @@ export default (context, inject) => {
     },
     async getCustomersIdAndName() {
       return await context.$axios
-        .$get('/api/eagleeye-msp/v1/customers/id/names')
+        .$get('/api/eagleeye-msp/v1/customers/ids/names')
         .then((response) => {
           return response
         })

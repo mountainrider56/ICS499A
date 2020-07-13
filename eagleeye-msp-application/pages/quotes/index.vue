@@ -15,7 +15,7 @@
                 <v-list-item>
                   <v-list-item-content>Total:</v-list-item-content>
                   <v-list-item-content class="align-end">
-                    {{ item.total }}
+                    ${{ item.total }}
                   </v-list-item-content>
                 </v-list-item>
               </v-list>

@@ -1,30 +1,18 @@
 package com.shew.consulting.eagleeye.msp.quote.service.model.management.pc.basic.spam.service;
 
-import com.shew.consulting.eagleeye.msp.quote.service.model.management.pc.basic.spam.service.breakdowns.DefinitionManagement;
-import com.shew.consulting.eagleeye.msp.quote.service.model.management.pc.basic.spam.service.breakdowns.DomainLevelFiltering;
-import com.shew.consulting.eagleeye.msp.quote.service.model.services.BusinessService;
-import com.shew.consulting.eagleeye.msp.quote.service.model.services.BusinessServiceBreakdown;
+import com.shew.consulting.eagleeye.msp.quote.service.model.quote.ManagementType;
+import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
+import com.shew.consulting.eagleeye.msp.quote.service.model.services.ServiceDefinition;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
-import java.util.ArrayList;
-import java.util.List;
-
-@Entity
 @Component
-public class BasicSpamService extends BusinessService {
+public class BasicSpamService implements ServiceDefinition {
 
-    public static final String NAME = "Basic Spam Service";
-    public static final String ID = "basicSpamServicePc";
+    public static final String TITLE = "Basic Spam Service";
 
-    public BasicSpamService() {
-        setId(ID);
-        setName(NAME);
-        setDisplayOrder(7);
-        List<BusinessServiceBreakdown> breakdowns = new ArrayList<>();
-        breakdowns.add(new DomainLevelFiltering());
-        breakdowns.add(new DefinitionManagement());
-        setBreakdowns(breakdowns);
+    @Override
+    public Service defineService() {
+        return new Service(getId(ManagementType.PC), TITLE, 0);
     }
 
 }

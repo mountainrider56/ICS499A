@@ -13,6 +13,19 @@ export default (context, inject) => {
           })
         })
     },
+    async getQuotePDF(id) {
+      return await context.$axios
+        .$get(`/api/eagleeye-msp/v1/quotes/${id}/files/pdf`)
+        .then((response) => {
+          return response
+        })
+        .catch((e) => {
+          context.error({
+            statusCode: e.response.status,
+            message: `Unable to generate PDF for quote: ${id}.`
+          })
+        })
+    },
     async getQuotes() {
       return await context.$axios
         .$get('/api/eagleeye-msp/v1/quotes')
@@ -26,9 +39,9 @@ export default (context, inject) => {
           })
         })
     },
-    async getPcManagmentServices() {
+    async getServices() {
       return await context.$axios
-        .$get('/api/eagleeye-msp/v1/quotes/management/pc/services')
+        .$get('/api/eagleeye-msp/v1/quotes/services')
         .then((response) => {
           return response
         })
@@ -39,9 +52,9 @@ export default (context, inject) => {
           })
         })
     },
-    async getPcManagmentEmptySelections() {
+    async getSelections() {
       return await context.$axios
-        .$get('/api/eagleeye-msp/v1/quotes/management/pc/selections')
+        .$get('/api/eagleeye-msp/v1/quotes/services/selections')
         .then((response) => {
           return response
         })

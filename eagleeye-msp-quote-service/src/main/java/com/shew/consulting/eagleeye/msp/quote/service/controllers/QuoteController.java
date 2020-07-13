@@ -34,4 +34,26 @@ public class QuoteController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "quote not found: " + quoteId);
     }
 
+//    @GetMapping(value = "{quoteId}/files/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+//    public ResponseEntity<InputStreamResource> getQuotePDF(@PathVariable long quoteId) throws FileNotFoundException, DocumentException {
+//        System.out.println(quoteId);
+//        Document document = new Document();
+//        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//        PdfWriter.getInstance(document, new FileOutputStream("iTextHelloWorld.pdf"));
+//
+//        document.open();
+//        Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+//        Chunk chunk = new Chunk("Hello World", font);
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        document.add(chunk);
+//        document.close();
+//        out.write(document);
+//        return ResponseEntity
+//                .ok()
+//                .headers(headers)
+//                .contentType(MediaType.APPLICATION_PDF)
+//                .body(new InputStreamResource(document));
+//    }
+
 }

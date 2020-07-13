@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 
 @Data
 @Entity
@@ -19,14 +21,11 @@ public class Quote {
 
     private long customerId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private PCManagementQuote pcManagementQuote;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private ServerManagementQuote serverManagementQuote;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Map<String, Selection> selections;
 
     private double total;
 
-    private Instant instant;
+    private Instant timestamp;
 
 }

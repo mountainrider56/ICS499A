@@ -1,5 +1,8 @@
 server:
+  port: 8080
   servlet:
     context-path: /api/eagleeye-msp
-  tomcat:
-    compression: true
+
+spring:
+  h2.console.enabled: true
+  profiles.active: testData
