@@ -50,7 +50,7 @@ public class QuoteTestData {
     }
 
     private int getRandomInt() {
-        return (int) (Math.random() * (100));
+        return (int) (Math.random() * (10) + 1);
     }
 
 }
