@@ -7,7 +7,6 @@ import com.shew.consulting.eagleeye.msp.quote.service.repository.QuoteRepository
 import com.shew.consulting.eagleeye.msp.quote.service.repository.ServiceRespository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;

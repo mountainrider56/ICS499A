@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-class EmployeeControllerSpec extends Specification {
+class EmployeeControllerIT extends Specification {
 
     @Autowired
     EmployeeRepository employeeRepository
@@ -174,7 +174,7 @@ class EmployeeControllerSpec extends Specification {
 
     def 'getEmployeeByUsername - not found'() {
         when:
-        ResultActions actions = mockMvc.perform(get('/v1/employees/username')
+        ResultActions actions = mockMvc.perform(post('/v1/employees/username')
                 .contentType(MediaType.APPLICATION_JSON).content('username4'))
 
         then:

@@ -10,7 +10,7 @@ import spock.lang.Specification
 @SpringBootTest
 @ActiveProfiles('testData')
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-class EmployeeTestDataSpec extends Specification {
+class EmployeeTestDataIT extends Specification {
 
     @Autowired
     EmployeeRepository employeeRepository

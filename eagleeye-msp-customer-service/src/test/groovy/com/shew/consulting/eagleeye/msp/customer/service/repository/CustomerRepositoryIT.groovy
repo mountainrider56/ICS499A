@@ -1,4 +1,4 @@
-package com.shew.consulting.eagleeye.msp.employee.service.repository
+package com.shew.consulting.eagleeye.msp.customer.service.repository
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -7,14 +7,14 @@ import spock.lang.Specification
 
 @SpringBootTest
 @ActiveProfiles("test")
-class EmployeeRepositorySpec extends Specification {
+class CustomerRepositoryIT extends Specification {
 
     @Autowired
-    EmployeeRepository employeeRepository
+    CustomerRepository customerRepository
 
     def 'repository'() {
         expect:
-        employeeRepository // assert not null
+        customerRepository // assert not null
     }
 
 }
