@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+/**
+ * Service class that represents a service.
+ */
 @Data
 @Entity
 @NoArgsConstructor

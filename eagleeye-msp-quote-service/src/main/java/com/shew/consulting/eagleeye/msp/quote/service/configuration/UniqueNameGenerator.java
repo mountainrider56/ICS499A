@@ -4,6 +4,9 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.AnnotationBeanNameGenerator;
 
+/**
+ * Customize only the components/beans created in the management model of this service.
+ */
 public class UniqueNameGenerator extends AnnotationBeanNameGenerator {
 
     @Override

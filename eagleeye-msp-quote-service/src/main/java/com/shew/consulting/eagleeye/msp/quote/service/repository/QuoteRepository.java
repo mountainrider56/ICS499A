@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Create a repository for quote class.
+ */
 @Repository
 public interface QuoteRepository extends CrudRepository<Quote, Long> {
 

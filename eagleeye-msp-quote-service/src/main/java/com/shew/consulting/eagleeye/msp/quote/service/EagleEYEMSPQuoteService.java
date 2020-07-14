@@ -5,6 +5,9 @@ import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
+/**
+ * Main application class for the quote service.
+ */
 @SpringBootApplication
 public class EagleEYEMSPQuoteService {
 

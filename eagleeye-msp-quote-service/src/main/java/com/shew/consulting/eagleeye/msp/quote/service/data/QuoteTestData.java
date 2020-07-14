@@ -18,6 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+/**
+ * Load all test data after application starts.
+ */
 @Component
 @Order(2)
 @Profile("testData")

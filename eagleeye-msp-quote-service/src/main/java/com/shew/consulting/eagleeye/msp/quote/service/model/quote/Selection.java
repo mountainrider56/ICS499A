@@ -9,6 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Selection class that represents a selection within a quote.
+ */
 @Data
 @Entity
 @NoArgsConstructor

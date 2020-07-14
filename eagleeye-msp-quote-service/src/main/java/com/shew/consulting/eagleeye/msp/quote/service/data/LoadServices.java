@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+/**
+ * Load all services after application starts.
+ */
 @Order(1)
 @Component
 @RequiredArgsConstructor

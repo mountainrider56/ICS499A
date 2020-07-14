@@ -9,6 +9,9 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Quote class that represents a quote.
+ */
 @Data
 @Entity
 @NoArgsConstructor

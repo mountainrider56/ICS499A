@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Expose endpoints for the services service.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("v1/quotes/services")

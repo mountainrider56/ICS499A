@@ -13,6 +13,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Expose endpoints for the quote service.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("v1/quotes")
