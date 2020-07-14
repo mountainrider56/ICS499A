@@ -6,7 +6,7 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.services.ServiceDefi
 import org.springframework.stereotype.Component;
 
 @Component
-    public class DarkwebMonitoring implements ServiceDefinition {
+public class DarkwebMonitoring implements ServiceDefinition {
 
     public static final String TITLE = "Darkweb Monitoring";
 
