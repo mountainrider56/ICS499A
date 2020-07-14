@@ -1,14 +1,16 @@
 package com.shew.consulting.eagleeye.msp.quote.service;
 
-import com.shew.consulting.eagleeye.msp.quote.service.configuration.UniqueNameGenerator;
+import com.shew.consulting.eagleeye.msp.quote.service.configuration.UniqueeBeanNameGenerator;
 import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Main application class for the quote service.
  */
 @SpringBootApplication
+@ComponentScan(nameGenerator = UniqueeBeanNameGenerator.class)
 public class EagleEYEMSPQuoteService {
 
     public static void main(String[] args) {
@@ -16,7 +18,6 @@ public class EagleEYEMSPQuoteService {
                 .headless(true)
                 .bannerMode(Banner.Mode.OFF)
                 .sources(EagleEYEMSPQuoteService.class)
-                .beanNameGenerator(new UniqueNameGenerator())
                 .run(args);
     }
 

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.AnnotationBeanNameGenerator;
 /**
  * Customize only the components/beans created in the management model of this service.
  */
-public class UniqueNameGenerator extends AnnotationBeanNameGenerator {
+public class UniqueeBeanNameGenerator extends AnnotationBeanNameGenerator {
 
     @Override
     public String generateBeanName(BeanDefinition definition, BeanDefinitionRegistry registry) {
