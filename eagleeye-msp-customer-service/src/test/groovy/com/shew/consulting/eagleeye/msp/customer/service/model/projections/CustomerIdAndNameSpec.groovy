@@ -6,7 +6,7 @@ class CustomerIdAndNameSpec extends Specification {
 
     def 'create CustomerIdAndName'() {
         setup:
-        CustomerIdAndName customerIdAndName = new CustomerIdAndNameClass();
+        CustomerIdAndName customerIdAndName = new CustomerIdAndNameClass()
 
         expect:
         customerIdAndName
