@@ -1,4 +1,6 @@
 package com.shew.consulting.eagleeye.msp.quote.service.model.management.additional.darkweb.monitoring
 
-class DarkwebMonitoringPersonalEmailAddressesSpec {
+import spock.lang.Specification
+
+class DarkwebMonitoringPersonalEmailAddressesSpec extends Specification {
 }

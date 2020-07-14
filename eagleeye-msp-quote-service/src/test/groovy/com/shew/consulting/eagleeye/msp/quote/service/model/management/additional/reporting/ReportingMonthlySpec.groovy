@@ -1,4 +1,6 @@
 package com.shew.consulting.eagleeye.msp.quote.service.model.management.additional.reporting
 
-class ReportingMonthlySpec {
+import spock.lang.Specification
+
+class ReportingMonthlySpec extends Specification {
 }

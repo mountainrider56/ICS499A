@@ -1,4 +1,6 @@
 package com.shew.consulting.eagleeye.msp.quote.service.model.management.additional.periodic.planning.review
 
-class PeriodicPlanningReviewSpec {
+import spock.lang.Specification
+
+class PeriodicPlanningReviewSpec extends Specification {
 }

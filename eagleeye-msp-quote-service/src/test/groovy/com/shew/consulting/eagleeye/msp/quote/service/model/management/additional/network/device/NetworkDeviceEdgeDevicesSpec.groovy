@@ -1,4 +1,6 @@
 package com.shew.consulting.eagleeye.msp.quote.service.model.management.additional.network.device
 
-class NetworkDeviceEdgeDevicesSpec {
+import spock.lang.Specification
+
+class NetworkDeviceEdgeDevicesSpec extends Specification {
 }

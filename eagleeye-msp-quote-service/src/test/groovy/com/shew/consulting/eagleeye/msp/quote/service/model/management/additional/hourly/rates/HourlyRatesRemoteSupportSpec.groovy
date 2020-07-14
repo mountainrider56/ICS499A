@@ -1,4 +1,6 @@
 package com.shew.consulting.eagleeye.msp.quote.service.model.management.additional.hourly.rates
 
-class HourlyRatesRemoteSupportSpec {
+import spock.lang.Specification
+
+class HourlyRatesRemoteSupportSpec extends Specification {
 }

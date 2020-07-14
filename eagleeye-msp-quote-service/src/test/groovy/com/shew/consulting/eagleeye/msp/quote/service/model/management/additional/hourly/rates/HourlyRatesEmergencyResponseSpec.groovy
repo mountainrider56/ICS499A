@@ -1,4 +1,6 @@
 package com.shew.consulting.eagleeye.msp.quote.service.model.management.additional.hourly.rates
 
-class HourlyRatesEmergencyResponseSpec {
+import spock.lang.Specification
+
+class HourlyRatesEmergencyResponseSpec extends Specification {
 }

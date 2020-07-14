@@ -10,9 +10,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.shew.consulting</groupId>
     <artifactId>eagleeye-msp-quote-service</artifactId>
-    <version>0.0.1</version>
-    <name>eagleeye-msp-quote-service</name>
+    <version>1.0.0-SNAPSHOT</version>
     <description>Service for eagleEYE MSP quotes.</description>
+    <packaging>jar</packaging>
     <properties>
         <java.version>1.8</java.version>
         <char.encoding>UTF-8</char.encoding>
