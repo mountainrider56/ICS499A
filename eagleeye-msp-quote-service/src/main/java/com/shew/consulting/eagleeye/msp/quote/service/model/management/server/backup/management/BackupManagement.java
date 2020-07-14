@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class BackupManagement implements ServiceDefinition {
 
-    public static final String TITLE = "Backup management";
+    public static final String TITLE = "Backup Management";
 
     @Override
     public Service defineService() {
