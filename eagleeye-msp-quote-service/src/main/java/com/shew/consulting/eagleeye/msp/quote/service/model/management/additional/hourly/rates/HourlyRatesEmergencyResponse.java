@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class HourlyRatesEmergencyResponse implements ServiceDefinition {
 
-    public static final String TITLE = "Remote Support";
+    public static final String TITLE = "Emergency Response";
 
     @Override
     public Service defineService() {
