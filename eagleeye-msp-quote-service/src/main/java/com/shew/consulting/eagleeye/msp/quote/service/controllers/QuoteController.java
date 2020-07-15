@@ -29,7 +29,7 @@ public class QuoteController {
     }
 
     @GetMapping("{quoteId}")
-    public Quote getQuote(@PathVariable long quoteId) {
+    public Quote getQuote(@PathVariable Long quoteId) {
         Optional<Quote> quote = quoteRepository.findById(quoteId);
         if (quote.isPresent()) {
             return quote.get();

@@ -36,7 +36,7 @@ public class EmployeeController {
     }
 
     @GetMapping("{employeeId}")
-    public Employee getEmployee(@PathVariable long employeeId) {
+    public Employee getEmployee(@PathVariable Long employeeId) {
         Optional<Employee> employee = employeeRepository.findById(employeeId);
         if (employee.isPresent()) {
             return employee.get();

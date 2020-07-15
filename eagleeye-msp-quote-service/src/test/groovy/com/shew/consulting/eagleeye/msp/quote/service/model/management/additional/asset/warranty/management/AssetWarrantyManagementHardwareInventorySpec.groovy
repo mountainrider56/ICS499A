@@ -15,7 +15,7 @@ class AssetWarrantyManagementHardwareInventorySpec extends Specification {
         then:
         service // not null
         service.id == 'AssetWarrantyManagementHardwareInventoryADDITIONAL'
-        service.price == 0.5 as Double
+        service.price == 0.5 as double
         service.title == 'Hardware Inventory'
     }
 

@@ -15,7 +15,7 @@ class AntiVirusAntiSpywareDetectionSpec extends Specification {
         then:
         service // not null
         service.id == 'AntiVirusAntiSpywareDetectionSERVER'
-        service.price == 3.25 as Double
+        service.price == 3.25 as double
         service.title == 'AntiVirus/Antispyware Detection'
     }
 

@@ -15,7 +15,7 @@ class BackupManagementEagleEYECloudBackupAddOnModulesSpec extends Specification 
         then:
         service // not null
         service.id == 'BackupManagementEagleEYECloudBackupAddOnModulesSERVER'
-        service.price == 12.50 as Double
+        service.price == 12.50 as double
         service.title == 'Add On Modules'
     }
 

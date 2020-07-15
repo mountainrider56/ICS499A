@@ -15,7 +15,7 @@ class BackupManagementHardwareAssistedCloudBackup2000Spec extends Specification 
         then:
         service // not null
         service.id == 'BackupManagementHardwareAssistedCloudBackup2000SERVER'
-        service.price == 499.99 as Double
+        service.price == 499.99 as double
         service.title == '2000GB'
     }
 

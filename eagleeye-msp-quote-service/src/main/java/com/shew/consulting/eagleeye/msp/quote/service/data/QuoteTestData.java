@@ -45,7 +45,7 @@ public class QuoteTestData {
                 }
             });
             quote.setSelections(selections);
-            quote.setCustomerId(i + 1);
+            quote.setCustomerId((long) (i + 1));
             quote.setTimestamp(Instant.now());
             quoteRepository.save(quote);
         });

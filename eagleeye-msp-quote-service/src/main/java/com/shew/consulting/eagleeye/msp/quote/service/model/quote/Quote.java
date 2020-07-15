@@ -19,9 +19,9 @@ public class Quote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
-    private long customerId;
+    private Long customerId;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Map<String, Selection> selections;

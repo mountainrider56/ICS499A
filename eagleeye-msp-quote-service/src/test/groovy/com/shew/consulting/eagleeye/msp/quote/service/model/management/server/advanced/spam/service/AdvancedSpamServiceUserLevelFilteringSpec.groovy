@@ -15,7 +15,7 @@ class AdvancedSpamServiceUserLevelFilteringSpec extends Specification {
         then:
         service // not null
         service.id == 'AdvancedSpamServiceUserLevelFilteringSERVER'
-        service.price == 2.75 as Double
+        service.price == 2.75 as double
         service.title == 'User Level Filtering'
     }
 

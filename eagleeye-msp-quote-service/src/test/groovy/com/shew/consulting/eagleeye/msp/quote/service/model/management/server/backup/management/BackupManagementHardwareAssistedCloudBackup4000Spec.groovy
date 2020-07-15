@@ -15,7 +15,7 @@ class BackupManagementHardwareAssistedCloudBackup4000Spec extends Specification 
         then:
         service // not null
         service.id == 'BackupManagementHardwareAssistedCloudBackup4000SERVER'
-        service.price == 799.99 as Double
+        service.price == 799.99 as double
         service.title == '4000GB'
     }
 

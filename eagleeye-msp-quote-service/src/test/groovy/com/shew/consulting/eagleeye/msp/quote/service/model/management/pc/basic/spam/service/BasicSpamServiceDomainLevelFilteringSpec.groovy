@@ -15,7 +15,7 @@ class BasicSpamServiceDomainLevelFilteringSpec extends Specification {
         then:
         service // not null
         service.id == 'BasicSpamServiceDomainLevelFilteringPC'
-        service.price == 2.5 as Double
+        service.price == 2.5 as double
         service.title == 'Domain Level Filtering'
     }
 

@@ -15,7 +15,7 @@ class BackupManagementEagleEYECloudBackup75Spec extends Specification {
         then:
         service // not null
         service.id == 'BackupManagementEagleEYECloudBackup75SERVER'
-        service.price == 79.95 as Double
+        service.price == 79.95 as double
         service.title == 'eagleEYE Cloud Backup (75GB)'
     }
 
