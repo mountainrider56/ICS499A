@@ -154,11 +154,11 @@ class CustomerControllerIT extends Specification {
 
         then:
         actions.andExpect(status().is4xxClientError())
-        actions.andReturn().response.contentAsString == ''
+        actions.andReturn().response.errorMessage == 'customer not found: 1'
     }
 
     @Unroll
-    def 'deleteCustomer'() {
+    def 'deleteCustomer - #id'() {
         setup:
         customerRepository.save(getCustomer1())
         customerRepository.save(getCustomer2())

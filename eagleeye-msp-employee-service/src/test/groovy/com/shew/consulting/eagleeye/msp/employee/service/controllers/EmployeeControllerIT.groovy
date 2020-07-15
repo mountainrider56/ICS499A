@@ -148,7 +148,7 @@ class EmployeeControllerIT extends Specification {
 
         then:
         actions.andExpect(status().is4xxClientError())
-        actions.andReturn().response.contentAsString == ''
+        actions.andReturn().response.errorMessage == 'employee not found: 1'
     }
 
     def 'getEmployeeByUsername - happy path'() {
@@ -179,11 +179,11 @@ class EmployeeControllerIT extends Specification {
 
         then:
         actions.andExpect(status().is4xxClientError())
-        actions.andReturn().response.contentAsString == ''
+        actions.andReturn().response.errorMessage == 'employee not found: username4'
     }
 
     @Unroll
-    def 'deleteEmployee'() {
+    def 'deleteEmployee - #id'() {
         setup:
         employeeRepository.save(getEmployee1())
         employeeRepository.save(getEmployee2())

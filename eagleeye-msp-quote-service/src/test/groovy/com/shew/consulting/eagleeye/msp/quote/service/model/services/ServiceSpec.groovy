@@ -20,4 +20,12 @@ class ServiceSpec extends Specification {
         'id1' | 'test1' | 10.5 as double
     }
 
+    def 'service - no arg constructor'() {
+        setup:
+        Service service = new Service()
+
+        expect:
+        service // not null
+    }
+
 }
