@@ -1,6 +1,9 @@
 <template>
   <v-container>
     <h1>{{ title }}</h1>
+
+    <v-btn color="primary" class="mt-8" @click="getPDF()">Download PDF</v-btn>
+
     <h2 class="mt-8 mb-6">PC Management</h2>
 
     <!-- Device Monitoring -->
@@ -445,39 +448,37 @@
       @onQuantityUpdate="setServerTotal"
     ></QuoteInputRow>
 
-    <!-- AntiMalware/Antispyware Detection -->
+    <!-- AntiVirus/Antispyware Detection -->
     <QuoteInputRow
-      ref="AntiMalwareAntiSpywareDetectionSERVER"
-      :selection="quote.selections.AntiMalwareAntiSpywareDetectionSERVER"
-      :service="services.AntiMalwareAntiSpywareDetectionSERVER"
+      ref="AntiVirusAntiSpywareDetectionSERVER"
+      :selection="quote.selections.AntiVirusAntiSpywareDetectionSERVER"
+      :service="services.AntiVirusAntiSpywareDetectionSERVER"
       :cost-type="content.server"
       @onQuantityUpdate="setServerTotal"
     ></QuoteInputRow>
     <QuoteRow
       :is-sub-row="true"
       :service="
-        services.AntiMalwareAntiSpywareDetectionProvideMalwareBytesLicenseSERVER
+        services.AntiVirusAntiSpywareDetectionProvideTrendMicroWFBSSLicenseSERVER
       "
     ></QuoteRow>
     <QuoteRow
       :is-sub-row="true"
       :service="
-        services.AntiMalwareAntiSpywareDetectionDefinitionManagementSERVER
+        services.AntiVirusAntiSpywareDetectionDefinitionManagementSERVER
       "
     ></QuoteRow>
     <QuoteRow
       :is-sub-row="true"
-      :service="
-        services.AntiMalwareAntiSpywareDetectionApplicationUpdatesSERVER
-      "
+      :service="services.AntiVirusAntiSpywareDetectionApplicationUpdatesSERVER"
     ></QuoteRow>
     <QuoteRow
       :is-sub-row="true"
-      :service="services.AntiMalwareAntiSpywareDetectionScheduledScanningSERVER"
+      :service="services.AntiVirusAntiSpywareDetectionScheduledScanningSERVER"
     ></QuoteRow>
     <QuoteRow
       :is-sub-row="true"
-      :service="services.AntiMalwareAntiSpywareDetectionHistoricReportsSERVER"
+      :service="services.AntiVirusAntiSpywareDetectionHistoricReportsSERVER"
     ></QuoteRow>
 
     <!-- Advanced Spam Service -->
@@ -508,7 +509,7 @@
       :selection="quote.selections.DarkwebMonitoringDomainsADDITIONAL"
       :service="services.DarkwebMonitoringDomainsADDITIONAL"
       :cost-type="content.domains"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
     <QuoteInputRow
       ref="DarkwebMonitoringPersonalEmailAddressesADDITIONAL"
@@ -518,7 +519,7 @@
       "
       :service="services.DarkwebMonitoringPersonalEmailAddressesADDITIONAL"
       cost-type="10 Email Addresses"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
 
     <!-- Reporting -->
@@ -529,7 +530,7 @@
       :selection="quote.selections.ReportingMonthlyADDITIONAL"
       :service="services.ReportingMonthlyADDITIONAL"
       cost-type="?"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
     <QuoteInputRow
       ref="ReportingQuarterlyADDITIONAL"
@@ -537,7 +538,7 @@
       :selection="quote.selections.ReportingQuarterlyADDITIONAL"
       :service="services.ReportingQuarterlyADDITIONAL"
       cost-type="?"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
     <QuoteInputRow
       ref="ReportingAnnuallyADDITIONAL"
@@ -545,7 +546,7 @@
       :selection="quote.selections.ReportingAnnuallyADDITIONAL"
       :service="services.ReportingAnnuallyADDITIONAL"
       cost-type="?"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
 
     <!-- UPS Testing -->
@@ -556,7 +557,7 @@
       :selection="quote.selections.UPSTestingMonthlyADDITIONAL"
       :service="services.UPSTestingMonthlyADDITIONAL"
       cost-type="?"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
     <QuoteInputRow
       ref="UPSTestingQuarterlyADDITIONAL"
@@ -564,7 +565,7 @@
       :selection="quote.selections.UPSTestingQuarterlyADDITIONAL"
       :service="services.UPSTestingQuarterlyADDITIONAL"
       cost-type="?"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
     <QuoteInputRow
       ref="UPSTestingAnnuallyADDITIONAL"
@@ -572,7 +573,7 @@
       :selection="quote.selections.UPSTestingAnnuallyADDITIONAL"
       :service="services.UPSTestingAnnuallyADDITIONAL"
       cost-type="?"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
 
     <!-- Network Device -->
@@ -583,7 +584,7 @@
       :selection="quote.selections.NetworkDeviceSNMPDevicesADDITIONAL"
       :service="services.NetworkDeviceSNMPDevicesADDITIONAL"
       :cost-type="content.device"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
     <QuoteInputRow
       ref="NetworkDeviceEdgeDevicesADDITIONAL"
@@ -591,7 +592,7 @@
       :selection="quote.selections.NetworkDeviceEdgeDevicesADDITIONAL"
       :service="services.NetworkDeviceEdgeDevicesADDITIONAL"
       :cost-type="content.device"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
 
     <!-- Asset/Warranty Management -->
@@ -604,7 +605,7 @@
       "
       :service="services.AssetWarrantyManagementHardwareInventoryADDITIONAL"
       :cost-type="content.device"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
     <QuoteInputRow
       ref="AssetWarrantyManagementWarrantyExpirationADDITIONAL"
@@ -614,13 +615,13 @@
       "
       :service="services.AssetWarrantyManagementWarrantyExpirationADDITIONAL"
       :cost-type="content.device"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
 
     <!-- Periodic Planning and Review -->
     <QuoteRow :service="services.PeriodicPlanningReviewADDITIONAL"></QuoteRow>
     <QuoteRow
-      is-sub-row="true"
+      :is-sub-row="true"
       :service="services.PeriodicPlanningReviewDescriptionADDITIONAL"
     ></QuoteRow>
     <QuoteInputRow
@@ -629,7 +630,7 @@
       :selection="quote.selections.PeriodicPlanningReviewMonthlyADDITIONAL"
       :service="services.PeriodicPlanningReviewMonthlyADDITIONAL"
       cost-type="?"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
     <QuoteInputRow
       ref="PeriodicPlanningReviewQuarterlyADDITIONAL"
@@ -637,7 +638,7 @@
       :selection="quote.selections.PeriodicPlanningReviewQuarterlyADDITIONAL"
       :service="services.PeriodicPlanningReviewQuarterlyADDITIONAL"
       cost-type="?"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
     <QuoteInputRow
       ref="PeriodicPlanningReviewAnnuallyADDITIONAL"
@@ -645,7 +646,7 @@
       :selection="quote.selections.PeriodicPlanningReviewAnnuallyADDITIONAL"
       :service="services.PeriodicPlanningReviewAnnuallyADDITIONAL"
       cost-type="?"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
 
     <!-- Hourly Rates -->
@@ -656,7 +657,7 @@
       :selection="quote.selections.HourlyRatesOnSiteADDITIONAL"
       :service="services.HourlyRatesOnSiteADDITIONAL"
       cost-type="?"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
     <QuoteInputRow
       ref="HourlyRatesRemoteSupportADDITIONAL"
@@ -664,7 +665,7 @@
       :selection="quote.selections.HourlyRatesRemoteSupportADDITIONAL"
       :service="services.HourlyRatesRemoteSupportADDITIONAL"
       cost-type="?"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
     <QuoteInputRow
       ref="HourlyRatesEmergencyResponseADDITIONAL"
@@ -672,7 +673,7 @@
       :selection="quote.selections.HourlyRatesEmergencyResponseADDITIONAL"
       :service="services.HourlyRatesEmergencyResponseADDITIONAL"
       cost-type="?"
-      @onQuantityUpdate="setAdditionTotal"
+      @onQuantityUpdate="setAdditionalTotal"
     ></QuoteInputRow>
 
     <!-- Additional Management Total -->
@@ -749,7 +750,7 @@ export default {
           'BackupManagementHardwareAssistedCloudBackup1000SERVER',
           'BackupManagementHardwareAssistedCloudBackup2000SERVER',
           'BackupManagementHardwareAssistedCloudBackup4000SERVER',
-          'AntiMalwareAntiSpywareDetectionSERVER',
+          'AntiVirusAntiSpywareDetectionSERVER',
           'AdvancedSpamServiceUserLevelFilteringSERVER'
         ]
       },
@@ -831,7 +832,7 @@ export default {
       return total
     },
     getPDF() {
-      return this.$quoteApi.getQuotePDF('1')
+      this.$quoteApi.getQuotePDF('1')
     }
   },
   head() {

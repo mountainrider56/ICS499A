@@ -14,10 +14,16 @@ export default (context, inject) => {
         })
     },
     async getQuotePDF(id) {
-      return await context.$axios
-        .$get(`/api/eagleeye-msp/v1/quotes/${id}/files/pdf`)
+      return await context
+        .$axios({
+          method: 'get',
+          url: `/api/eagleeye-msp/v1/quotes/${id}/files/pdf`,
+          responseType: 'blob'
+        })
         .then((response) => {
-          return response
+          const file = new Blob([response.data], { type: 'application/pdf' })
+          const fileURL = URL.createObjectURL(file)
+          window.open(fileURL)
         })
         .catch((e) => {
           context.error({

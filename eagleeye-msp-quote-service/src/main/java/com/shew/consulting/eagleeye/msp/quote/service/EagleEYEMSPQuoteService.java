@@ -14,7 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class EagleEYEMSPQuoteService {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder()
+            new SpringApplicationBuilder()
                 .headless(true)
                 .bannerMode(Banner.Mode.OFF)
                 .sources(EagleEYEMSPQuoteService.class)
