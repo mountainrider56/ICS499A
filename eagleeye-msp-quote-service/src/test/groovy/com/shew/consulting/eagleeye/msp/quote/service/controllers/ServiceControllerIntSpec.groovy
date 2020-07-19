@@ -1,7 +1,7 @@
-package com.shew.consulting.eagleeye.msp.employee.service.controllers
+package com.shew.consulting.eagleeye.msp.quote.service.controllers
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.shew.consulting.eagleeye.msp.employee.service.model.SecurityRole
+import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -18,7 +18,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class SecurityRolesControllerIT extends Specification {
+class ServiceControllerIntSpec extends Specification {
+
+    @Autowired
+    Map<String, Service> services
 
     @Autowired
     MockMvc mockMvc
@@ -26,14 +29,24 @@ class SecurityRolesControllerIT extends Specification {
     @Autowired
     ObjectMapper mapper
 
-    def 'getSecurityRoles'() {
+    def 'getServices'() {
         when:
-        ResultActions actions = mockMvc.perform(get('/v1/employees/security-roles'))
+        ResultActions actions = mockMvc.perform(get('/v1/quotes/services'))
 
         then:
         actions.andExpect(status().isOk())
         actions.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        actions.andReturn().response.contentAsString == mapper.writeValueAsString(SecurityRole.values())
+        actions.andReturn().response.contentAsString == mapper.writeValueAsString(services)
+    }
+
+    def 'getEmptySelections'() {
+        when:
+        ResultActions actions = mockMvc.perform(get('/v1/quotes/services/selections'))
+
+        then:
+        actions.andExpect(status().isOk())
+        actions.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        mapper.readValue(actions.andReturn().response.contentAsString, Map).size() == 101
     }
 
 }

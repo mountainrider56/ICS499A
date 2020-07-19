@@ -2,7 +2,7 @@ package com.shew.consulting.eagleeye.msp.quote.service
 
 import spock.lang.Specification
 
-class EagleEYEMSPQuoteServiceIT extends Specification {
+class EagleEYEMSPQuoteServiceIntSpec extends Specification {
 
     def 'app'() {
         expect:

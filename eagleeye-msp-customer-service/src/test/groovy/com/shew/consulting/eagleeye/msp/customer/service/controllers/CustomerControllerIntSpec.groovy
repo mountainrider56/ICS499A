@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-class CustomerControllerIT extends Specification {
+class CustomerControllerIntSpec extends Specification {
 
     @Autowired
     CustomerRepository customerRepository

@@ -1,4 +1,4 @@
-package com.shew.consulting.eagleeye.msp.customer.service.configuration
+package com.shew.consulting.eagleeye.msp.quote.service.configuration
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.common.base.Optional
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class SwaggerConfigurationIT extends Specification {
+class SwaggerConfigurationIntSpec extends Specification {
 
     @Autowired
     MockMvc mockMvc
@@ -52,7 +52,7 @@ class SwaggerConfigurationIT extends Specification {
 
         then:
         apiInfo // assert not null
-        apiInfo.title == 'EagleEYE MSP customer service API'
+        apiInfo.title == 'EagleEYE MSP quote service API'
         apiInfo.version == '1.0'
         apiInfo.license == '(C) Copyright Shew Consulting'
         apiInfo.description == 'List of all endpoints used in API'

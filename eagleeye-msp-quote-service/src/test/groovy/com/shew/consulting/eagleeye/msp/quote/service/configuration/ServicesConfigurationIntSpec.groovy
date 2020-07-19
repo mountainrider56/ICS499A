@@ -1,6 +1,6 @@
-package com.shew.consulting.eagleeye.msp.customer.service.data
+package com.shew.consulting.eagleeye.msp.quote.service.configuration
 
-import com.shew.consulting.eagleeye.msp.customer.service.repository.CustomerRepository
+import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.annotation.DirtiesContext
@@ -8,16 +8,16 @@ import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 
 @SpringBootTest
-@ActiveProfiles('testData')
+@ActiveProfiles('test')
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-class CustomerTestDataIT extends Specification {
+class ServicesConfigurationIntSpec extends Specification {
 
     @Autowired
-    CustomerRepository customerRepository
+    Map<String, Service> services
 
-    def 'applicationReady'() {
+    def 'services'() {
         expect:
-        customerRepository.findAll().size() == 10
+        services.size() == 101
     }
 
 }

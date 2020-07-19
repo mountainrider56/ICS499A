@@ -7,7 +7,7 @@ import spock.lang.Specification
 
 @SpringBootTest
 @ActiveProfiles("test")
-class EmployeeRepositoryIT extends Specification {
+class EmployeeRepositoryIntSpec extends Specification {
 
     @Autowired
     EmployeeRepository employeeRepository

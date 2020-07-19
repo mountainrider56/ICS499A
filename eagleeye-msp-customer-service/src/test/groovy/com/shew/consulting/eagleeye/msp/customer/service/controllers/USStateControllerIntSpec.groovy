@@ -1,7 +1,7 @@
-package com.shew.consulting.eagleeye.msp.quote.service.controllers
+package com.shew.consulting.eagleeye.msp.customer.service.controllers
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service
+import com.shew.consulting.eagleeye.msp.customer.service.model.USState
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -18,10 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class ServiceControllerIT extends Specification {
-
-    @Autowired
-    Map<String, Service> services
+class USStateControllerIntSpec extends Specification {
 
     @Autowired
     MockMvc mockMvc
@@ -29,24 +26,15 @@ class ServiceControllerIT extends Specification {
     @Autowired
     ObjectMapper mapper
 
-    def 'getServices'() {
+    def 'getUSStates'() {
         when:
-        ResultActions actions = mockMvc.perform(get('/v1/quotes/services'))
+        ResultActions actions = mockMvc.perform(get('/v1/customers/states'))
 
         then:
         actions.andExpect(status().isOk())
         actions.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        actions.andReturn().response.contentAsString == mapper.writeValueAsString(services)
+        actions.andReturn().response.contentAsString == mapper.writeValueAsString(USState.values())
     }
 
-    def 'getEmptySelections'() {
-        when:
-        ResultActions actions = mockMvc.perform(get('/v1/quotes/services/selections'))
-
-        then:
-        actions.andExpect(status().isOk())
-        actions.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        mapper.readValue(actions.andReturn().response.contentAsString, Map).size() == 101
-    }
 
 }
