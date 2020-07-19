@@ -3,13 +3,17 @@
     <v-alert v-if="success" class="mt-7 mb-7" type="success" outlined>
       Successfully saved customer.
     </v-alert>
+    <v-alert v-if="fail" class="mt-7 mb-7" type="error" outlined>
+      {{ modal.fail.message }}
+    </v-alert>
     <h1>{{ name }}</h1>
     <CustomerForm ref="customerForm" :states="states" :customer="customer">
       <v-btn class="mt-6 mr-3" color="primary" @click.stop.prevent="submit()">
         Update
       </v-btn>
       <v-btn class="mt-6" color="secondary">Create a quote</v-btn>
-      <DeleteModal type="customer" :callback="deleteCustomer"> </DeleteModal>
+      <DeleteModal ref="deleteModal" type="customer" :callback="deleteCustomer">
+      </DeleteModal>
     </CustomerForm>
   </v-container>
 </template>
@@ -25,7 +29,19 @@ export default {
     return {
       title: 'Edit a Customer',
       name: '',
-      success: false
+      success: false,
+      fail: false,
+      modal: {
+        fail: {
+          message: '',
+          delete: {
+            message: 'Unable to delete customer.'
+          },
+          update: {
+            message: 'Unable to save customer.'
+          }
+        }
+      }
     }
   },
   mounted() {
@@ -36,20 +52,34 @@ export default {
   methods: {
     async submit() {
       const data = await this.$refs.customerForm.submit()
+      this.reset()
       if (data) {
         this.name = this.customer.name
         this.success = true
-        window.scrollTo(0, 0)
+      } else {
+        this.fail = true
+        this.modal.fail.message = this.modal.fail.update.message
       }
+      window.scrollTo(0, 0)
     },
     async deleteCustomer() {
       const data = await this.$customerApi.deleteCustomer(this.customer.id)
+      this.reset()
       if (data) {
         this.$router.push({
           path: '/customers',
           query: { success: true }
         })
+      } else {
+        this.$refs.deleteModal.dialog = false
+        this.fail = true
+        this.modal.fail.message = this.modal.fail.delete.message
+        window.scrollTo(0, 0)
       }
+    },
+    reset() {
+      this.success = false
+      this.fail = false
     }
   },
   head() {
