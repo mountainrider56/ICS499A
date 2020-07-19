@@ -44,7 +44,7 @@ public class EmployeeController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "employee not found: " + employeeId);
     }
 
-    @PostMapping("/username")
+    @GetMapping("/username")
     public Employee getEmployeeByUsername(@RequestBody String username) {
         Optional<Employee> employee = employeeRepository.findEmployeeByUsername(username);
         if (employee.isPresent()) {
