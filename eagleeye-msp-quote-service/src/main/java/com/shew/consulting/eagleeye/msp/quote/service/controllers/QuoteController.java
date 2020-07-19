@@ -13,10 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.ByteArrayInputStream;
@@ -51,14 +48,19 @@ public class QuoteController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "quote not found: " + quoteId);
     }
 
+    @DeleteMapping("{quoteId}")
+    public boolean deleteQuote(@PathVariable Long quoteId) {
+        if (quoteRepository.existsById(quoteId)) {
+            quoteRepository.deleteById(quoteId);
+            return !quoteRepository.existsById(quoteId);
+        } else {
+            return false;
+        }
+    }
+
     @GetMapping(value = "{quoteId}/files/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> getQuotePDF(@PathVariable Long quoteId) throws DocumentException {
-
-        Optional<Quote> optionalQuote = quoteRepository.findById(quoteId);
-        if (!optionalQuote.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "quote not found: " + quoteId);
-        }
-        Quote quote = optionalQuote.get();
+        Quote quote = getQuote(quoteId);
 
         PdfDocument pdfDocument = new PdfDocument(services);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
