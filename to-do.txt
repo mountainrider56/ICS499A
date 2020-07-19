@@ -18,5 +18,4 @@
 -  UI Tests
 -  Quote Tests
 -  JavaDoc Comments
--  Password Storage in DB
-24. Footer 
+-  Password Storage in DB 
