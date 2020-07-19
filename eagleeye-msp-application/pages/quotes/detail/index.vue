@@ -2,7 +2,7 @@
   <v-container>
     <h1>{{ title }}</h1>
 
-    <v-btn color="primary" class="mt-8" @click="getPDF()">Download PDF</v-btn>
+    <v-btn color="primary" class="mt-8" @click="getPdf()">Download PDF</v-btn>
 
     <h2 class="mt-8 mb-6">PC Management</h2>
 
@@ -831,8 +831,8 @@ export default {
       })
       return total
     },
-    getPDF() {
-      this.$quoteApi.getQuotePDF('1')
+    getPdf() {
+      this.$quoteApi.getQuotePdf('1')
     }
   },
   head() {

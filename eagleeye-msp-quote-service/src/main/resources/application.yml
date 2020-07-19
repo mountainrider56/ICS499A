@@ -6,3 +6,5 @@ server:
 spring:
   h2.console.enabled: true
   profiles.active: testData
+
+customer.host: http://localhost:8080

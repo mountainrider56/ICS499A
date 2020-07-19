@@ -13,7 +13,7 @@ export default (context, inject) => {
           })
         })
     },
-    async getQuotePDF(id) {
+    async getQuotePdf(id) {
       return await context
         .$axios({
           method: 'get',

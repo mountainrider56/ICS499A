@@ -1,8 +1,11 @@
 package com.shew.consulting.eagleeye.msp.quote.service.controllers;
 
-import com.itextpdf.text.*;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.shew.consulting.eagleeye.msp.quote.service.external.CustomerService;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.Quote;
+import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.PdfDocument;
+import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 import com.shew.consulting.eagleeye.msp.quote.service.repository.QuoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -19,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -30,6 +34,8 @@ import java.util.Optional;
 public class QuoteController {
 
     private final QuoteRepository quoteRepository;
+    private final CustomerService customerService;
+    private final Map<String, Service> services;
 
     @GetMapping
     public List<Quote> getQuotes() {
@@ -46,16 +52,23 @@ public class QuoteController {
     }
 
     @GetMapping(value = "{quoteId}/files/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> getQuotePDF(@PathVariable long quoteId) throws DocumentException {
-        Document document = new Document();
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        PdfWriter.getInstance(document, out);
+    public ResponseEntity<InputStreamResource> getQuotePDF(@PathVariable Long quoteId) throws DocumentException {
 
-        document.open();
-        Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
-        Chunk chunk = new Chunk("Hello World", font);
-        document.add(chunk);
-        document.close();
+        Optional<Quote> optionalQuote = quoteRepository.findById(quoteId);
+        if (!optionalQuote.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "quote not found: " + quoteId);
+        }
+        Quote quote = optionalQuote.get();
+
+        PdfDocument pdfDocument = new PdfDocument(services);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PdfWriter.getInstance(pdfDocument.getDocument(), out);
+
+        try {
+            pdfDocument.writeToItextDocument(quote, customerService.getCustomer(quote.getCustomerId()));
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to generate quote: " + quoteId);
+        }
 
         return ResponseEntity
                 .ok()
