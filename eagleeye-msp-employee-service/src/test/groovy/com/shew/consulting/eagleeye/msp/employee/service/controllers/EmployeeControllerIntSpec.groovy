@@ -157,9 +157,9 @@ class EmployeeControllerIntSpec extends Specification {
         Employee expected2 = employeeRepository.save(getEmployee2())
 
         when:
-        ResultActions actions1 = mockMvc.perform(post("/v1/employees/username")
+        ResultActions actions1 = mockMvc.perform(get("/v1/employees/username")
                 .contentType(MediaType.APPLICATION_JSON).content('username1'))
-        ResultActions actions2 = mockMvc.perform(post("/v1/employees/username")
+        ResultActions actions2 = mockMvc.perform(get("/v1/employees/username")
                 .contentType(MediaType.APPLICATION_JSON).content('username2'))
 
         then:
@@ -174,7 +174,7 @@ class EmployeeControllerIntSpec extends Specification {
 
     def 'getEmployeeByUsername - not found'() {
         when:
-        ResultActions actions = mockMvc.perform(post('/v1/employees/username')
+        ResultActions actions = mockMvc.perform(get('/v1/employees/username')
                 .contentType(MediaType.APPLICATION_JSON).content('username4'))
 
         then:
