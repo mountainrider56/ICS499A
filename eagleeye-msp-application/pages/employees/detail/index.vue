@@ -12,7 +12,7 @@
       <v-btn class="mt-6" color="primary" @click.stop.prevent="submit()">
         Update
       </v-btn>
-      <v-btn class="mt-6 float-right" @click="deleteEmployee()">Delete</v-btn>
+      <DeleteModal type="employee" :callback="deleteEmployee"> </DeleteModal>
     </EmployeeForm>
   </v-container>
 </template>

@@ -9,7 +9,7 @@
         Update
       </v-btn>
       <v-btn class="mt-6" color="secondary">Create a quote</v-btn>
-      <v-btn class="mt-6 float-right" @click="deleteCustomer()">Delete</v-btn>
+      <DeleteModal type="customer" :callback="deleteCustomer"> </DeleteModal>
     </CustomerForm>
   </v-container>
 </template>
