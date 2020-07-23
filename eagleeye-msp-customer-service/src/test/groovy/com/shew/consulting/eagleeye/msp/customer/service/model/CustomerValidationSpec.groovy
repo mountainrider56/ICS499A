@@ -16,7 +16,7 @@ class CustomerValidationSpec extends Specification {
     ValidatorFactory factory
     Set<ConstraintViolation<Customer>> constraintViolations
 
-    void setup() {
+    def setup() {
         customer = new Customer()
         factory = Validation.buildDefaultValidatorFactory()
         validator = factory.getValidator()

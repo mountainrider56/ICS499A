@@ -1,12 +1,13 @@
 package com.shew.consulting.eagleeye.msp.customer.service.controllers
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.shew.consulting.eagleeye.msp.customer.service.exception.handling.GlobalExceptionHandling
+import com.shew.consulting.eagleeye.msp.customer.service.external.QuoteService
 import com.shew.consulting.eagleeye.msp.customer.service.model.Customer
 import com.shew.consulting.eagleeye.msp.customer.service.model.Representative
 import com.shew.consulting.eagleeye.msp.customer.service.model.USState
 import com.shew.consulting.eagleeye.msp.customer.service.repository.CustomerRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.annotation.DirtiesContext
@@ -14,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -22,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringBootTest
-@AutoConfigureMockMvc
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class CustomerControllerIntSpec extends Specification {
@@ -31,10 +32,18 @@ class CustomerControllerIntSpec extends Specification {
     CustomerRepository customerRepository
 
     @Autowired
-    MockMvc mockMvc
-
-    @Autowired
     ObjectMapper mapper
+
+    MockMvc mockMvc
+    QuoteService quoteService
+
+    def setup() {
+        quoteService = Mock()
+        CustomerController controller = new CustomerController(customerRepository, quoteService)
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .setControllerAdvice(new GlobalExceptionHandling())
+                .build()
+    }
 
     def 'saveCustomer'() {
         setup:
@@ -167,14 +176,18 @@ class CustomerControllerIntSpec extends Specification {
         ResultActions actions = mockMvc.perform(delete("/v1/customers/${id}"))
 
         then:
+        1 * quoteService.getQuoteByCustomerId(id) >> quoteId
+        ivokeQuoteDelete * quoteService.deleteQuote(quoteId) >> quoteDelete
         actions.andExpect(status().isOk())
         actions.andReturn().response.contentAsString == deleted
 
         where:
-        id | deleted
-        1  | 'true'
-        2  | 'true'
-        4  | 'false'
+        id | deleted | quoteId | quoteDelete | ivokeQuoteDelete
+        1  | 'false' | null    | false       | 0
+        1  | 'false' | 1       | false       | 1
+        1  | 'true'  | -1      | true        | 0
+        2  | 'true'  | 2       | true        | 1
+        4  | 'false' | 4       | true        | 1
     }
 
     def getCustomer1() {

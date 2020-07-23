@@ -14,7 +14,9 @@ public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
     List<Customer> findAll();
 
-    // Get select attributes of the Customer object via Spring JPA projections
+    /**
+     * Get select attributes of the Customer object via Spring JPA projections
+     */
     <T> List<T> getAllBy(Class<T> type);
 
 }

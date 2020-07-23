@@ -1,5 +1,6 @@
 package com.shew.consulting.eagleeye.msp.customer.service.controllers;
 
+import com.shew.consulting.eagleeye.msp.customer.service.external.QuoteService;
 import com.shew.consulting.eagleeye.msp.customer.service.model.Customer;
 import com.shew.consulting.eagleeye.msp.customer.service.model.projections.CustomerIdAndName;
 import com.shew.consulting.eagleeye.msp.customer.service.repository.CustomerRepository;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class CustomerController {
 
     private final CustomerRepository customerRepository;
+    private final QuoteService quoteService;
 
     @PutMapping
     public Customer saveCustomer(@Valid @RequestBody Customer customer) {
@@ -52,6 +54,10 @@ public class CustomerController {
 
     @DeleteMapping("{customerId}")
     public boolean deleteCustomer(@PathVariable Long customerId) {
+        Long quoteId = quoteService.getQuoteByCustomerId(customerId);
+        if (quoteId == null || (quoteId != -1 && !quoteService.deleteQuote(quoteId))) {
+            return false;
+        }
         if (customerRepository.existsById(customerId)) {
             customerRepository.deleteById(customerId);
             return !customerRepository.existsById(customerId);

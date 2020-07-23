@@ -15,7 +15,7 @@ class RepresentativeValidationSpec extends Specification {
     ValidatorFactory factory
     Set<ConstraintViolation<Representative>> constraintViolations
 
-    void setup() {
+    def setup() {
         representative = new Representative()
         factory = Validation.buildDefaultValidatorFactory()
         validator = factory.getValidator()
