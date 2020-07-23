@@ -18,4 +18,5 @@
 -  UI Tests
 -  Quote Tests
 -  JavaDoc Comments
--  Password Storage in DB 
+-  Password Storage in DB
+-  Create quote page 
