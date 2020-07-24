@@ -17,6 +17,4 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
     Optional<Employee> findEmployeeByUsername(String username);
 
-
-
 }

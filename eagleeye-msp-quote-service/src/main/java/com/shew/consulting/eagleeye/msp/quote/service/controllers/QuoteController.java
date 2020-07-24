@@ -48,6 +48,15 @@ public class QuoteController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "quote not found: " + quoteId);
     }
 
+    @GetMapping("customers/{customerId}")
+    public Long getQuoteIdByCustomer(@PathVariable Long customerId) {
+        Optional<Quote> quote = quoteRepository.findByCustomerId(customerId);
+        if (quote.isPresent()) {
+            return quote.get().getId();
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "quote not found by customer: " + customerId);
+    }
+
     @DeleteMapping("{quoteId}")
     public boolean deleteQuote(@PathVariable Long quoteId) {
         if (quoteRepository.existsById(quoteId)) {

@@ -5,6 +5,7 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.quote.Selection;
 import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 import com.shew.consulting.eagleeye.msp.quote.service.repository.QuoteRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
@@ -18,6 +19,7 @@ import java.util.stream.IntStream;
 /**
  * Load all test data after application starts.
  */
+@Slf4j
 @Component
 @Profile("testData")
 @RequiredArgsConstructor
@@ -28,7 +30,6 @@ public class QuoteTestData {
 
     @EventListener
     public void applicationReady(ApplicationReadyEvent event) {
-        System.out.println(event);
         IntStream.range(0, 10).forEach(i -> {
             Quote quote = new Quote();
             Map<String, Selection> selections = new HashMap<>();
@@ -45,6 +46,7 @@ public class QuoteTestData {
             quote.setTimestamp(Instant.now());
             quoteRepository.save(quote);
         });
+        log.debug(event.toString());
     }
 
     private int getRandomInt() {

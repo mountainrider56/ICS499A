@@ -7,7 +7,7 @@
     </template>
     <v-card>
       <v-card-title class="headline">Are you sure?</v-card-title>
-      <v-card-text> This will permanently delete this {{ type }}. </v-card-text>
+      <v-card-text> {{ message }} </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="secondary" @click="dialog = false">
@@ -24,7 +24,7 @@
 <script>
 export default {
   props: {
-    type: {
+    message: {
       type: String,
       required: true
     },

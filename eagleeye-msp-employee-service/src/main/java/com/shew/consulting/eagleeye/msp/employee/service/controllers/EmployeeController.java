@@ -1,9 +1,11 @@
 package com.shew.consulting.eagleeye.msp.employee.service.controllers;
 
 import com.shew.consulting.eagleeye.msp.employee.service.model.Employee;
+import com.shew.consulting.eagleeye.msp.employee.service.model.EmployeeRequest;
 import com.shew.consulting.eagleeye.msp.employee.service.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,13 +22,16 @@ import java.util.Optional;
 public class EmployeeController {
 
     private final EmployeeRepository employeeRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @PutMapping
-    public Employee saveEmployee(@Valid @RequestBody Employee employee) {
+    public Employee saveEmployee(@Valid @RequestBody EmployeeRequest employeeRequest) {
         try {
+            Employee employee = employeeRequest.getEmployee();
+            employee.setPassword(passwordEncoder.encode(employee.getPassword()));
             return employeeRepository.save(employee);
         } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to save employee: " + ex.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to save employee.");
         }
     }
 

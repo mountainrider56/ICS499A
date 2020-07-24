@@ -1,18 +1,21 @@
 package com.shew.consulting.eagleeye.msp.employee.service.controllers
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.shew.consulting.eagleeye.msp.employee.service.exception.handling.GlobalExceptionHandling
 import com.shew.consulting.eagleeye.msp.employee.service.model.Employee
 import com.shew.consulting.eagleeye.msp.employee.service.model.SecurityRole
 import com.shew.consulting.eagleeye.msp.employee.service.repository.EmployeeRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.validation.Validator
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -21,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringBootTest
-@AutoConfigureMockMvc
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class EmployeeControllerIntSpec extends Specification {
@@ -30,16 +32,29 @@ class EmployeeControllerIntSpec extends Specification {
     EmployeeRepository employeeRepository
 
     @Autowired
-    MockMvc mockMvc
+    PasswordEncoder passwordEncoder
+
+    @Autowired
+    Validator validatorFactory
 
     @Autowired
     ObjectMapper mapper
 
+    MockMvc mockMvc
+
+    def setup() {
+        EmployeeController controller = new EmployeeController(employeeRepository, passwordEncoder)
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .setControllerAdvice(new GlobalExceptionHandling())
+                .setValidator(validatorFactory)
+                .build()
+    }
+
     def 'saveEmployee'() {
         setup:
-        Employee employee = getEmployee1()
-        String request = mapper.writeValueAsString(employee)
-        employee.id = 1
+        Employee employee1 = getEmployee1()
+        String request = mapper.writeValueAsString(employee1)
+        employee1.id = 1
         MockHttpServletRequestBuilder putBuilder = put('/v1/employees')
                 .contentType(MediaType.APPLICATION_JSON).content(request)
 
@@ -49,7 +64,13 @@ class EmployeeControllerIntSpec extends Specification {
         then:
         actions.andExpect(status().isOk())
         actions.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        actions.andReturn().response.contentAsString == mapper.writeValueAsString(employee)
+        Employee employee = mapper.readValue(actions.andReturn().response.contentAsString, Employee)
+        employee1.id == employee.id
+        employee1.username == employee.username
+        employee1.firstName == employee.firstName
+        employee1.lastName == employee.lastName
+        employee1.email == employee.email
+        passwordEncoder.matches(employee1.getPassword(), employee.getPassword())
     }
 
     def 'saveEmployee - employee invalid'() {
@@ -76,6 +97,26 @@ class EmployeeControllerIntSpec extends Specification {
         result.sort() == expected.sort()
     }
 
+    def 'saveEmployee - exception'() {
+        setup:
+        EmployeeController controller = new EmployeeController(employeeRepository, null)
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .setControllerAdvice(new GlobalExceptionHandling())
+                .setValidator(validatorFactory)
+                .build()
+        Employee employee1 = getEmployee1()
+        String request1 = mapper.writeValueAsString(employee1)
+        MockHttpServletRequestBuilder putBuilder = put('/v1/employees')
+                .contentType(MediaType.APPLICATION_JSON).content(request1)
+
+        when:
+        ResultActions actions = mockMvc.perform(putBuilder)
+
+        then:
+        actions.andExpect(status().isBadRequest())
+        actions.andReturn().response.errorMessage == 'Unable to save employee.'
+    }
+
     def 'saveEmployee - unavailable username'() {
         setup:
         Employee employee1 = getEmployee1()
@@ -95,8 +136,13 @@ class EmployeeControllerIntSpec extends Specification {
         then:
         actions1.andExpect(status().isOk())
         actions1.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        actions1.andReturn().response.contentAsString == mapper.writeValueAsString(employee1)
-
+        Employee employee = mapper.readValue(actions1.andReturn().response.contentAsString, Employee)
+        employee1.id == employee.id
+        employee1.username == employee.username
+        employee1.firstName == employee.firstName
+        employee1.lastName == employee.lastName
+        employee1.email == employee.email
+        passwordEncoder.matches(employee1.getPassword(), employee.getPassword())
         actions2.andExpect(status().isBadRequest())
     }
 
@@ -206,7 +252,7 @@ class EmployeeControllerIntSpec extends Specification {
         Employee employee = new Employee()
         employee.username = 'username1'
         employee.firstName = 'firstName1'
-        employee.password = 'password1'
+        employee.password = 'Password11**'
         employee.lastName = 'lastName1'
         employee.securityRole = SecurityRole.USER
         employee.email = 'employee1@gmail.com'
@@ -218,7 +264,7 @@ class EmployeeControllerIntSpec extends Specification {
         Employee employee = new Employee()
         employee.username = 'username2'
         employee.firstName = 'firstName2'
-        employee.password = 'password2'
+        employee.password = 'Password11**'
         employee.lastName = 'lastName2'
         employee.securityRole = SecurityRole.ADMIN
         employee.email = 'employee2@gmail.com'

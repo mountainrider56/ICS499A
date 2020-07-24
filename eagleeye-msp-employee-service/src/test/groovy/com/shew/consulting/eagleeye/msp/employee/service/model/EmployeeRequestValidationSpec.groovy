@@ -9,15 +9,15 @@ import javax.validation.Validation
 import javax.validation.Validator
 import javax.validation.ValidatorFactory
 
-class EmployeeValidationSpec extends Specification {
+class EmployeeRequestValidationSpec extends Specification {
 
-    Employee employee
+    EmployeeRequest employeeRequest
     Validator validator
     ValidatorFactory factory
     Set<ConstraintViolation<Employee>> constraintViolations
 
-    void setup() {
-        employee = new Employee()
+    def setup() {
+        employeeRequest = new EmployeeRequest()
         factory = Validation.buildDefaultValidatorFactory()
         validator = factory.getValidator()
     }
@@ -25,8 +25,8 @@ class EmployeeValidationSpec extends Specification {
     @Unroll
     def 'setUsername - #username'() {
         when:
-        employee.username = username
-        constraintViolations = validator.validateProperty(employee, 'username')
+        employeeRequest.username = username
+        constraintViolations = validator.validateProperty(employeeRequest, 'username')
 
         then:
         constraintViolations.size() == errorSize
@@ -45,8 +45,8 @@ class EmployeeValidationSpec extends Specification {
     @Unroll
     def 'setFirstName - #firstName'() {
         when:
-        employee.firstName = firstName
-        constraintViolations = validator.validateProperty(employee, 'firstName')
+        employeeRequest.firstName = firstName
+        constraintViolations = validator.validateProperty(employeeRequest, 'firstName')
 
         then:
         constraintViolations.size() == errorSize
@@ -65,8 +65,8 @@ class EmployeeValidationSpec extends Specification {
     @Unroll
     def 'setLastName - #lastName'() {
         when:
-        employee.lastName = lastName
-        constraintViolations = validator.validateProperty(employee, 'lastName')
+        employeeRequest.lastName = lastName
+        constraintViolations = validator.validateProperty(employeeRequest, 'lastName')
 
         then:
         constraintViolations.size() == errorSize
@@ -85,8 +85,8 @@ class EmployeeValidationSpec extends Specification {
     @Unroll
     def 'setEmail - #email'() {
         when:
-        employee.email = email
-        constraintViolations = validator.validateProperty(employee, 'email')
+        employeeRequest.email = email
+        constraintViolations = validator.validateProperty(employeeRequest, 'email')
 
         then:
         constraintViolations.size() == errorSize
@@ -106,8 +106,8 @@ class EmployeeValidationSpec extends Specification {
     @Unroll
     def 'setSecurityRole - #securityRole'() {
         when:
-        employee.securityRole = securityRole
-        constraintViolations = validator.validateProperty(employee, 'securityRole')
+        employeeRequest.securityRole = securityRole
+        constraintViolations = validator.validateProperty(employeeRequest, 'securityRole')
 
         then:
         constraintViolations.size() == errorSize
@@ -125,8 +125,8 @@ class EmployeeValidationSpec extends Specification {
     @Unroll
     def 'setPassword - #password'() {
         when:
-        employee.password = password
-        constraintViolations = validator.validateProperty(employee, 'password')
+        employeeRequest.password = password
+        constraintViolations = validator.validateProperty(employeeRequest, 'password')
 
         then:
         constraintViolations.size() == errorSize
@@ -135,11 +135,17 @@ class EmployeeValidationSpec extends Specification {
         })
 
         where:
-        password | message                | errorSize
-        null     | 'Password is required' | 1
-        ''       | 'Password is required' | 1
-        ' '      | 'Password is required' | 1
-        'name'   | null                   | 0
+        password                | message                                                 | errorSize
+        null                    | 'Password is required'                                  | 1
+        ''                      | 'Password is required'                                  | 1
+        ' '                     | 'Password must be 8 or more characters in length'       | 1
+        '1111 1111'             | 'Password contains a whitespace character'              | 1
+        '11111111'              | 'Password must contain 1 or more uppercase characters'  | 1
+        'A1111111'              | 'Password must contain 2 or more special characters'    | 1
+        'A**aaaaa'              | 'Password must contain 2 or more digit characters'      | 1
+        'A11**aaaaaaaaaaaaaaaa' | 'Password must be no more than 15 characters in length' | 1
+        'A11**aaaaaaaaaa'       | 'Password matches the illegal pattern \'aaa\''          | 1
+        'A11**asdert'           | null                                                    | 0
     }
 
 }

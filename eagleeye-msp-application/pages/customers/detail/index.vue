@@ -12,7 +12,11 @@
         Update
       </v-btn>
       <v-btn class="mt-6" color="secondary">Create a quote</v-btn>
-      <DeleteModal ref="deleteModal" type="customer" :callback="deleteCustomer">
+      <DeleteModal
+        ref="deleteModal"
+        :message="modal.delete.message"
+        :callback="deleteCustomer"
+      >
       </DeleteModal>
     </CustomerForm>
   </v-container>
@@ -32,6 +36,10 @@ export default {
       success: false,
       fail: false,
       modal: {
+        delete: {
+          message:
+            'This will permanently delete this customer and its quote. This cannot be undone.'
+        },
         fail: {
           message: '',
           delete: {

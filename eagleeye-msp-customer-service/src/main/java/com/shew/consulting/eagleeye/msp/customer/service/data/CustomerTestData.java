@@ -45,7 +45,7 @@ public class CustomerTestData {
     private Customer customer1() {
         Customer customer = new Customer();
         customer.setName("Savvy Action");
-        customer.setTelephone("1234567890");
+        customer.setTelephone("(752) 920-6450");
         customer.setEmail("contact@SavvyAction.com");
         customer.setAddress1("9219 Wood Lane");
         customer.setCity("Minneapolis");
@@ -55,7 +55,7 @@ public class CustomerTestData {
         representative.setFirstName("Maegan");
         representative.setLastName("Talley");
         representative.setEmail("Maegan.C.Talley@SavvyAction.com");
-        representative.setTelephone("2345678901");
+        representative.setTelephone("(804) 326-8065");
         customer.setRepresentative(representative);
         return customer;
     }

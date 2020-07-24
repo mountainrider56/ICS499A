@@ -15,7 +15,11 @@
       <v-btn class="mt-6" color="primary" @click.stop.prevent="submit()">
         Update
       </v-btn>
-      <DeleteModal ref="deleteModal" type="employee" :callback="deleteEmployee">
+      <DeleteModal
+        ref="deleteModal"
+        :message="modal.delete.message"
+        :callback="deleteEmployee"
+      >
       </DeleteModal>
     </EmployeeForm>
   </v-container>
@@ -35,6 +39,10 @@ export default {
       success: false,
       fail: false,
       modal: {
+        delete: {
+          message:
+            'This will permanently delete this employee. This cannot be undone.'
+        },
         fail: {
           message: '',
           delete: {
