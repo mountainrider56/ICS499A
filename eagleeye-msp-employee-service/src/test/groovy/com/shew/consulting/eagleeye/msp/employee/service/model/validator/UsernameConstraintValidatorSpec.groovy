@@ -11,17 +11,23 @@ import javax.validation.ConstraintValidatorContext
 class UsernameConstraintValidatorSpec extends Specification {
 
     @Unroll
-    def 'isValid'() {
+    def 'isValid - #expected'() {
         setup:
         EmployeeRepository repository = Mock()
         UsernameConstraintValidator validator = new UsernameConstraintValidator()
         validator.setEmployeeRepository(repository)
         ConstraintValidatorContext context = Mock()
+        ConstraintValidatorContext.ConstraintViolationBuilder builder = Mock()
+        ConstraintValidatorContext.ConstraintViolationBuilder.NodeBuilderCustomizableContext nodeBuilder = Mock()
 
         when:
         boolean result = validator.isValid(employeeUpdate, context)
 
         then:
+        if (!expected) {
+            1 * context.buildConstraintViolationWithTemplate("{message}") >> builder
+            1 * builder.addPropertyNode("username") >> nodeBuilder
+        }
         if (employeeUpdate != null) {
             invocation * repository.findEmployeeByUsername(employeeUpdate.getUsername()) >> Optional.ofNullable(response)
         }
@@ -29,7 +35,7 @@ class UsernameConstraintValidatorSpec extends Specification {
 
         where:
         expected | employeeUpdate                                  | response                                  | invocation
-        true     | null                                             | null                                      | 0
+        true     | null                                            | null                                      | 0
         true     | new EmployeeUpdate(id: 1, username: null)       | null                                      | 0
         true     | new EmployeeUpdate(id: 1, username: '')         | null                                      | 0
         true     | new EmployeeUpdate(id: 1, username: 'username') | new Employee(id: 1, username: 'username') | 1
