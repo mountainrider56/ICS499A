@@ -1,50 +1,62 @@
 <template>
   <v-form>
-    <v-text-field
-      v-model="employee.username"
-      :error="!errors.employee.username.valid"
-      :error-messages="errors.employee.username.message"
-      label="Username"
-      autofocus
-    ></v-text-field>
-    <v-text-field
-      v-model="employee.firstName"
-      :error="!errors.employee.firstName.valid"
-      :error-messages="errors.employee.firstName.message"
-      label="First Name"
-    ></v-text-field>
-    <v-text-field
-      v-model="employee.lastName"
-      :error="!errors.employee.lastName.valid"
-      :error-messages="errors.employee.lastName.message"
-      label="Last Name"
-    ></v-text-field>
-    <v-text-field
-      v-model="employee.email"
-      :error="!errors.employee.email.valid"
-      :error-messages="errors.employee.email.message"
-      label="Email"
-    ></v-text-field>
-    <v-radio-group
-      v-model="employee.securityRole"
-      label="Security Role"
-      :error="!errors.employee.securityRole.valid"
-      :error-messages="errors.employee.securityRole.message"
-    >
-      <v-radio
-        v-for="role in securityRoles"
-        :key="role"
-        :label="role"
-        :value="role"
-      ></v-radio>
-    </v-radio-group>
-    <v-text-field
-      v-model="employee.password"
-      :error="!errors.employee.password.valid"
-      :error-messages="errors.employee.password.message"
-      label="Password"
-      type="password"
-    ></v-text-field>
+    <div v-if="!password">
+      <v-text-field
+        v-model="employee.username"
+        :error="!errors.employee.username.valid"
+        :error-messages="errors.employee.username.message"
+        label="Username"
+        autofocus
+      ></v-text-field>
+      <v-text-field
+        v-model="employee.firstName"
+        :error="!errors.employee.firstName.valid"
+        :error-messages="errors.employee.firstName.message"
+        label="First Name"
+      ></v-text-field>
+      <v-text-field
+        v-model="employee.lastName"
+        :error="!errors.employee.lastName.valid"
+        :error-messages="errors.employee.lastName.message"
+        label="Last Name"
+      ></v-text-field>
+      <v-text-field
+        v-model="employee.email"
+        :error="!errors.employee.email.valid"
+        :error-messages="errors.employee.email.message"
+        label="Email"
+      ></v-text-field>
+      <v-radio-group
+        v-model="employee.securityRole"
+        label="Security Role"
+        :error="!errors.employee.securityRole.valid"
+        :error-messages="errors.employee.securityRole.message"
+      >
+        <v-radio
+          v-for="role in securityRoles"
+          :key="role"
+          :label="role"
+          :value="role"
+        ></v-radio>
+      </v-radio-group>
+    </div>
+
+    <div v-if="!edit || password">
+      <v-text-field
+        v-model="employee.password"
+        :error="!errors.employee.password.valid"
+        :error-messages="errors.employee.password.message"
+        label="Password"
+        type="password"
+      ></v-text-field>
+      <v-text-field
+        v-model="employee.password2"
+        :error="!errors.employee.password2.valid"
+        :error-messages="errors.employee.password2.message"
+        label="Confirm Password"
+        type="password"
+      ></v-text-field>
+    </div>
 
     <slot />
   </v-form>
@@ -78,6 +90,10 @@ const defaults = {
         password: {
           valid: true,
           message: ''
+        },
+        password2: {
+          valid: true,
+          message: ''
         }
       }
     }
@@ -86,6 +102,18 @@ const defaults = {
 
 export default {
   props: {
+    edit: {
+      type: Boolean,
+      defaul() {
+        return false
+      }
+    },
+    password: {
+      type: Boolean,
+      defaul() {
+        return false
+      }
+    },
     securityRoles: {
       type: Array,
       required: true
@@ -99,7 +127,8 @@ export default {
           lastName: '',
           email: '',
           securityRole: 'USER',
-          password: ''
+          password: '',
+          password2: ''
         }
       }
     }
@@ -113,9 +142,9 @@ export default {
     resetErrors() {
       this.errors = defaults.getNoErrors()
     },
-    async submit() {
+    async submit(func) {
       this.resetErrors()
-      const data = await this.$employeeApi.saveEmployee(this.employee)
+      const data = await this.$employeeApi[func](this.employee)
       if (!data.id) {
         Object.keys(data).map((i) => {
           const field = i

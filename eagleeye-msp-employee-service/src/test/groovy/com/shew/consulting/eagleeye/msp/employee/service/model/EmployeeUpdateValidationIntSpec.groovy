@@ -48,6 +48,7 @@ class EmployeeUpdateValidationIntSpec extends Specification {
         then:
         constraintViolations.size() == errorSize
         constraintViolations.forEach({ i ->
+            assert i.getPropertyPath().toString() == 'username'
             assert i.getMessage() == message
         })
 

@@ -11,9 +11,17 @@
       ref="employeeForm"
       :security-roles="securityRoles"
       :employee="employee"
+      :edit="true"
     >
-      <v-btn class="mt-6" color="primary" @click.stop.prevent="submit()">
+      <v-btn class="mt-6 mr-3" color="primary" @click.stop.prevent="submit()">
         Update
+      </v-btn>
+      <v-btn
+        class="mt-6"
+        color="secondary"
+        @click.stop.prevent="navigateToUpdatePasswordPage()"
+      >
+        Update password
       </v-btn>
       <DeleteModal
         ref="deleteModal"
@@ -67,7 +75,7 @@ export default {
   },
   methods: {
     async submit() {
-      const data = await this.$refs.employeeForm.submit()
+      const data = await this.$refs.employeeForm.submit('updateEmployee')
       this.reset()
       if (data) {
         this.displayName = this.name
@@ -96,6 +104,12 @@ export default {
     reset() {
       this.success = false
       this.fail = false
+    },
+    navigateToUpdatePasswordPage() {
+      this.$router.push({
+        path: '/employees/update-password',
+        query: { id: this.employee.id }
+      })
     }
   },
   head() {

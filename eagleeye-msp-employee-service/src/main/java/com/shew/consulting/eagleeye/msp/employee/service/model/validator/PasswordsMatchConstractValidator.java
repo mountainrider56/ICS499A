@@ -8,13 +8,20 @@ import javax.validation.ConstraintValidatorContext;
 public class PasswordsMatchConstractValidator implements ConstraintValidator<MatchingPasswords, EmployeeSave> {
 
     @Override
-    public boolean isValid(EmployeeSave employeeSave, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(EmployeeSave employeeSave, ConstraintValidatorContext context) {
         if (employeeSave.getPassword() == null || employeeSave.getPassword2() == null) {
             return true;
         }
         PasswordConstraintValidator passwordConstraintValidator = new PasswordConstraintValidator();
         if (passwordConstraintValidator.isValid(employeeSave.getPassword(), null)) {
-            return employeeSave.getPassword().equals(employeeSave.getPassword2());
+            boolean isValid = employeeSave.getPassword().equals(employeeSave.getPassword2());
+            if (!isValid) {
+                context.disableDefaultConstraintViolation();
+                context.buildConstraintViolationWithTemplate("{message}")
+                       .addPropertyNode("password2")
+                       .addConstraintViolation();
+            }
+            return isValid;
         }
         return true;
     }

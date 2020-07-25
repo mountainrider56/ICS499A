@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     async submit() {
-      const data = await this.$refs.employeeForm.submit()
+      const data = await this.$refs.employeeForm.submit('saveEmployee')
       if (data) {
         this.$router.push({
           path: '/employees/detail',

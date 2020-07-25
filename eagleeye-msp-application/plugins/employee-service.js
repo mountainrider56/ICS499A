@@ -41,6 +41,22 @@ export default (context, inject) => {
     },
     async saveEmployee(employee) {
       return await context.$axios
+        .$post('/api/eagleeye-msp/v1/employees', employee)
+        .then((response) => {
+          return response
+        })
+        .catch((e) => {
+          if (e.response.status === 400) {
+            return e.response.data
+          }
+          context.error({
+            statusCode: e.response.status,
+            message: 'Unable to save employee.'
+          })
+        })
+    },
+    async updateEmployee(employee) {
+      return await context.$axios
         .$put('/api/eagleeye-msp/v1/employees', employee)
         .then((response) => {
           return response

@@ -22,9 +22,12 @@ public class GlobalExceptionHandling {
     public @ResponseBody Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
+            String errorField = error.getObjectName();
+            if (error instanceof FieldError) {
+                errorField = ((FieldError) error).getField();
+            }
             String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
+            errors.put(errorField, errorMessage);
         });
         return errors;
     }

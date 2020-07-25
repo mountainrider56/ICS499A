@@ -18,12 +18,19 @@ public class UsernameConstraintValidator implements ConstraintValidator<UniqueUs
     private EmployeeRepository employeeRepository;
 
     @Override
-    public boolean isValid(EmployeeUpdate employeeUpdate, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(EmployeeUpdate employeeUpdate, ConstraintValidatorContext context) {
         if (employeeUpdate == null || StringUtils.isEmpty(employeeUpdate.getUsername())) {
             return true;
         }
         Optional<Employee> employee = employeeRepository.findEmployeeByUsername(employeeUpdate.getUsername());
-        return !employee.isPresent() || (employee.get().getId().equals(employeeUpdate.getId()));
+        boolean isValid = !employee.isPresent() || (employee.get().getId().equals(employeeUpdate.getId()));
+        if (!isValid) {
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate("{message}")
+                   .addPropertyNode("username")
+                   .addConstraintViolation();
+        }
+        return isValid;
     }
 
 }

@@ -47,13 +47,14 @@ class EmployeeSaveValidationIntSpec extends Specification {
         then:
         constraintViolations.size() == errorSize
         constraintViolations.forEach({ i ->
+            assert i.getPropertyPath().toString() == path
             assert i.getMessage() == message
         })
 
         where:
-        password       | password2      | errorSize | message
-        'ssss'         | 'sssa'         | 1         | 'Password must be 8 or more characters in length'
-        'Password11**' | 'Password12**' | 1         | 'Passwords do not match'
+        password       | password2      | errorSize | path         | message
+        'ssss'         | 'sssa'         | 1         | 'password'   | 'Password must be 8 or more characters in length'
+        'Password11**' | 'Password12**' | 1         | 'password2' | 'Passwords do not match'
     }
 
 
