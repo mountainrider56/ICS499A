@@ -8,14 +8,13 @@ import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import javax.swing.Action
 import javax.validation.ConstraintViolation
 import javax.validation.Validator
 
 @SpringBootTest
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-class EmployeeRequestValidationIntSpec extends Specification {
+class EmployeeUpdateValidationIntSpec extends Specification {
 
     @Autowired
     Validator validator
@@ -23,11 +22,11 @@ class EmployeeRequestValidationIntSpec extends Specification {
     @Autowired
     EmployeeRepository employeeRepository
 
-    EmployeeRequest employeeRequest
+    EmployeeUpdate employeeUpdate
     Set<ConstraintViolation<Employee>> constraintViolations
 
     def setup() {
-        employeeRequest = new EmployeeRequest()
+        employeeUpdate = new EmployeeUpdate()
     }
 
     @Unroll
@@ -37,14 +36,14 @@ class EmployeeRequestValidationIntSpec extends Specification {
         employeeRepository.save(getEmployee2())
 
         when:
-        employeeRequest.id = 2
-        employeeRequest.username = username
-        employeeRequest.firstName = 'first'
-        employeeRequest.lastName = 'last'
-        employeeRequest.email = 'test@gmail.com'
-        employeeRequest.password = 'Password11**'
-        employeeRequest.securityRole = SecurityRole.USER
-        constraintViolations = validator.validate(employeeRequest)
+        employeeUpdate.id = 2
+        employeeUpdate.username = username
+        employeeUpdate.firstName = 'first'
+        employeeUpdate.lastName = 'last'
+        employeeUpdate.email = 'test@gmail.com'
+        employeeUpdate.password = 'Password11**'
+        employeeUpdate.securityRole = SecurityRole.USER
+        constraintViolations = validator.validate(employeeUpdate)
 
         then:
         constraintViolations.size() == errorSize

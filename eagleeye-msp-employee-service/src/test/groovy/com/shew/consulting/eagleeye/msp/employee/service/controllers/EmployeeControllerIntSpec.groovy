@@ -3,6 +3,8 @@ package com.shew.consulting.eagleeye.msp.employee.service.controllers
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.shew.consulting.eagleeye.msp.employee.service.exception.handling.GlobalExceptionHandling
 import com.shew.consulting.eagleeye.msp.employee.service.model.Employee
+import com.shew.consulting.eagleeye.msp.employee.service.model.EmployeeSave
+import com.shew.consulting.eagleeye.msp.employee.service.model.EmployeeUpdate
 import com.shew.consulting.eagleeye.msp.employee.service.model.SecurityRole
 import com.shew.consulting.eagleeye.msp.employee.service.repository.EmployeeRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -52,10 +54,10 @@ class EmployeeControllerIntSpec extends Specification {
 
     def 'saveEmployee'() {
         setup:
-        Employee employee1 = getEmployee1()
-        String request = mapper.writeValueAsString(employee1)
-        employee1.id = 1
-        MockHttpServletRequestBuilder putBuilder = put('/v1/employees')
+        EmployeeSave employeeSave1 = getEmployeeSave1()
+        String request = mapper.writeValueAsString(employeeSave1)
+        employeeSave1.id = 1
+        MockHttpServletRequestBuilder putBuilder = post('/v1/employees')
                 .contentType(MediaType.APPLICATION_JSON).content(request)
 
         when:
@@ -65,19 +67,19 @@ class EmployeeControllerIntSpec extends Specification {
         actions.andExpect(status().isOk())
         actions.andExpect(content().contentType(MediaType.APPLICATION_JSON))
         Employee employee = mapper.readValue(actions.andReturn().response.contentAsString, Employee)
-        employee1.id == employee.id
-        employee1.username == employee.username
-        employee1.firstName == employee.firstName
-        employee1.lastName == employee.lastName
-        employee1.email == employee.email
-        passwordEncoder.matches(employee1.getPassword(), employee.getPassword())
+        employeeSave1.id == employee.id
+        employeeSave1.username == employee.username
+        employeeSave1.firstName == employee.firstName
+        employeeSave1.lastName == employee.lastName
+        employeeSave1.email == employee.email
+        passwordEncoder.matches(employeeSave1.getPassword(), employee.getPassword())
     }
 
     def 'saveEmployee - employee invalid'() {
         setup:
-        Employee employee = new Employee()
-        String request = mapper.writeValueAsString(employee)
-        MockHttpServletRequestBuilder putBuilder = put('/v1/employees')
+        EmployeeSave employeeSave = new EmployeeSave()
+        String request = mapper.writeValueAsString(employeeSave)
+        MockHttpServletRequestBuilder putBuilder = post('/v1/employees')
                 .contentType(MediaType.APPLICATION_JSON).content(request)
         Map<String, String> expected = [:]
         expected['username'] = 'Username is required'
@@ -104,9 +106,9 @@ class EmployeeControllerIntSpec extends Specification {
                 .setControllerAdvice(new GlobalExceptionHandling())
                 .setValidator(validatorFactory)
                 .build()
-        Employee employee1 = getEmployee1()
-        String request1 = mapper.writeValueAsString(employee1)
-        MockHttpServletRequestBuilder putBuilder = put('/v1/employees')
+        EmployeeSave employeeSave1 = getEmployeeSave1()
+        String request1 = mapper.writeValueAsString(employeeSave1)
+        MockHttpServletRequestBuilder putBuilder = post('/v1/employees')
                 .contentType(MediaType.APPLICATION_JSON).content(request1)
 
         when:
@@ -119,11 +121,127 @@ class EmployeeControllerIntSpec extends Specification {
 
     def 'saveEmployee - unavailable username'() {
         setup:
-        Employee employee1 = getEmployee1()
-        Employee employee2 = getEmployee1()
-        String request1 = mapper.writeValueAsString(employee1)
-        employee1.id = 1
-        String request2 = mapper.writeValueAsString(employee2)
+        EmployeeSave employeeSave1 = getEmployeeSave1()
+        EmployeeSave employeeSave1Clone = getEmployeeSave1()
+        String request1 = mapper.writeValueAsString(employeeSave1)
+        employeeSave1.id = 1
+        String request2 = mapper.writeValueAsString(employeeSave1Clone)
+        MockHttpServletRequestBuilder putBuilder1 = post('/v1/employees')
+                .contentType(MediaType.APPLICATION_JSON).content(request1)
+        MockHttpServletRequestBuilder putBuilder2 = post('/v1/employees')
+                .contentType(MediaType.APPLICATION_JSON).content(request2)
+
+        when:
+        ResultActions actions1 = mockMvc.perform(putBuilder1)
+        ResultActions actions2 = mockMvc.perform(putBuilder2)
+
+        then:
+        actions1.andExpect(status().isOk())
+        actions1.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        Employee employee = mapper.readValue(actions1.andReturn().response.contentAsString, Employee)
+        employeeSave1.id == employee.id
+        employeeSave1.username == employee.username
+        employeeSave1.firstName == employee.firstName
+        employeeSave1.lastName == employee.lastName
+        employeeSave1.email == employee.email
+        passwordEncoder.matches(employeeSave1.getPassword(), employee.getPassword())
+        actions2.andExpect(status().isBadRequest())
+    }
+
+    def 'updateEmployee'() {
+        setup:
+        EmployeeUpdate employeeSave1 = getEmployeeSave1()
+        employeeRepository.save(employeeSave1.getEmployee())
+        employeeSave1.id = 1
+        String request = mapper.writeValueAsString(employeeSave1)
+        MockHttpServletRequestBuilder putBuilder = put('/v1/employees')
+                .contentType(MediaType.APPLICATION_JSON).content(request)
+
+        when:
+        ResultActions actions = mockMvc.perform(putBuilder)
+
+        then:
+        actions.andExpect(status().isOk())
+        actions.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        Employee employee = mapper.readValue(actions.andReturn().response.contentAsString, Employee)
+        employeeSave1.id == employee.id
+        employeeSave1.username == employee.username
+        employeeSave1.firstName == employee.firstName
+        employeeSave1.lastName == employee.lastName
+        employeeSave1.email == employee.email
+        employeeSave1.password == employee.password
+    }
+
+    def 'updateEmployee - employee doesn\'t exist'() {
+        setup:
+        EmployeeUpdate employeeSave1 = getEmployeeSave1()
+        employeeSave1.id = 1
+        String request = mapper.writeValueAsString(employeeSave1)
+        MockHttpServletRequestBuilder putBuilder = put('/v1/employees')
+                .contentType(MediaType.APPLICATION_JSON).content(request)
+
+        when:
+        ResultActions actions = mockMvc.perform(putBuilder)
+
+        then:
+        actions.andExpect(status().isBadRequest())
+        actions.andReturn().response.errorMessage == 'Employee is not existing.'
+    }
+
+    def 'updateEmployee - employee invalid'() {
+        setup:
+        EmployeeSave employeeSave = new EmployeeSave()
+        employeeRepository.save(employeeSave1.getEmployee())
+        employeeSave1.id = 1
+        String request = mapper.writeValueAsString(employeeSave)
+        MockHttpServletRequestBuilder putBuilder = put('/v1/employees')
+                .contentType(MediaType.APPLICATION_JSON).content(request)
+        Map<String, String> expected = [:]
+        expected['username'] = 'Username is required'
+        expected['firstName'] = 'First name is required'
+        expected['lastName'] = 'Last name is required'
+        expected['email'] = 'Email is required'
+        expected['securityRole'] = 'Security role is required'
+
+        when:
+        ResultActions actions = mockMvc.perform(putBuilder)
+
+        then:
+        actions.andExpect(status().isBadRequest())
+        actions.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        Map<String, String> result = mapper.readValue(actions.andReturn().response.contentAsString, HashMap.class)
+        result.sort() == expected.sort()
+    }
+
+    def 'updateEmployee - exception'() {
+        setup:
+        EmployeeController controller = new EmployeeController(employeeRepository, null)
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .setControllerAdvice(new GlobalExceptionHandling())
+                .setValidator(validatorFactory)
+                .build()
+        EmployeeSave employeeSave1 = getEmployeeSave1()
+        String request1 = mapper.writeValueAsString(employeeSave1)
+        MockHttpServletRequestBuilder putBuilder = put('/v1/employees')
+                .contentType(MediaType.APPLICATION_JSON).content(request1)
+
+        when:
+        ResultActions actions = mockMvc.perform(putBuilder)
+
+        then:
+        actions.andExpect(status().isBadRequest())
+        actions.andReturn().response.errorMessage == 'Unable to update employee.'
+    }
+
+    def 'updateEmployee - unavailable username'() {
+        setup:
+        EmployeeSave employeeSave1 = getEmployeeSave1()
+        employeeRepository.save(employeeSave1.getEmployee())
+        employeeSave1.id = 1
+        EmployeeSave employeeSave1Clone = getEmployeeSave1()
+        employeeSave1Clone.id = 2
+        String request1 = mapper.writeValueAsString(employeeSave1)
+        String request2 = mapper.writeValueAsString(employeeSave1Clone)
         MockHttpServletRequestBuilder putBuilder1 = put('/v1/employees')
                 .contentType(MediaType.APPLICATION_JSON).content(request1)
         MockHttpServletRequestBuilder putBuilder2 = put('/v1/employees')
@@ -137,12 +255,12 @@ class EmployeeControllerIntSpec extends Specification {
         actions1.andExpect(status().isOk())
         actions1.andExpect(content().contentType(MediaType.APPLICATION_JSON))
         Employee employee = mapper.readValue(actions1.andReturn().response.contentAsString, Employee)
-        employee1.id == employee.id
-        employee1.username == employee.username
-        employee1.firstName == employee.firstName
-        employee1.lastName == employee.lastName
-        employee1.email == employee.email
-        passwordEncoder.matches(employee1.getPassword(), employee.getPassword())
+        employeeSave1.id == employee.id
+        employeeSave1.username == employee.username
+        employeeSave1.firstName == employee.firstName
+        employeeSave1.lastName == employee.lastName
+        employeeSave1.email == employee.email
+        employeeSave1.password == employee.password
         actions2.andExpect(status().isBadRequest())
     }
 
@@ -164,15 +282,15 @@ class EmployeeControllerIntSpec extends Specification {
         actions.andReturn().response.contentAsString == mapper.writeValueAsString(expected)
 
         where:
-        employeeList                     | expectedEmployeeLength
-        [getEmployee1(), getEmployee2()] | 2
-        []                               | 0
+        employeeList                                                         | expectedEmployeeLength
+        [getEmployeeSave1().getEmployee(), getEmployeeSave2().getEmployee()] | 2
+        []                                                                   | 0
     }
 
     def 'getEmployee - happy path'() {
         setup:
-        Employee expected1 = employeeRepository.save(getEmployee1())
-        Employee expected2 = employeeRepository.save(getEmployee2())
+        Employee expected1 = employeeRepository.save(getEmployeeSave1().getEmployee())
+        Employee expected2 = employeeRepository.save(getEmployeeSave2().getEmployee())
 
         when:
         ResultActions actions1 = mockMvc.perform(get("/v1/employees/1"))
@@ -199,8 +317,8 @@ class EmployeeControllerIntSpec extends Specification {
 
     def 'getEmployeeByUsername - happy path'() {
         setup:
-        Employee expected1 = employeeRepository.save(getEmployee1())
-        Employee expected2 = employeeRepository.save(getEmployee2())
+        Employee expected1 = employeeRepository.save(getEmployeeSave1().getEmployee())
+        Employee expected2 = employeeRepository.save(getEmployeeSave2().getEmployee())
 
         when:
         ResultActions actions1 = mockMvc.perform(get("/v1/employees/username")
@@ -231,8 +349,8 @@ class EmployeeControllerIntSpec extends Specification {
     @Unroll
     def 'deleteEmployee - #id'() {
         setup:
-        employeeRepository.save(getEmployee1())
-        employeeRepository.save(getEmployee2())
+        employeeRepository.save(getEmployeeSave1().getEmployee())
+        employeeRepository.save(getEmployeeSave2().getEmployee())
 
         when:
         ResultActions actions = mockMvc.perform(delete("/v1/employees/${id}"))
@@ -248,28 +366,30 @@ class EmployeeControllerIntSpec extends Specification {
         4  | 'false'
     }
 
-    def getEmployee1() {
-        Employee employee = new Employee()
-        employee.username = 'username1'
-        employee.firstName = 'firstName1'
-        employee.password = 'Password11**'
-        employee.lastName = 'lastName1'
-        employee.securityRole = SecurityRole.USER
-        employee.email = 'employee1@gmail.com'
+    def getEmployeeSave1() {
+        EmployeeSave employeeSave = new EmployeeSave()
+        employeeSave.username = 'username1'
+        employeeSave.firstName = 'firstName1'
+        employeeSave.password = 'Password11**'
+        employeeSave.password2 = employeeSave.password
+        employeeSave.lastName = 'lastName1'
+        employeeSave.securityRole = SecurityRole.USER
+        employeeSave.email = 'employee1@gmail.com'
 
-        employee
+        employeeSave
     }
 
-    def getEmployee2() {
-        Employee employee = new Employee()
-        employee.username = 'username2'
-        employee.firstName = 'firstName2'
-        employee.password = 'Password11**'
-        employee.lastName = 'lastName2'
-        employee.securityRole = SecurityRole.ADMIN
-        employee.email = 'employee2@gmail.com'
+    def getEmployeeSave2() {
+        EmployeeSave employeeSave = new EmployeeSave()
+        employeeSave.username = 'username2'
+        employeeSave.firstName = 'firstName2'
+        employeeSave.password = 'Password11**'
+        employeeSave.password2 = employeeSave.password
+        employeeSave.lastName = 'lastName2'
+        employeeSave.securityRole = SecurityRole.ADMIN
+        employeeSave.email = 'employee2@gmail.com'
 
-        employee
+        employeeSave
     }
 
 }

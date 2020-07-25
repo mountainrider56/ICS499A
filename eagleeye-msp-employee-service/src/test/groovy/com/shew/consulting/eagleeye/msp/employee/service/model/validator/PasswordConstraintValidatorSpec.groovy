@@ -37,4 +37,23 @@ class PasswordConstraintValidatorSpec extends Specification {
         true     | 'A11**asdert'           | null
     }
 
+    @Unroll
+    def 'isValid - null context - #password'() {
+        setup:
+        PasswordConstraintValidator validator = new PasswordConstraintValidator()
+        ConstraintValidatorContext context = null
+
+        when:
+        boolean response = validator.isValid(password, context)
+
+        then:
+        0 * context.buildConstraintViolationWithTemplate(_ as String)
+        response == expected
+
+        where:
+        expected | password
+        true     | 'Password11**'
+        false    | 'pasdasd'
+    }
+
 }

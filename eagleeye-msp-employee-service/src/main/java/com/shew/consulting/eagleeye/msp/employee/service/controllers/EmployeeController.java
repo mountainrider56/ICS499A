@@ -1,7 +1,8 @@
 package com.shew.consulting.eagleeye.msp.employee.service.controllers;
 
 import com.shew.consulting.eagleeye.msp.employee.service.model.Employee;
-import com.shew.consulting.eagleeye.msp.employee.service.model.EmployeeRequest;
+import com.shew.consulting.eagleeye.msp.employee.service.model.EmployeeSave;
+import com.shew.consulting.eagleeye.msp.employee.service.model.EmployeeUpdate;
 import com.shew.consulting.eagleeye.msp.employee.service.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,14 +25,32 @@ public class EmployeeController {
     private final EmployeeRepository employeeRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @PutMapping
-    public Employee saveEmployee(@Valid @RequestBody EmployeeRequest employeeRequest) {
+    @PostMapping
+    public Employee saveEmployee(@Valid @RequestBody EmployeeSave employeeSave) {
         try {
-            Employee employee = employeeRequest.getEmployee();
+            Employee employee = employeeSave.getEmployee();
             employee.setPassword(passwordEncoder.encode(employee.getPassword()));
             return employeeRepository.save(employee);
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to save employee.");
+        }
+    }
+
+    @PutMapping
+    public Employee updateEmployee(@Valid @RequestBody EmployeeUpdate employeeUpdate) {
+        try {
+            Employee employee = employeeUpdate.getEmployee();
+            Optional<Employee> saveEmployee = employeeRepository.findById(employee.getId());
+            if (!saveEmployee.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is not existing.");
+            }
+            employee.setPassword(saveEmployee.get().getPassword());
+            return employeeRepository.save(employee);
+        } catch (Exception ex) {
+            if (ex instanceof ResponseStatusException) {
+                throw ex;
+            }
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to update employee.");
         }
     }
 

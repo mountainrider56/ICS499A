@@ -1,7 +1,7 @@
 package com.shew.consulting.eagleeye.msp.employee.service.data;
 
 import com.shew.consulting.eagleeye.msp.employee.service.controllers.EmployeeController;
-import com.shew.consulting.eagleeye.msp.employee.service.model.EmployeeRequest;
+import com.shew.consulting.eagleeye.msp.employee.service.model.EmployeeSave;
 import com.shew.consulting.eagleeye.msp.employee.service.model.SecurityRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,135 +31,145 @@ public class EmployeeTestData {
 
     @EventListener
     public void applicationReady(ApplicationReadyEvent event) {
-        List<EmployeeRequest> employeeRequests = new ArrayList<>();
-        employeeRequests.add(employeeRequest1());
-        employeeRequests.add(employeeRequest2());
-        employeeRequests.add(employeeRequest3());
-        employeeRequests.add(employeeRequest4());
-        employeeRequests.add(employeeRequest5());
-        employeeRequests.add(employeeRequest6());
-        employeeRequests.add(employeeRequest7());
-        employeeRequests.add(employeeRequest8());
-        employeeRequests.add(employeeRequest9());
-        employeeRequests.add(employeeRequest10());
-        employeeRequests.forEach(employeeRequest -> {
-            Set<ConstraintViolation<EmployeeRequest>> violations = validator.validate(employeeRequest);
+        List<EmployeeSave> employeeSaves = new ArrayList<>();
+        employeeSaves.add(employeeSave1());
+        employeeSaves.add(employeeSave2());
+        employeeSaves.add(employeeSave3());
+        employeeSaves.add(employeeSave4());
+        employeeSaves.add(employeeSave5());
+        employeeSaves.add(employeeSave6());
+        employeeSaves.add(employeeSave7());
+        employeeSaves.add(employeeSave8());
+        employeeSaves.add(employeeSave9());
+        employeeSaves.add(employeeSave10());
+        employeeSaves.forEach(employeeSave -> {
+            Set<ConstraintViolation<EmployeeSave>> violations = validator.validate(employeeSave);
             if (!violations.isEmpty()) {
                 throw new ConstraintViolationException(violations);
             }
-            employeeController.saveEmployee(employeeRequest);
+            employeeController.saveEmployee(employeeSave);
         });
         log.info(event.toString());
     }
 
-    private EmployeeRequest employeeRequest1() {
-        EmployeeRequest employeeRequest = new EmployeeRequest();
-        employeeRequest.setUsername("KennyLovell");
-        employeeRequest.setFirstName("Kenny");
-        employeeRequest.setLastName("Lovell");
-        employeeRequest.setEmail("Kenny.Lovell@EagleEYE.com");
-        employeeRequest.setSecurityRole(SecurityRole.USER);
-        employeeRequest.setPassword("Password11**");
-        return employeeRequest;
+    private EmployeeSave employeeSave1() {
+        EmployeeSave employeeSave = new EmployeeSave();
+        employeeSave.setUsername("KennyLovell");
+        employeeSave.setFirstName("Kenny");
+        employeeSave.setLastName("Lovell");
+        employeeSave.setEmail("Kenny.Lovell@EagleEYE.com");
+        employeeSave.setSecurityRole(SecurityRole.USER);
+        employeeSave.setPassword("Password11**");
+        employeeSave.setPassword2(employeeSave.getPassword());
+        return employeeSave;
     }
 
-    private EmployeeRequest employeeRequest2() {
-        EmployeeRequest employeeRequest = new EmployeeRequest();
-        employeeRequest.setUsername("KarenCarroll");
-        employeeRequest.setFirstName("Karen");
-        employeeRequest.setLastName("Carroll");
-        employeeRequest.setEmail("Karen.Carroll@EagleEYE.com");
-        employeeRequest.setSecurityRole(SecurityRole.ADMIN);
-        employeeRequest.setPassword("Password11**");
-        return employeeRequest;
+    private EmployeeSave employeeSave2() {
+        EmployeeSave employeeSave = new EmployeeSave();
+        employeeSave.setUsername("KarenCarroll");
+        employeeSave.setFirstName("Karen");
+        employeeSave.setLastName("Carroll");
+        employeeSave.setEmail("Karen.Carroll@EagleEYE.com");
+        employeeSave.setSecurityRole(SecurityRole.ADMIN);
+        employeeSave.setPassword("Password11**");
+        employeeSave.setPassword2(employeeSave.getPassword());
+        return employeeSave;
     }
 
-    private EmployeeRequest employeeRequest3() {
-        EmployeeRequest employeeRequest = new EmployeeRequest();
-        employeeRequest.setUsername("LukasCalhoun");
-        employeeRequest.setFirstName("Lukas");
-        employeeRequest.setLastName("Calhoun");
-        employeeRequest.setEmail("Lukas.Calhoun@EagleEYE.com");
-        employeeRequest.setSecurityRole(SecurityRole.USER);
-        employeeRequest.setPassword("Password11**");
-        return employeeRequest;
+    private EmployeeSave employeeSave3() {
+        EmployeeSave employeeSave = new EmployeeSave();
+        employeeSave.setUsername("LukasCalhoun");
+        employeeSave.setFirstName("Lukas");
+        employeeSave.setLastName("Calhoun");
+        employeeSave.setEmail("Lukas.Calhoun@EagleEYE.com");
+        employeeSave.setSecurityRole(SecurityRole.USER);
+        employeeSave.setPassword("Password11**");
+        employeeSave.setPassword2(employeeSave.getPassword());
+        return employeeSave;
     }
 
-    private EmployeeRequest employeeRequest4() {
-        EmployeeRequest employeeRequest = new EmployeeRequest();
-        employeeRequest.setUsername("BrynMcclure");
-        employeeRequest.setFirstName("Bryn");
-        employeeRequest.setLastName("Mcclure");
-        employeeRequest.setEmail("Bryn.Mcclure@EagleEYE.com");
-        employeeRequest.setSecurityRole(SecurityRole.ADMIN);
-        employeeRequest.setPassword("Password11**");
-        return employeeRequest;
+    private EmployeeSave employeeSave4() {
+        EmployeeSave employeeSave = new EmployeeSave();
+        employeeSave.setUsername("BrynMcclure");
+        employeeSave.setFirstName("Bryn");
+        employeeSave.setLastName("Mcclure");
+        employeeSave.setEmail("Bryn.Mcclure@EagleEYE.com");
+        employeeSave.setSecurityRole(SecurityRole.ADMIN);
+        employeeSave.setPassword("Password11**");
+        employeeSave.setPassword2(employeeSave.getPassword());
+        return employeeSave;
     }
 
-    private EmployeeRequest employeeRequest5() {
-        EmployeeRequest employeeRequest = new EmployeeRequest();
-        employeeRequest.setUsername("GriffDawe");
-        employeeRequest.setFirstName("Griff");
-        employeeRequest.setLastName("Dawe");
-        employeeRequest.setEmail("Griff.Dawe@EagleEYE.com");
-        employeeRequest.setSecurityRole(SecurityRole.USER);
-        employeeRequest.setPassword("Password11**");
-        return employeeRequest;
+    private EmployeeSave employeeSave5() {
+        EmployeeSave employeeSave = new EmployeeSave();
+        employeeSave.setUsername("GriffDawe");
+        employeeSave.setFirstName("Griff");
+        employeeSave.setLastName("Dawe");
+        employeeSave.setEmail("Griff.Dawe@EagleEYE.com");
+        employeeSave.setSecurityRole(SecurityRole.USER);
+        employeeSave.setPassword("Password11**");
+        employeeSave.setPassword2(employeeSave.getPassword());
+        return employeeSave;
     }
 
-    private EmployeeRequest employeeRequest6() {
-        EmployeeRequest employeeRequest = new EmployeeRequest();
-        employeeRequest.setUsername("AnaRusso");
-        employeeRequest.setFirstName("Ana");
-        employeeRequest.setLastName("Russo");
-        employeeRequest.setEmail("Ana.Russo@EagleEYE.com");
-        employeeRequest.setSecurityRole(SecurityRole.ADMIN);
-        employeeRequest.setPassword("Password11**");
-        return employeeRequest;
+    private EmployeeSave employeeSave6() {
+        EmployeeSave employeeSave = new EmployeeSave();
+        employeeSave.setUsername("AnaRusso");
+        employeeSave.setFirstName("Ana");
+        employeeSave.setLastName("Russo");
+        employeeSave.setEmail("Ana.Russo@EagleEYE.com");
+        employeeSave.setSecurityRole(SecurityRole.ADMIN);
+        employeeSave.setPassword("Password11**");
+        employeeSave.setPassword2(employeeSave.getPassword());
+        return employeeSave;
     }
 
-    private EmployeeRequest employeeRequest7() {
-        EmployeeRequest employeeRequest = new EmployeeRequest();
-        employeeRequest.setUsername("ShivMedrano");
-        employeeRequest.setFirstName("Shiv");
-        employeeRequest.setLastName("Medrano");
-        employeeRequest.setEmail("Shiv.Medrano@EagleEYE.com");
-        employeeRequest.setSecurityRole(SecurityRole.USER);
-        employeeRequest.setPassword("Password11**");
-        return employeeRequest;
+    private EmployeeSave employeeSave7() {
+        EmployeeSave employeeSave = new EmployeeSave();
+        employeeSave.setUsername("ShivMedrano");
+        employeeSave.setFirstName("Shiv");
+        employeeSave.setLastName("Medrano");
+        employeeSave.setEmail("Shiv.Medrano@EagleEYE.com");
+        employeeSave.setSecurityRole(SecurityRole.USER);
+        employeeSave.setPassword("Password11**");
+        employeeSave.setPassword2(employeeSave.getPassword());
+        return employeeSave;
     }
 
-    private EmployeeRequest employeeRequest8() {
-        EmployeeRequest employeeRequest = new EmployeeRequest();
-        employeeRequest.setUsername("ElleanorClarkson");
-        employeeRequest.setFirstName("Elleanor");
-        employeeRequest.setLastName("Clarkson");
-        employeeRequest.setEmail("Elleanor.Clarkson@EagleEYE.com");
-        employeeRequest.setSecurityRole(SecurityRole.ADMIN);
-        employeeRequest.setPassword("Password11**");
-        return employeeRequest;
+    private EmployeeSave employeeSave8() {
+        EmployeeSave employeeSave = new EmployeeSave();
+        employeeSave.setUsername("ElleanorClarkson");
+        employeeSave.setFirstName("Elleanor");
+        employeeSave.setLastName("Clarkson");
+        employeeSave.setEmail("Elleanor.Clarkson@EagleEYE.com");
+        employeeSave.setSecurityRole(SecurityRole.ADMIN);
+        employeeSave.setPassword("Password11**");
+        employeeSave.setPassword2(employeeSave.getPassword());
+        return employeeSave;
     }
 
-    private EmployeeRequest employeeRequest9() {
-        EmployeeRequest employeeRequest = new EmployeeRequest();
-        employeeRequest.setUsername("SkyeBonilla");
-        employeeRequest.setFirstName("Skye");
-        employeeRequest.setLastName("Bonilla");
-        employeeRequest.setEmail("Skye.Bonilla@EagleEYE.com");
-        employeeRequest.setSecurityRole(SecurityRole.USER);
-        employeeRequest.setPassword("Password11**");
-        return employeeRequest;
+    private EmployeeSave employeeSave9() {
+        EmployeeSave employeeSave = new EmployeeSave();
+        employeeSave.setUsername("SkyeBonilla");
+        employeeSave.setFirstName("Skye");
+        employeeSave.setLastName("Bonilla");
+        employeeSave.setEmail("Skye.Bonilla@EagleEYE.com");
+        employeeSave.setSecurityRole(SecurityRole.USER);
+        employeeSave.setPassword("Password11**");
+        employeeSave.setPassword2(employeeSave.getPassword());
+        return employeeSave;
     }
 
-    private EmployeeRequest employeeRequest10() {
-        EmployeeRequest employeeRequest = new EmployeeRequest();
-        employeeRequest.setUsername("ReaganBurrows");
-        employeeRequest.setFirstName("Reagan");
-        employeeRequest.setLastName("Burrows");
-        employeeRequest.setEmail("Reagan.Burrows@EagleEYE.com");
-        employeeRequest.setSecurityRole(SecurityRole.ADMIN);
-        employeeRequest.setPassword("Password11**");
-        return employeeRequest;
+    private EmployeeSave employeeSave10() {
+        EmployeeSave employeeSave = new EmployeeSave();
+        employeeSave.setUsername("ReaganBurrows");
+        employeeSave.setFirstName("Reagan");
+        employeeSave.setLastName("Burrows");
+        employeeSave.setEmail("Reagan.Burrows@EagleEYE.com");
+        employeeSave.setSecurityRole(SecurityRole.ADMIN);
+        employeeSave.setPassword("Password11**");
+        employeeSave.setPassword2(employeeSave.getPassword());
+        return employeeSave;
     }
 
 }

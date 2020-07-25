@@ -1,7 +1,7 @@
 package com.shew.consulting.eagleeye.msp.employee.service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shew.consulting.eagleeye.msp.employee.service.model.validator.UniqueUsername;
-import com.shew.consulting.eagleeye.msp.employee.service.model.validator.ValidPassword;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -9,7 +9,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @UniqueUsername
-public class EmployeeRequest extends Employee {
+@JsonIgnoreProperties(ignoreUnknown=true)
+public class EmployeeUpdate extends Employee {
 
     @Override
     @NotBlank(message = "Username is required")
@@ -40,13 +41,6 @@ public class EmployeeRequest extends Employee {
     @NotNull(message = "Security role is required")
     public SecurityRole getSecurityRole() {
         return super.getSecurityRole();
-    }
-
-    @Override
-    @ValidPassword
-    @NotEmpty(message = "Password is required")
-    public String getPassword() {
-        return super.getPassword();
     }
 
     public Employee getEmployee() {

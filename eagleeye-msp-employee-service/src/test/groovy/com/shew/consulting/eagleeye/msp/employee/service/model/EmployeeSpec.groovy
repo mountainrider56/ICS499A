@@ -2,10 +2,12 @@ package com.shew.consulting.eagleeye.msp.employee.service.model
 
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class EmployeeSpec extends Specification {
 
-    def 'employee creation'() {
+    @Unroll
+    def 'employee creation - @#id'() {
         setup:
         Employee employee = new Employee(id, username, firstName, lastName, email, securityRole, password)
 
