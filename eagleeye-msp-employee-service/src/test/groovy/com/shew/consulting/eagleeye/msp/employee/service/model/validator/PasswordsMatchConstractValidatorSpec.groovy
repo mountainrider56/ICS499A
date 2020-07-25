@@ -12,6 +12,8 @@ class PasswordsMatchConstractValidatorSpec extends Specification {
     def 'isValid - #password/#password2'() {
         setup:
         ConstraintValidatorContext context = Mock()
+        ConstraintValidatorContext.ConstraintViolationBuilder builder = Mock()
+        ConstraintValidatorContext.ConstraintViolationBuilder.NodeBuilderCustomizableContext nodeBuilder = Mock()
         PasswordsMatchConstractValidator validator = new PasswordsMatchConstractValidator()
         EmployeeSave employeeSave = new EmployeeSave()
         employeeSave.password = password
@@ -21,6 +23,10 @@ class PasswordsMatchConstractValidatorSpec extends Specification {
         boolean response = validator.isValid(employeeSave, context)
 
         then:
+        if (!expected) {
+            1 * context.buildConstraintViolationWithTemplate("{message}") >> builder
+            1 * builder.addPropertyNode("password2") >> nodeBuilder
+        }
         response == expected
 
         where:
