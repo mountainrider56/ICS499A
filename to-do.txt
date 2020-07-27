@@ -1,22 +1,13 @@
--  Landing Page Layout
--  Search Page Layout - Employee
--  Search Page Layout - Customer
--  Username Validation - Employee
--  Form Validation Requirements - Customer
--  Form Validation Requirements - Employee
--  Delete Quotes When Customer Deletes
--  Form Order - Employee
--  Form Order - Customer
--  Form Order - Quotes
--  Get Customer Names Call
+-  Form Validation Requirements in doc - Customer
+-  Form Validation Requirements in doc - Employee
+-  Form Order in doc - Employee
+-  Form Order in doc - Customer
+-  Form Order in doc - Quotes
 -  Login Page
 -  Login Page Validation
 -  Session Storage
 -  Build PDF
--  Audit All Actions?
 -  Update UI of 500/404 error pages 
 -  UI Tests
 -  Quote Tests
 -  JavaDoc Comments
--  Password Storage in DB
--  Create quote page 
