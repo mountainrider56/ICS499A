@@ -4,37 +4,15 @@
       Successfully deleted employee.
     </v-alert>
     <h1>{{ title }}</h1>
-    <v-btn small to="/employees/create" color="primary">
-      + Add an Employee
+    <v-btn class="mt-6" to="/employees/create" color="primary">
+      Add an Employee
     </v-btn>
-    <v-data-iterator :items="employees" :items-per-page.sync="itemsPerPage">
-      <template v-slot:default="props">
-        <v-row>
-          <v-col v-for="item in props.items" :key="item.id" lg="3">
-            <v-card :to="getEmployeeDetailLink(item.id)">
-              <v-card-title class="subheading font-weight-bold">
-                {{ item.firstName }} {{ item.lastName }}
-              </v-card-title>
-              <v-divider></v-divider>
-              <v-list dense>
-                <v-list-item>
-                  <v-list-item-content>Email:</v-list-item-content>
-                  <v-list-item-content class="align-end">
-                    {{ item.email }}
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-content>Security Role:</v-list-item-content>
-                  <v-list-item-content class="align-end">
-                    {{ item.securityRole }}
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-card>
-          </v-col>
-        </v-row>
-      </template>
-    </v-data-iterator>
+    <Datatable
+      class="mt-8"
+      :items="employees"
+      :datatable="datatable"
+      :handle-row-click="handleRowClick"
+    ></Datatable>
   </v-container>
 </template>
 
@@ -47,8 +25,42 @@ export default {
   data() {
     return {
       title: 'View all Employees',
-      itemsPerPage: 5,
-      successAlert: false
+      successAlert: false,
+      datatable: {
+        headers: [
+          {
+            text: 'Username',
+            align: 'left',
+            value: 'username'
+          },
+          {
+            text: 'First name',
+            align: 'left',
+            value: 'firstName'
+          },
+          {
+            text: 'Last name',
+            align: 'left',
+            value: 'lastName'
+          },
+          {
+            text: 'Email',
+            align: 'left',
+            value: 'email'
+          },
+          {
+            text: 'Security Role',
+            align: 'left',
+            value: 'securityRole'
+          },
+          {
+            text: 'Actions',
+            value: 'actions',
+            sortable: false
+          }
+        ],
+        sortBy: 'username'
+      }
     }
   },
   mounted() {
@@ -56,8 +68,11 @@ export default {
     this.$routeUtils.removeQueryParam(this, 'success')
   },
   methods: {
-    getEmployeeDetailLink(id) {
-      return `/employees/detail?id=${id}`
+    handleRowClick(event) {
+      this.$router.push({
+        path: '/employees/detail',
+        query: { id: event.id }
+      })
     }
   },
   head() {

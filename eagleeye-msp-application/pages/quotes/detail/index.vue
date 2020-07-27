@@ -4,24 +4,11 @@
       Successfully saved quote.
     </v-alert>
     <h1>{{ title }} for {{ customer.name }}</h1>
-    <div class="mt-6">
-      <v-btn
-        color="secondary"
-        class="inline-block mr-3"
-        outlined
-        @click.prevent="downloadPdf()"
-      >
-        Download PDF
-      </v-btn>
-      <v-btn
-        class="inline-block"
-        color="secondary"
-        outlined
-        @click.prevent="viewPdf()"
-      >
-        View PDF
-      </v-btn>
-    </div>
+    <DownloadPdf
+      class="mt-6"
+      :download-pdf="downloadPdf"
+      :view-pdf="viewPdf"
+    ></DownloadPdf>
     <QuoteForm ref="quoteForm" class="mt-6" :services="services" :quote="quote">
       <v-btn class="mt-6 mr-3" color="primary" @click.stop.prevent="submit()">
         Update
@@ -29,24 +16,11 @@
       <v-btn class="mt-6" outlined to="/quotes" exact>
         Cancel
       </v-btn>
-      <div class="float-right mt-6">
-        <v-btn
-          color="secondary"
-          class="inline-block mr-3"
-          outlined
-          @click.prevent="downloadPdf()"
-        >
-          Download PDF
-        </v-btn>
-        <v-btn
-          class="inline-block"
-          color="secondary"
-          outlined
-          @click.prevent="viewPdf()"
-        >
-          View PDF
-        </v-btn>
-      </div>
+      <DownloadPdf
+        class="float-right mt-6"
+        :download-pdf="downloadPdf"
+        :view-pdf="viewPdf"
+      ></DownloadPdf>
     </QuoteForm>
   </v-container>
 </template>
