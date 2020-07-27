@@ -4,53 +4,15 @@
       Successfully deleted customer.
     </v-alert>
     <h1>{{ title }}</h1>
-    <v-btn small to="/customers/create" color="primary">+ Add a Customer</v-btn>
-    <v-data-iterator :items="customers" :items-per-page.sync="itemsPerPage">
-      <template v-slot:default="props">
-        <v-row>
-          <v-col v-for="item in props.items" :key="item.id" lg="3">
-            <v-card :to="getCustomerDetailLink(item.id)">
-              <v-card-title class="subheading font-weight-bold">
-                {{ item.name }}
-              </v-card-title>
-              <v-divider></v-divider>
-              <v-list dense>
-                <v-list-item>
-                  <v-list-item-content>Telephone:</v-list-item-content>
-                  <v-list-item-content class="align-end">
-                    {{ item.telephone }}
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-content>Address1:</v-list-item-content>
-                  <v-list-item-content class="align-end">
-                    {{ item.address1 }}
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-content>Address2:</v-list-item-content>
-                  <v-list-item-content class="align-end">
-                    {{ item.address2 }}
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-content>City:</v-list-item-content>
-                  <v-list-item-content class="align-end">
-                    {{ item.city }}
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-content>Zipcode:</v-list-item-content>
-                  <v-list-item-content class="align-end">
-                    {{ item.zipcode }}
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-card>
-          </v-col>
-        </v-row>
-      </template>
-    </v-data-iterator>
+    <v-btn to="/customers/create" class="mt-6" color="primary">
+      Add a Customer
+    </v-btn>
+    <Datatable
+      class="mt-8"
+      :items="customers"
+      :datatable="datatable"
+      :handle-row-click="handleRowClick"
+    ></Datatable>
   </v-container>
 </template>
 
@@ -63,8 +25,57 @@ export default {
   data() {
     return {
       title: 'View all Customers',
-      itemsPerPage: 5,
-      successAlert: false
+      successAlert: false,
+      datatable: {
+        headers: [
+          {
+            text: 'Name',
+            align: 'left',
+            value: 'name'
+          },
+          {
+            text: 'Telephone',
+            align: 'left',
+            value: 'telephone'
+          },
+          {
+            text: 'Email',
+            align: 'left',
+            value: 'email'
+          },
+          {
+            text: 'Address',
+            align: 'left',
+            value: 'address1'
+          },
+          {
+            text: 'Address 2',
+            align: 'left',
+            value: 'address2'
+          },
+          {
+            text: 'City',
+            align: 'left',
+            value: 'city'
+          },
+          {
+            text: 'State',
+            align: 'left',
+            value: 'state'
+          },
+          {
+            text: 'Zipcode',
+            align: 'left',
+            value: 'zipcode'
+          },
+          {
+            text: 'Actions',
+            value: 'actions',
+            sortable: false
+          }
+        ],
+        sortBy: 'name'
+      }
     }
   },
   mounted() {
@@ -72,8 +83,11 @@ export default {
     this.$routeUtils.removeQueryParam(this, 'success')
   },
   methods: {
-    getCustomerDetailLink(id) {
-      return `/customers/detail?id=${id}`
+    handleRowClick(event) {
+      this.$router.push({
+        path: '/customers/detail',
+        query: { id: event.id }
+      })
     }
   },
   head() {

@@ -10,7 +10,7 @@
       <v-card-text> {{ message }} </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="secondary" @click="dialog = false">
+        <v-btn outlined @click="dialog = false">
           Cancel
         </v-btn>
         <v-btn color="primary" @click="respond()">

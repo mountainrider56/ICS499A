@@ -5,18 +5,16 @@
       Welcome to the EagleEYE MSP Application. The tool to generate quotes for
       our customers.
     </p>
-    <h2>Get started</h2>
-    <v-list dense>
-      <v-list-item>
-        <v-btn to="/quotes" color="primary">Create a quote</v-btn>
-      </v-list-item>
-      <v-list-item>
-        <v-btn to="/customers/create" color="primary">Add a Customer</v-btn>
-      </v-list-item>
-      <v-list-item>
-        <v-btn to="/employees/create" color="primary">Add an Employee</v-btn>
-      </v-list-item>
-    </v-list>
+    <h2 class="mb-3">Get started</h2>
+    <v-btn to="/quotes/select-customer" class="mr-3" outlined color="primary">
+      Create a quote
+    </v-btn>
+    <v-btn to="/customers/create" class="mr-3" outlined color="primary">
+      Add a Customer
+    </v-btn>
+    <v-btn to="/employees/create" class="mr-3" outlined color="primary">
+      Add an Employee
+    </v-btn>
   </v-container>
 </template>
 
