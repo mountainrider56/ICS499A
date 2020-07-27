@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -33,6 +34,19 @@ public class QuoteController {
     private final QuoteRepository quoteRepository;
     private final CustomerService customerService;
     private final Map<String, Service> services;
+
+    @PutMapping
+    public Quote saveQuote(@RequestBody Quote quote) {
+        quote.setTotal(0);
+        quote.getSelections().forEach((key, value) -> {
+            double total = quote.getTotal();
+            Service service = services.get(key);
+            double serviceTotal = service.getPrice() * value.getQuantity();
+            quote.setTotal(total + serviceTotal);
+        });
+        quote.setTimestamp(Instant.now());
+        return quoteRepository.save(quote);
+    }
 
     @GetMapping
     public List<Quote> getQuotes() {

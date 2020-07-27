@@ -10,7 +10,7 @@
       <v-btn class="mt-6 mr-3" color="primary" @click.stop.prevent="submit()">
         Update
       </v-btn>
-      <v-btn class="mt-6" @click.stop.prevent="cancel()">
+      <v-btn class="mt-6" outlined exact @click.stop.prevent="cancel()">
         Cancel
       </v-btn>
     </EmployeeForm>

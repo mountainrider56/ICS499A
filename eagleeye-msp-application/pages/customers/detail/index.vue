@@ -11,7 +11,10 @@
       <v-btn class="mt-6 mr-3" color="primary" @click.stop.prevent="submit()">
         Update
       </v-btn>
-      <v-btn class="mt-6" color="secondary">Create a quote</v-btn>
+      <v-btn class="mt-6 mr-3" color="secondary">Create a quote</v-btn>
+      <v-btn class="mt-6" outlined to="/customers" exact>
+        Cancel
+      </v-btn>
       <DeleteModal
         ref="deleteModal"
         :message="modal.delete.message"

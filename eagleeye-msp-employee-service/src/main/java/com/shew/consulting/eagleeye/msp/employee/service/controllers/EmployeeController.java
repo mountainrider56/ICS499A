@@ -32,7 +32,7 @@ public class EmployeeController {
             employee.setPassword(passwordEncoder.encode(employee.getPassword()));
             return employeeRepository.save(employee);
         } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to save employee.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to save employee.");
         }
     }
 

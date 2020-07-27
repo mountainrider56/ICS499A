@@ -1,29 +1,50 @@
 <template>
   <v-container>
-    <h1>{{ title }}</h1>
-    <v-row>
-      <v-col cols="3">
-        Device Monitoring (${{ items.deviceMonitoring.price }})
-      </v-col>
-      <v-col cols="9">
-        <v-text-field label="Quantity" outlined></v-text-field>
-      </v-col>
-    </v-row>
+    <h1>{{ title }} for {{ customer.name }}</h1>
+    <QuoteForm ref="quoteForm" :services="services" :quote="quote">
+      <v-btn color="primary" class="mt-6 mr-3" @click.stop.prevent="submit()">
+        Add
+      </v-btn>
+      <v-btn class="mt-6" outlined to="/quotes" exact>
+        Cancel
+      </v-btn>
+    </QuoteForm>
   </v-container>
 </template>
 
 <script>
 export default {
-  async asyncData({ $axios }) {
-    const items = await $axios.$get(
-      `/api/eagleeye-msp/v1/quotes/pc-management/items`
-    )
-    return { items }
+  async asyncData({ $quoteApi, $customerApi, route }) {
+    const customer = await $customerApi.getCustomer(route.query.customerId)
+    const services = await $quoteApi.getServices()
+    const quote = {
+      selections: {},
+      customerId: customer.id
+    }
+    for (const id in services) {
+      quote.selections[id] = { quantity: 0 }
+    }
+    return {
+      customer,
+      services,
+      quote
+    }
   },
   data() {
     return {
       title: 'Create a Quote',
       client: {}
+    }
+  },
+  methods: {
+    async submit() {
+      const data = await this.$refs.quoteForm.submit()
+      if (data) {
+        this.$router.push({
+          path: '/quotes/detail',
+          query: { id: data.id, success: true }
+        })
+      }
     }
   },
   head() {

@@ -2,8 +2,11 @@
   <v-container>
     <h1>{{ title }}</h1>
     <EmployeeForm ref="employeeForm" :security-roles="securityRoles">
-      <v-btn color="primary" class="mt-6" @click.stop.prevent="submit()">
+      <v-btn color="primary" class="mt-6 mr-3" @click.stop.prevent="submit()">
         Add
+      </v-btn>
+      <v-btn class="mt-6" outlined to="/employees" exact>
+        Cancel
       </v-btn>
     </EmployeeForm>
   </v-container>

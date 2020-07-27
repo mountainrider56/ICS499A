@@ -68,9 +68,22 @@ export default (context, inject) => {
           })
         })
     },
-    async getCustomersIdAndName() {
+    async getCustomersIdAndNameMap() {
       return await context.$axios
-        .$get('/api/eagleeye-msp/v1/customers/ids/names')
+        .$get('/api/eagleeye-msp/v1/customers/ids/names/map')
+        .then((response) => {
+          return response
+        })
+        .catch((e) => {
+          context.error({
+            statusCode: e.response.status,
+            message: 'Unable to get customers.'
+          })
+        })
+    },
+    async getCustomersIdAndNameList() {
+      return await context.$axios
+        .$get('/api/eagleeye-msp/v1/customers/ids/names/list')
         .then((response) => {
           return response
         })

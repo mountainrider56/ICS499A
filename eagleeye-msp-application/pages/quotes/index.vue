@@ -1,7 +1,9 @@
 <template>
   <v-container>
     <h1>{{ title }}</h1>
-    <v-btn small to="/quotes/create" color="primary">Create a Quote</v-btn>
+    <v-btn small to="/quotes/select-customer" color="primary">
+      Create a Quote
+    </v-btn>
     <v-data-iterator :items="quotes" :items-per-page.sync="itemsPerPage">
       <template v-slot:default="props">
         <v-row>
@@ -31,7 +33,7 @@
 export default {
   async asyncData({ $quoteApi, $customerApi }) {
     const quotes = await $quoteApi.getQuotes()
-    const customers = await $customerApi.getCustomersIdAndName()
+    const customers = await $customerApi.getCustomersIdAndNameMap()
     return { quotes, customers }
   },
   data() {
@@ -41,7 +43,7 @@ export default {
     }
   },
   methods: {
-    getQuoteDetailLink(id) {
+    getQuoteDetailLink(id, customerId) {
       return `/quotes/detail?id=${id}`
     }
   },

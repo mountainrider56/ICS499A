@@ -115,7 +115,7 @@ class EmployeeControllerIntSpec extends Specification {
         ResultActions actions = mockMvc.perform(putBuilder)
 
         then:
-        actions.andExpect(status().isBadRequest())
+        actions.andExpect(status().isInternalServerError())
         actions.andReturn().response.errorMessage == 'Unable to save employee.'
     }
 

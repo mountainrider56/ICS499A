@@ -36,11 +36,16 @@ public class CustomerController {
         return customerRepository.findAll();
     }
 
-    @GetMapping("ids/names")
-    public Map<Long, CustomerIdAndName> getCustomersIdAndName() {
-        return customerRepository.getAllBy(CustomerIdAndName.class)
-                                 .parallelStream()
-                                 .collect(Collectors.toMap(CustomerIdAndName::getId, item -> item));
+    @GetMapping("ids/names/map")
+    public Map<Long, CustomerIdAndName> getCustomersIdAndNameMap() {
+        return getCustomersIdAndNameList()
+                .parallelStream()
+                .collect(Collectors.toMap(CustomerIdAndName::getId, item -> item));
+    }
+
+    @GetMapping("ids/names/list")
+    public List<CustomerIdAndName> getCustomersIdAndNameList() {
+        return customerRepository.getAllBy(CustomerIdAndName.class);
     }
 
     @GetMapping("{customerId}")

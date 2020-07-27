@@ -118,14 +118,14 @@ class CustomerControllerIntSpec extends Specification {
     }
 
     @Unroll
-    def 'getCustomersIdAndName'() {
+    def 'getCustomersIdAndNameMap'() {
         setup:
         customerList.forEach({ i ->
             customerRepository.save(i)
         })
 
         when:
-        ResultActions actions = mockMvc.perform(get('/v1/customers/ids/names'))
+        ResultActions actions = mockMvc.perform(get('/v1/customers/ids/names/map'))
 
         then:
         actions.andExpect(status().isOk())
@@ -136,6 +136,27 @@ class CustomerControllerIntSpec extends Specification {
         customerList                     | expectedResult
         [getCustomer1(), getCustomer2()] | '{"1":{"name":"test1","id":1},"2":{"name":"test2","id":2}}'
         []                               | '{}'
+    }
+
+    @Unroll
+    def 'getCustomersIdAndNameList'() {
+        setup:
+        customerList.forEach({ i ->
+            customerRepository.save(i)
+        })
+
+        when:
+        ResultActions actions = mockMvc.perform(get('/v1/customers/ids/names/list'))
+
+        then:
+        actions.andExpect(status().isOk())
+        actions.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        actions.andReturn().response.contentAsString == expectedResult
+
+        where:
+        customerList                     | expectedResult
+        [getCustomer1(), getCustomer2()] | '[{"name":"test1","id":1},{"name":"test2","id":2}]'
+        []                               | '[]'
     }
 
     def 'getCustomer - happy path'() {

@@ -2,8 +2,11 @@
   <v-container>
     <h1>{{ title }}</h1>
     <CustomerForm ref="customerForm" :states="states">
-      <v-btn color="primary" class="mt-6" @click.stop.prevent="submit()">
+      <v-btn color="primary" class="mt-6 mr-3" @click.stop.prevent="submit()">
         Add
+      </v-btn>
+      <v-btn class="mt-6" outlined to="/customers" exact>
+        Cancel
       </v-btn>
     </CustomerForm>
   </v-container>

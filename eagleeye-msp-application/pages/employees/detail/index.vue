@@ -17,11 +17,14 @@
         Update
       </v-btn>
       <v-btn
-        class="mt-6"
+        class="mt-6 mr-3"
         color="secondary"
         @click.stop.prevent="navigateToUpdatePasswordPage()"
       >
         Update password
+      </v-btn>
+      <v-btn class="mt-6" outlined to="/employees" exact>
+        Cancel
       </v-btn>
       <DeleteModal
         ref="deleteModal"
