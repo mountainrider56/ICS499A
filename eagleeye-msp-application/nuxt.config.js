@@ -37,6 +37,7 @@ export default {
     { src: '@/plugins/quote-service.js' },
     { src: '@/plugins/route-utils.js' }
   ],
+  router: { middleware: ['auth'] },
   /*
    ** Nuxt.js dev-modules
    */
@@ -63,7 +64,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/axios', '@nuxtjs/proxy'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/proxy', '@nuxtjs/auth'],
   axios: {
     proxy: true
   },
