@@ -1,7 +1,6 @@
 package com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.pc;
 
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.Quote;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.utils.PdfTableBuilder;
 import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
@@ -15,8 +14,7 @@ public class PdfPcPatchManagement {
     private final Map<String, Service> services;
     private final PdfTableBuilder builder;
 
-    public PdfPcPatchManagement(Quote quote, Document document, Map<String, Service> services)
-            throws DocumentException {
+    public PdfPcPatchManagement(Quote quote, Document document, Map<String, Service> services) throws Exception {
         this.quote = quote;
         this.document = document;
         this.services = services;
@@ -24,7 +22,7 @@ public class PdfPcPatchManagement {
         init();
     }
 
-    private void init() throws DocumentException {
+    private void init() throws Exception {
         builder.withQuote(quote)
                .withServices(services)
                .withDocument(document)

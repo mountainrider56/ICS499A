@@ -1,27 +1,19 @@
 package com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf;
 
 import com.itextpdf.text.Document;
-import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.shew.consulting.eagleeye.msp.quote.service.model.external.Customer;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.Quote;
-import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.pc.PdfPcDeviceMonitoring;
-import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.pc.PdfPcPatchManagement;
+import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.PdfCustomer;
+import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.PdfLogo;
+import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.pc.*;
 import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 import lombok.Data;
-import org.springframework.util.StringUtils;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.Instant;
 import java.util.Map;
 
-import static com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.utils.PdfFonts.getFont12;
 import static com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.utils.PdfFonts.getFont14Bold;
 import static com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.utils.PdfFormat.newLine;
-import static com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.utils.PdfTableBuilder.getWhiteCell;
 
 @Data
 public class PdfDocument {
@@ -38,46 +30,41 @@ public class PdfDocument {
         document.open();
         document.addCreationDate();
 
-        Path path = Paths.get(ClassLoader.getSystemResource("pdf/images/logo.png").toURI());
-        Image img = Image.getInstance(path.toAbsolutePath().toString());
-        img.scaleAbsolute(184, 50);
-        document.add(img);
+        new PdfLogo(document);
+        new PdfCustomer(document, customer, quote);
+        newLine(document, 2);
 
-        // Header information
-        PdfPTable headerTable = new PdfPTable(2);
-        headerTable.setWidthPercentage(100);
-        PdfPCell customerCell = getWhiteCell();
-        customerCell.addElement(new Paragraph("Customer", getFont14Bold()));
-        customerCell.addElement(new Paragraph(customer.getName(), getFont12()));
-        customerCell.addElement(new Paragraph(customer.getAddress1(), getFont12()));
-        if (!StringUtils.isEmpty(customer.getAddress2())) {
-            customerCell.addElement(new Paragraph(customer.getAddress2(), getFont12()));
-        }
-        String location = customer.getCity() + ", " + customer.getState() + " " + customer.getZipcode();
-        customerCell.addElement(new Paragraph(location, getFont12()));
-        customerCell.addElement(new Paragraph(customer.getTelephone(), getFont12()));
-        customerCell.addElement(new Paragraph(customer.getEmail(), getFont12()));
-
-        headerTable.addCell(customerCell);
-        PdfPCell dateCell = getWhiteCell();
-        dateCell.addElement(new Paragraph("Start Date", getFont14Bold()));
-        dateCell.addElement(new Paragraph(Instant.now().toString(), getFont12()));
-        headerTable.addCell(dateCell);
-        document.add(headerTable);
-
-        document.add(newLine());
-        document.add(newLine());
-
+        // PC management
         document.add(new Paragraph("PC Management", getFont14Bold()));
-
-        document.add(newLine());
+        newLine(document, 1);
 
         new PdfPcDeviceMonitoring(quote, document, services);
-
-        document.add(newLine());
-        document.add(newLine());
+        newLine(document, 2);
 
         new PdfPcPatchManagement(quote, document, services);
+        newLine(document, 2);
+
+        new PdfPcHelpDesk(quote, document, services);
+        newLine(document, 3);
+
+        new PdfPcPeriodicSystemOptimization(quote, document, services);
+        newLine(document, 2);
+
+        new PdfPcBackupManagement(quote, document, services);
+        newLine(document, 2);
+
+        new PdfPcAntivirusDetection(quote, document, services);
+        newLine(document, 2);
+
+        new PdfPcAntiMalwareAntiSpywareDetection(quote, document, services);
+        newLine(document, 2);
+
+        new PdfPcBasicSpamService(quote, document, services);
+        newLine(document, 2);
+
+        // Server management
+        document.add(new Paragraph("Server Management", getFont14Bold()));
+        newLine(document, 1);
 
         document.close();
     }

@@ -7,14 +7,14 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 
 import java.util.Map;
 
-public class PdfPcDeviceMonitoring {
+public class PdfPcBackupManagement {
 
     private final Quote quote;
     private final Document document;
     private final Map<String, Service> services;
     private final PdfTableBuilder builder;
 
-    public PdfPcDeviceMonitoring(Quote quote, Document document, Map<String, Service> services) throws Exception {
+    public PdfPcBackupManagement(Quote quote, Document document, Map<String, Service> services) throws Exception {
         this.quote = quote;
         this.document = document;
         this.services = services;
@@ -27,10 +27,9 @@ public class PdfPcDeviceMonitoring {
                .withServices(services)
                .withDocument(document)
                .withHeaders("Workstation")
-               .withQuantityRow("DeviceMonitoringPC")
-               .withSubRow("DeviceMonitoringPerformancePC")
-               .withSubRow("DeviceMonitoringSystemLogsPC")
-               .withSubRow("DeviceMonitoringRemoteControlPC")
+               .withRow("BackupManagementPC")
+               .withQuantitySubRow("BackupManagementMonitoringPC")
+               .withQuantitySubRow("BackupManagementIntegratedBackupPC")
                .build();
     }
 
