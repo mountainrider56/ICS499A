@@ -7,6 +7,8 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.quote.Quote;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.PdfCustomer;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.PdfLogo;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.pc.*;
+import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.server.PdfServerDeviceMonitoring;
+import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.server.PdfServerPatchManagement;
 import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 import lombok.Data;
 
@@ -65,6 +67,12 @@ public class PdfDocument {
         // Server management
         document.add(new Paragraph("Server Management", getFont14Bold()));
         newLine(document, 1);
+
+        new PdfServerDeviceMonitoring(quote, document, services);
+        newLine(document, 2);
+
+        new PdfServerPatchManagement(quote, document, services);
+        newLine(document, 2);
 
         document.close();
     }
