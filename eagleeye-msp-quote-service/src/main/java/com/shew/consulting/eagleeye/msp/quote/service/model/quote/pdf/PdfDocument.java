@@ -6,6 +6,7 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.external.Customer;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.Quote;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.PdfCustomer;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.PdfLogo;
+import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.additional.*;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.pc.*;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.server.*;
 import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
@@ -63,6 +64,8 @@ public class PdfDocument {
         new PdfPcBasicSpamService(quote, document, services);
         newLine(document, 2);
 
+        //FIXME
+
         // Server management
         document.add(new Paragraph("Server Management", getFont14Bold()));
         newLine(document, 1);
@@ -81,6 +84,42 @@ public class PdfDocument {
 
         new PdfServerBackupManagement(quote, document, services);
         newLine(document, 2);
+
+        new PdfServerAntiVirusAntiSpywareDetection(quote, document, services);
+        newLine(document, 2);
+
+        new PdfServerAdvancedSpamService(quote, document, services);
+        newLine(document, 2);
+
+        //FIXME
+
+        document.add(new Paragraph("Additional Services", getFont14Bold()));
+        newLine(document, 1);
+
+        new PdfAdditionalDarkWebMonitoring(quote, document, services);
+        newLine(document, 2);
+
+        new PdfAdditionalReporting(quote, document, services);
+        newLine(document, 2);
+
+        new PdfAdditionalUPSTesting(quote, document, services);
+        newLine(document, 2);
+
+        new PdfAdditionalNetworkDevices(quote, document, services);
+        newLine(document, 2);
+
+        new PdfAdditionalAssetWarrantyManagement(quote, document, services);
+        newLine(document, 2);
+
+        new PdfAdditionalPeriodicPlanning(quote, document, services);
+        newLine(document, 2);
+
+        new PdfAdditionalHourlyRates(quote, document, services);
+        newLine(document, 2);
+
+        //FIXME
+
+        //FIXME
 
         document.close();
     }
