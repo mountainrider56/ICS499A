@@ -7,14 +7,14 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 
 import java.util.Map;
 
-public class PdfServerPatchManagement {
+public class PdfServerHelpDesk {
 
     private final Quote quote;
     private final Document document;
     private final Map<String, Service> services;
     private final PdfTableBuilder builder;
 
-    public PdfServerPatchManagement(Quote quote, Document document, Map<String, Service> services) throws Exception {
+    public PdfServerHelpDesk(Quote quote, Document document, Map<String, Service> services) throws Exception {
         this.quote = quote;
         this.document = document;
         this.services = services;
@@ -27,10 +27,9 @@ public class PdfServerPatchManagement {
                .withServices(services)
                .withDocument(document)
                .withHeaders("Workstation")
-               .withRow("PatchManagementSERVER")
-               .withQuantitySubRow("PatchManagementWindowsUpdatesSERVER")
-               .withQuantitySubRow("PatchManagementOfficeUpdatesSERVER")
-               .withQuantitySubRow("PatchManagementOtherUpdatesSERVER")
+               .withQuantityRow("HelpDeskSERVER")
+               .withSubRow("HelpDeskTelephoneSupportSERVER")
+               .withSubRow("HelpDeskRemoteControlSERVER")
                .build();
     }
 
