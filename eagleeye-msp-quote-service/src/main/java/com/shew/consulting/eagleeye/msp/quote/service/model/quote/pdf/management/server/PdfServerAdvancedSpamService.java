@@ -14,7 +14,8 @@ public class PdfServerAdvancedSpamService {
     private final Map<String, Service> services;
     private final PdfTableBuilder builder;
 
-    public PdfServerAdvancedSpamService(Quote quote, Document document, Map<String, Service> services) throws Exception {
+    public PdfServerAdvancedSpamService(Quote quote, Document document, Map<String, Service> services)
+            throws Exception {
         this.quote = quote;
         this.document = document;
         this.services = services;

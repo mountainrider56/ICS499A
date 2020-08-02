@@ -14,7 +14,8 @@ public class PdfAdditionalDarkWebMonitoring {
     private final Map<String, Service> services;
     private final PdfTableBuilder builder;
 
-    public PdfAdditionalDarkWebMonitoring(Quote quote, Document document, Map<String, Service> services) throws Exception {
+    public PdfAdditionalDarkWebMonitoring(Quote quote, Document document, Map<String, Service> services)
+            throws Exception {
         this.quote = quote;
         this.document = document;
         this.services = services;

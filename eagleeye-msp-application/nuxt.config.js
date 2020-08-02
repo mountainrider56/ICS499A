@@ -35,15 +35,15 @@ export default {
     { src: '@/plugins/customer-service.js' },
     { src: '@/plugins/employee-service.js' },
     { src: '@/plugins/quote-service.js' },
-    { src: '@/plugins/route-utils.js' }
+    { src: '@/plugins/login-service.js' },
+    { src: '@/plugins/route-utils.js' },
+    { src: '@/plugins/user-flags.js' }
   ],
   /*
    ** Nuxt.js dev-modules
    */
   buildModules: [
-    // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
     [
       '@nuxtjs/vuetify',
@@ -63,7 +63,39 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/axios', '@nuxtjs/proxy'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/auth', '@nuxtjs/proxy'],
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      home: '/',
+      callback: '/login'
+    },
+    rewriteRedirects: false,
+    strategies: {
+      local: {
+        scopeKey: 'securityRole',
+        endpoints: {
+          login: {
+            url: '/api/eagleeye-msp/v1/employees/login',
+            method: 'post',
+            propertyName: 'token'
+          },
+          logout: false, // { url: '/api/auth/logout', method: 'post' },
+          user: {
+            url: '/api/eagleeye-msp/v1/employees/login',
+            method: 'get',
+            propertyName: false
+          }
+        },
+        tokenRequired: true,
+        tokenType: ''
+      }
+    }
+  },
+  router: {
+    middleware: ['auth', 'custom-session']
+  },
   axios: {
     proxy: true
   },

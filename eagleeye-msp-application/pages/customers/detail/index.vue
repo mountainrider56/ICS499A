@@ -11,7 +11,9 @@
       <v-btn class="mt-6 mr-3" color="primary" @click.stop.prevent="submit()">
         Update
       </v-btn>
-      <v-btn class="mt-6 mr-3" color="secondary">Create a quote</v-btn>
+      <v-btn class="mt-6 mr-3" color="secondary" @click.prevent="selectQuote()">
+        {{ quoteText }}
+      </v-btn>
       <v-btn class="mt-6" outlined to="/customers" exact>
         Cancel
       </v-btn>
@@ -27,10 +29,11 @@
 
 <script>
 export default {
-  async asyncData({ $customerApi, route }) {
+  async asyncData({ $customerApi, $quoteApi, route }) {
     const states = await $customerApi.getStates()
     const customer = await $customerApi.getCustomer(route.query.id)
-    return { customer, states }
+    const quoteId = await $quoteApi.getQuoteIdByCustomer(customer.id)
+    return { customer, states, quoteId }
   },
   data() {
     return {
@@ -55,6 +58,11 @@ export default {
       }
     }
   },
+  computed: {
+    quoteText() {
+      return this.quoteId ? 'Edit Quote' : 'Create a Quote'
+    }
+  },
   mounted() {
     this.name = this.customer.name
     this.success = this.$route.query.success
@@ -72,6 +80,19 @@ export default {
         this.modal.fail.message = this.modal.fail.update.message
       }
       window.scrollTo(0, 0)
+    },
+    selectQuote() {
+      if (this.quoteId === null) {
+        this.$router.push({
+          path: '/quotes/create',
+          query: { customerId: this.customer.id }
+        })
+      } else {
+        this.$router.push({
+          path: '/quotes/detail',
+          query: { id: this.quoteId }
+        })
+      }
     },
     async deleteCustomer() {
       const data = await this.$customerApi.deleteCustomer(this.customer.id)

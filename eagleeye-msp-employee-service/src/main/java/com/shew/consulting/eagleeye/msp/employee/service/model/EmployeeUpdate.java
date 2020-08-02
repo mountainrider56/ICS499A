@@ -3,10 +3,7 @@ package com.shew.consulting.eagleeye.msp.employee.service.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shew.consulting.eagleeye.msp.employee.service.model.validator.UniqueUsername;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 @UniqueUsername
 @JsonIgnoreProperties(ignoreUnknown=true)
@@ -14,18 +11,21 @@ public class EmployeeUpdate extends Employee {
 
     @Override
     @NotBlank(message = "Username is required")
+//    @Size(max = 15, message = "Username must be equal to or less than 15 characters") //TODO: TEST
     public String getUsername() {
         return super.getUsername();
     }
 
     @Override
     @NotBlank(message = "First name is required")
+//    @Size(max = 30, message = "First name must be equal to or less than 30 characters") //TODO: TEST
     public String getFirstName() {
         return super.getFirstName();
     }
 
     @Override
     @NotBlank(message = "Last name is required")
+//    @Size(max = 30, message = "Last name must be equal to or less than 30 characters") //TODO: TEST
     public String getLastName() {
         return super.getLastName();
     }
@@ -33,6 +33,7 @@ public class EmployeeUpdate extends Employee {
     @Override
     @Email(message = "Invalid email format")
     @NotEmpty(message = "Email is required")
+//    @Size(max = 50, message = "Email must be equal to or less than 50 characters") //TODO: TEST
     public String getEmail() {
         return super.getEmail();
     }
@@ -41,6 +42,12 @@ public class EmployeeUpdate extends Employee {
     @NotNull(message = "Security role is required")
     public SecurityRole getSecurityRole() {
         return super.getSecurityRole();
+    }
+
+    @Override
+    @NotNull(message = "Account status is required")
+    public AccountStatus getAccountStatus() {
+        return super.getAccountStatus();
     }
 
     public Employee getEmployee() {
@@ -52,6 +59,7 @@ public class EmployeeUpdate extends Employee {
         employee.setEmail(getEmail());
         employee.setSecurityRole(getSecurityRole());
         employee.setPassword(getPassword());
+        employee.setAccountStatus(getAccountStatus());
         return employee;
     }
 

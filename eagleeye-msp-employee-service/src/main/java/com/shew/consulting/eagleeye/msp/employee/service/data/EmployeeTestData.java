@@ -1,6 +1,7 @@
 package com.shew.consulting.eagleeye.msp.employee.service.data;
 
 import com.shew.consulting.eagleeye.msp.employee.service.controllers.EmployeeController;
+import com.shew.consulting.eagleeye.msp.employee.service.model.AccountStatus;
 import com.shew.consulting.eagleeye.msp.employee.service.model.EmployeeSave;
 import com.shew.consulting.eagleeye.msp.employee.service.model.SecurityRole;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +62,7 @@ public class EmployeeTestData {
         employeeSave.setSecurityRole(SecurityRole.USER);
         employeeSave.setPassword("Password11**");
         employeeSave.setPassword2(employeeSave.getPassword());
+        employeeSave.setAccountStatus(AccountStatus.ACTIVE);
         return employeeSave;
     }
 
@@ -73,6 +75,7 @@ public class EmployeeTestData {
         employeeSave.setSecurityRole(SecurityRole.ADMIN);
         employeeSave.setPassword("Password11**");
         employeeSave.setPassword2(employeeSave.getPassword());
+        employeeSave.setAccountStatus(AccountStatus.ACTIVE);
         return employeeSave;
     }
 
@@ -85,6 +88,7 @@ public class EmployeeTestData {
         employeeSave.setSecurityRole(SecurityRole.USER);
         employeeSave.setPassword("Password11**");
         employeeSave.setPassword2(employeeSave.getPassword());
+        employeeSave.setAccountStatus(AccountStatus.ACTIVE);
         return employeeSave;
     }
 
@@ -97,6 +101,7 @@ public class EmployeeTestData {
         employeeSave.setSecurityRole(SecurityRole.ADMIN);
         employeeSave.setPassword("Password11**");
         employeeSave.setPassword2(employeeSave.getPassword());
+        employeeSave.setAccountStatus(AccountStatus.ACTIVE);
         return employeeSave;
     }
 
@@ -109,6 +114,7 @@ public class EmployeeTestData {
         employeeSave.setSecurityRole(SecurityRole.USER);
         employeeSave.setPassword("Password11**");
         employeeSave.setPassword2(employeeSave.getPassword());
+        employeeSave.setAccountStatus(AccountStatus.ACTIVE);
         return employeeSave;
     }
 
@@ -121,6 +127,7 @@ public class EmployeeTestData {
         employeeSave.setSecurityRole(SecurityRole.ADMIN);
         employeeSave.setPassword("Password11**");
         employeeSave.setPassword2(employeeSave.getPassword());
+        employeeSave.setAccountStatus(AccountStatus.ACTIVE);
         return employeeSave;
     }
 
@@ -133,6 +140,7 @@ public class EmployeeTestData {
         employeeSave.setSecurityRole(SecurityRole.USER);
         employeeSave.setPassword("Password11**");
         employeeSave.setPassword2(employeeSave.getPassword());
+        employeeSave.setAccountStatus(AccountStatus.ACTIVE);
         return employeeSave;
     }
 
@@ -145,6 +153,7 @@ public class EmployeeTestData {
         employeeSave.setSecurityRole(SecurityRole.ADMIN);
         employeeSave.setPassword("Password11**");
         employeeSave.setPassword2(employeeSave.getPassword());
+        employeeSave.setAccountStatus(AccountStatus.ACTIVE);
         return employeeSave;
     }
 
@@ -157,6 +166,7 @@ public class EmployeeTestData {
         employeeSave.setSecurityRole(SecurityRole.USER);
         employeeSave.setPassword("Password11**");
         employeeSave.setPassword2(employeeSave.getPassword());
+        employeeSave.setAccountStatus(AccountStatus.ACTIVE);
         return employeeSave;
     }
 
@@ -169,6 +179,7 @@ public class EmployeeTestData {
         employeeSave.setSecurityRole(SecurityRole.ADMIN);
         employeeSave.setPassword("Password11**");
         employeeSave.setPassword2(employeeSave.getPassword());
+        employeeSave.setAccountStatus(AccountStatus.ACTIVE);
         return employeeSave;
     }
 

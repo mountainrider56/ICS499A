@@ -18,8 +18,8 @@ import java.util.Optional;
  * Expose endpoints for the employee service.
  */
 @RestController
-@RequestMapping("v1/employees")
 @RequiredArgsConstructor
+@RequestMapping("v1/employees")
 public class EmployeeController {
 
     private final EmployeeRepository employeeRepository;

@@ -47,14 +47,20 @@
         :error="!errors.employee.password.valid"
         :error-messages="errors.employee.password.message"
         label="Password"
-        type="password"
+        :type="form.password1.show ? 'text' : 'password'"
+        counter
+        :append-icon="form.password1.show ? 'mdi-eye' : 'mdi-eye-off'"
+        @click:append="form.password1.show = !form.password1.show"
       ></v-text-field>
       <v-text-field
         v-model="employee.password2"
         :error="!errors.employee.password2.valid"
         :error-messages="errors.employee.password2.message"
         label="Confirm Password"
-        type="password"
+        :type="form.password2.show ? 'text' : 'password'"
+        counter
+        :append-icon="form.password2.show ? 'mdi-eye' : 'mdi-eye-off'"
+        @click:append="form.password2.show = !form.password2.show"
       ></v-text-field>
     </div>
 
@@ -135,7 +141,15 @@ export default {
   },
   data() {
     return {
-      errors: defaults.getNoErrors()
+      errors: defaults.getNoErrors(),
+      form: {
+        password1: {
+          show: false
+        },
+        password2: {
+          show: false
+        }
+      }
     }
   },
   methods: {
