@@ -8,7 +8,12 @@
     </v-alert>
     <h1>{{ name }}</h1>
     <CustomerForm ref="customerForm" :states="states" :customer="customer">
-      <v-btn class="mt-6 mr-3" color="primary" @click.stop.prevent="submit()">
+      <v-btn
+        type="submit"
+        class="mt-6 mr-3"
+        color="primary"
+        @click.stop.prevent="submit()"
+      >
         Update
       </v-btn>
       <v-btn class="mt-6 mr-3" color="secondary" @click.prevent="selectQuote()">

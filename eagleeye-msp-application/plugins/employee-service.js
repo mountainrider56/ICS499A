@@ -13,6 +13,19 @@ export default (context, inject) => {
           })
         })
     },
+    async getAccountStatuses() {
+      return await context.$axios
+        .$get('/api/eagleeye-msp/v1/employees/account-statuses')
+        .then((response) => {
+          return response
+        })
+        .catch((e) => {
+          context.error({
+            statusCode: e.response.status,
+            message: 'Unable to get valid account statuses.'
+          })
+        })
+    },
     async getEmployee(id) {
       return await context.$axios
         .$get(`/api/eagleeye-msp/v1/employees/${id}`)

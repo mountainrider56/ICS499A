@@ -7,8 +7,10 @@ export default async (context) => {
       await context.$auth.logout()
     }
   }
-  const isActive = await session.isSessionActive()
-  if (context.$auth && context.$auth.loggedIn && !isActive) {
-    session.invalidateSession()
+  if (context.$auth && context.$auth.loggedIn) {
+    const isActive = await session.isSessionActive()
+    if (!isActive) {
+      session.invalidateSession()
+    }
   }
 }

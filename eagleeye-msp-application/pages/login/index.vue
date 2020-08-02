@@ -4,6 +4,9 @@
     <p>
       Welcome to the EagleEYE MSP Application.
     </p>
+    <v-alert v-if="alert.fail.show" class="mt-7 mb-7" type="error" outlined>
+      {{ alert.fail.message }}
+    </v-alert>
     <v-form>
       <v-text-field
         v-model="login.username"
@@ -18,7 +21,12 @@
         :append-icon="form.password.show ? 'mdi-eye' : 'mdi-eye-off'"
         @click:append="form.password.show = !form.password.show"
       ></v-text-field>
-      <v-btn class="mt-6" color="primary" @click.once.prevent="userLogin()">
+      <v-btn
+        type="submit"
+        class="mt-6"
+        color="primary"
+        @click.stop.prevent="userLogin()"
+      >
         Login
       </v-btn>
     </v-form>
@@ -34,6 +42,12 @@ export default {
         username: '',
         password: ''
       },
+      alert: {
+        fail: {
+          show: false,
+          message: ''
+        }
+      },
       form: {
         password: {
           show: false
@@ -44,12 +58,12 @@ export default {
   methods: {
     async userLogin() {
       try {
-        const response = await this.$auth.loginWith('local', {
+        await this.$auth.loginWith('local', {
           data: this.login
         })
-        console.log(response.data)
       } catch (err) {
-        console.log(err)
+        this.alert.fail.show = true
+        this.alert.fail.message = err.response.data.message
       }
     }
   },

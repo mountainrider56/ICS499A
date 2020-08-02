@@ -1,5 +1,6 @@
 package com.shew.consulting.eagleeye.msp.employee.service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shew.consulting.eagleeye.msp.employee.service.model.validator.MatchingPasswords;
 import com.shew.consulting.eagleeye.msp.employee.service.model.validator.ValidPassword;
@@ -16,6 +17,7 @@ public class EmployeeSave extends EmployeeUpdate {
 
     @Override
     @ValidPassword
+    @JsonIgnore(false)
     @NotEmpty(message = "Password is required")
     public String getPassword() {
         return super.getPassword();

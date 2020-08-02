@@ -2,7 +2,12 @@
   <v-container>
     <h1>{{ title }} for {{ customer.name }}</h1>
     <QuoteForm ref="quoteForm" :services="services" :quote="quote">
-      <v-btn color="primary" class="mt-6 mr-3" @click.stop.prevent="submit()">
+      <v-btn
+        type="submit"
+        color="primary"
+        class="mt-6 mr-3"
+        @click.stop.prevent="submit()"
+      >
         Add
       </v-btn>
       <v-btn class="mt-6" outlined to="/quotes" exact>

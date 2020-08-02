@@ -25,9 +25,6 @@ export default {
       title: 'Home'
     }
   },
-  created() {
-    console.log(this.$userFlags.isAdmin())
-  },
   head() {
     return {
       title: this.title

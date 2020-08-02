@@ -11,9 +11,15 @@
       filled
       class="mt-3"
       label="Select Customer"
+      @keyup.enter="select()"
     >
     </v-autocomplete>
-    <v-btn class="mt-6 mr-3" color="primary" @click.stop.prevent="select()">
+    <v-btn
+      type="submit"
+      class="mt-6 mr-3"
+      color="primary"
+      @click.stop.prevent="select()"
+    >
       Select
     </v-btn>
     <v-btn class="mt-6" outlined to="/quotes" exact>
@@ -40,7 +46,7 @@ export default {
   methods: {
     async select() {
       this.error.message = ''
-      if (this.id === null) {
+      if (!this.id) {
         this.error.message = 'Please select a customer'
       } else {
         const data = await this.$quoteApi.getQuoteIdByCustomer(this.id)

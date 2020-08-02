@@ -10,7 +10,12 @@
       :view-pdf="viewPdf"
     ></DownloadPdf>
     <QuoteForm ref="quoteForm" class="mt-6" :services="services" :quote="quote">
-      <v-btn class="mt-6 mr-3" color="primary" @click.stop.prevent="submit()">
+      <v-btn
+        type="submit"
+        class="mt-6 mr-3"
+        color="primary"
+        @click.stop.prevent="submit()"
+      >
         Update
       </v-btn>
       <v-btn class="mt-6" outlined to="/quotes" exact>

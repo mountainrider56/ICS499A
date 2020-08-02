@@ -1,5 +1,6 @@
 package com.shew.consulting.eagleeye.msp.employee.service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,5 +39,10 @@ public class Employee {
     private String password;
 
     private AccountStatus accountStatus;
+
+    @JsonIgnore
+    public String getPassword() {
+        return password;
+    }
 
 }

@@ -1,8 +1,17 @@
 <template>
   <v-container>
     <h1>{{ title }}</h1>
-    <EmployeeForm ref="employeeForm" :security-roles="securityRoles">
-      <v-btn color="primary" class="mt-6 mr-3" @click.stop.prevent="submit()">
+    <EmployeeForm
+      ref="employeeForm"
+      :security-roles="securityRoles"
+      :account-statuses="accountStatuses"
+    >
+      <v-btn
+        type="submit"
+        color="primary"
+        class="mt-6 mr-3"
+        @click.stop.prevent="submit()"
+      >
         Add
       </v-btn>
       <v-btn class="mt-6" outlined to="/employees" exact>
@@ -16,7 +25,8 @@
 export default {
   async asyncData({ $employeeApi }) {
     const securityRoles = await $employeeApi.getSecurityRoles()
-    return { securityRoles }
+    const accountStatuses = await $employeeApi.getAccountStatuses()
+    return { securityRoles, accountStatuses }
   },
   data() {
     return {

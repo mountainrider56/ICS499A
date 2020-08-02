@@ -39,6 +39,19 @@
           :value="role"
         ></v-radio>
       </v-radio-group>
+      <v-radio-group
+        v-model="employee.accountStatus"
+        label="Account status"
+        :error="!errors.employee.accountStatus.valid"
+        :error-messages="errors.employee.accountStatus.message"
+      >
+        <v-radio
+          v-for="role in accountStatuses"
+          :key="role"
+          :label="role"
+          :value="role"
+        ></v-radio>
+      </v-radio-group>
     </div>
 
     <div v-if="!edit || password">
@@ -93,6 +106,10 @@ const defaults = {
           valid: true,
           message: ''
         },
+        accountStatus: {
+          valid: true,
+          message: ''
+        },
         password: {
           valid: true,
           message: ''
@@ -124,6 +141,10 @@ export default {
       type: Array,
       required: true
     },
+    accountStatuses: {
+      type: Array,
+      required: true
+    },
     employee: {
       type: Object,
       default() {
@@ -133,6 +154,7 @@ export default {
           lastName: '',
           email: '',
           securityRole: 'USER',
+          accountStatus: 'ACTIVE',
           password: '',
           password2: ''
         }

@@ -10,10 +10,16 @@
     <EmployeeForm
       ref="employeeForm"
       :security-roles="securityRoles"
+      :account-statuses="accountStatuses"
       :employee="employee"
       :edit="true"
     >
-      <v-btn class="mt-6 mr-3" color="primary" @click.stop.prevent="submit()">
+      <v-btn
+        type="submit"
+        class="mt-6 mr-3"
+        color="primary"
+        @click.stop.prevent="submit()"
+      >
         Update
       </v-btn>
       <v-btn
@@ -40,8 +46,9 @@
 export default {
   async asyncData({ $employeeApi, route }) {
     const securityRoles = await $employeeApi.getSecurityRoles()
+    const accountStatuses = await $employeeApi.getAccountStatuses()
     const employee = await $employeeApi.getEmployee(route.query.id)
-    return { securityRoles, employee }
+    return { securityRoles, accountStatuses, employee }
   },
   data() {
     return {
