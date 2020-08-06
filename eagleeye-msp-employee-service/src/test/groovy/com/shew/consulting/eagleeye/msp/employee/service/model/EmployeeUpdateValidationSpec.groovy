@@ -1,5 +1,6 @@
 package com.shew.consulting.eagleeye.msp.employee.service.model
 
+import net.bytebuddy.utility.RandomString
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
@@ -12,7 +13,7 @@ import javax.validation.Validator
 import javax.validation.ValidatorFactory
 
 @SpringBootTest
-@ActiveProfiles("test")
+@ActiveProfiles('test')
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class EmployeeUpdateValidationSpec extends Specification {
 
@@ -40,11 +41,13 @@ class EmployeeUpdateValidationSpec extends Specification {
         })
 
         where:
-        username   | message                | errorSize
-        null       | 'Username is required' | 1
-        ''         | 'Username is required' | 1
-        ' '        | 'Username is required' | 1
-        'username' | null                   | 0
+        username              | message                                                | errorSize
+        null                  | 'Username is required'                                 | 1
+        ''                    | 'Username is required'                                 | 1
+        ' '                   | 'Username is required'                                 | 1
+        RandomString.make(16) | 'Username must be equal to or less than 15 characters' | 1
+        RandomString.make(15) | null                                                   | 0
+        'username'            | null                                                   | 0
     }
 
     @Unroll
@@ -60,11 +63,13 @@ class EmployeeUpdateValidationSpec extends Specification {
         })
 
         where:
-        firstName | message                  | errorSize
-        null      | 'First name is required' | 1
-        ''        | 'First name is required' | 1
-        ' '       | 'First name is required' | 1
-        'name'    | null                     | 0
+        firstName             | message                                                  | errorSize
+        null                  | 'First name is required'                                 | 1
+        ''                    | 'First name is required'                                 | 1
+        ' '                   | 'First name is required'                                 | 1
+        RandomString.make(31) | 'First name must be equal to or less than 30 characters' | 1
+        RandomString.make(30) | null                                                     | 0
+        'name'                | null                                                     | 0
     }
 
     @Unroll
@@ -80,11 +85,13 @@ class EmployeeUpdateValidationSpec extends Specification {
         })
 
         where:
-        lastName | message                 | errorSize
-        null     | 'Last name is required' | 1
-        ''       | 'Last name is required' | 1
-        ' '      | 'Last name is required' | 1
-        'name'   | null                    | 0
+        lastName              | message                                                 | errorSize
+        null                  | 'Last name is required'                                 | 1
+        ''                    | 'Last name is required'                                 | 1
+        ' '                   | 'Last name is required'                                 | 1
+        RandomString.make(31) | 'Last name must be equal to or less than 30 characters' | 1
+        RandomString.make(30) | null                                                    | 0
+        'name'                | null                                                    | 0
     }
 
     @Unroll
@@ -100,12 +107,14 @@ class EmployeeUpdateValidationSpec extends Specification {
         })
 
         where:
-        email            | message                | errorSize
-        null             | 'Email is required'    | 1
-        ''               | 'Email is required'    | 1
-        ' '              | 'Invalid email format' | 1
-        'test'           | 'Invalid email format' | 1
-        'test@gmail.com' | null                   | 0
+        email                                | message                                             | errorSize
+        null                                 | 'Email is required'                                 | 1
+        ''                                   | 'Email is required'                                 | 1
+        ' '                                  | 'Invalid email format'                              | 1
+        'test'                               | 'Invalid email format'                              | 1
+        "${RandomString.make(41)}@gmail.com" | 'Email must be equal to or less than 50 characters' | 1
+        "${RandomString.make(40)}@gmail.com" | null                                                | 0
+        'test@gmail.com'                     | null                                                | 0
     }
 
     @Unroll

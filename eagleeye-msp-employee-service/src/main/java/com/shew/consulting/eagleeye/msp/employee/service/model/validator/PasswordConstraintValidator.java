@@ -7,6 +7,9 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 
+/**
+ * Custom Hibernate validator for a user's password.
+ */
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
 
     @Override

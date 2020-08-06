@@ -9,6 +9,9 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * Constraint interface for matching passwords.
+ */
 @Documented
 @Constraint(validatedBy = PasswordsMatchConstractValidator.class)
 @Target({TYPE})

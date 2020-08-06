@@ -24,8 +24,8 @@ class PasswordsMatchConstractValidatorSpec extends Specification {
 
         then:
         if (!expected) {
-            1 * context.buildConstraintViolationWithTemplate("{message}") >> builder
-            1 * builder.addPropertyNode("password2") >> nodeBuilder
+            1 * context.buildConstraintViolationWithTemplate('{message}') >> builder
+            1 * builder.addPropertyNode('password2') >> nodeBuilder
         }
         response == expected
 

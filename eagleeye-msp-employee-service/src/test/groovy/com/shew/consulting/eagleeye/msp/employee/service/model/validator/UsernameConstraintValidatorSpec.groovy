@@ -25,8 +25,8 @@ class UsernameConstraintValidatorSpec extends Specification {
 
         then:
         if (!expected) {
-            1 * context.buildConstraintViolationWithTemplate("{message}") >> builder
-            1 * builder.addPropertyNode("username") >> nodeBuilder
+            1 * context.buildConstraintViolationWithTemplate('{message}') >> builder
+            1 * builder.addPropertyNode('username') >> nodeBuilder
         }
         if (employeeUpdate != null) {
             invocation * repository.findEmployeeByUsername(employeeUpdate.getUsername()) >> Optional.ofNullable(response)

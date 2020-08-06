@@ -3,7 +3,9 @@ package com.shew.consulting.eagleeye.msp.employee.service.controllers;
 import com.shew.consulting.eagleeye.msp.employee.service.model.Employee;
 import com.shew.consulting.eagleeye.msp.employee.service.model.EmployeeSave;
 import com.shew.consulting.eagleeye.msp.employee.service.model.EmployeeUpdate;
+import com.shew.consulting.eagleeye.msp.employee.service.model.LoginAttempt;
 import com.shew.consulting.eagleeye.msp.employee.service.repository.EmployeeRepository;
+import com.shew.consulting.eagleeye.msp.employee.service.repository.LoginAttemptRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +26,7 @@ public class EmployeeController {
 
     private final EmployeeRepository employeeRepository;
     private final PasswordEncoder passwordEncoder;
+    private final LoginAttemptRepository loginAttemptRepository;
 
     @PostMapping
     public Employee saveEmployee(@Valid @RequestBody EmployeeSave employeeSave) {
@@ -45,6 +48,9 @@ public class EmployeeController {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is not existing.");
             }
             employee.setPassword(saveEmployee.get().getPassword());
+            if (employee.getAccountStatus().isActive()) {
+                loginAttemptRepository.save(new LoginAttempt(employee.getId(), 0));
+            }
             return employeeRepository.save(employee);
         } catch (Exception ex) {
             if (ex instanceof ResponseStatusException) {

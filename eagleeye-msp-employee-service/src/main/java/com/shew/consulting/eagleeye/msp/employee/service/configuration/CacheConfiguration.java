@@ -12,6 +12,9 @@ import org.springframework.lang.NonNull;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Configuration to setup Guava cache for login session.
+ */
 @Configuration
 @EnableCaching
 public class CacheConfiguration {

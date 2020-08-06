@@ -9,6 +9,9 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * Constraint interface for a valid password.
+ */
 @Documented
 @Constraint(validatedBy = PasswordConstraintValidator.class)
 @Target({METHOD})

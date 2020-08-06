@@ -11,6 +11,9 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Optional;
 
+/**
+ * Customer Hibernate validator to confirm unique username.
+ */
 @Setter
 public class UsernameConstraintValidator implements ConstraintValidator<UniqueUsername, EmployeeUpdate> {
 

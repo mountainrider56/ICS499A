@@ -12,7 +12,7 @@ import javax.validation.ConstraintViolation
 import javax.validation.Validator
 
 @SpringBootTest
-@ActiveProfiles("test")
+@ActiveProfiles('test')
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class EmployeeUpdateValidationIntSpec extends Specification {
 
@@ -43,6 +43,7 @@ class EmployeeUpdateValidationIntSpec extends Specification {
         employeeUpdate.email = 'test@gmail.com'
         employeeUpdate.password = 'Password11**'
         employeeUpdate.securityRole = SecurityRole.USER
+        employeeUpdate.accountStatus = AccountStatus.ACTIVE
         constraintViolations = validator.validate(employeeUpdate)
 
         then:
@@ -69,6 +70,7 @@ class EmployeeUpdateValidationIntSpec extends Specification {
         employee.password = 'Password11**'
         employee.lastName = 'lastName1'
         employee.securityRole = SecurityRole.USER
+        employee.accountStatus = AccountStatus.ACTIVE
         employee.email = 'employee1@gmail.com'
 
         employee
@@ -81,6 +83,7 @@ class EmployeeUpdateValidationIntSpec extends Specification {
         employee.password = 'Password11**'
         employee.lastName = 'lastName2'
         employee.securityRole = SecurityRole.ADMIN
+        employee.accountStatus = AccountStatus.ACTIVE
         employee.email = 'employee2@gmail.com'
 
         employee

@@ -6,7 +6,7 @@ import com.shew.consulting.eagleeye.msp.employee.service.model.Employee;
 import com.shew.consulting.eagleeye.msp.employee.service.model.Login;
 import com.shew.consulting.eagleeye.msp.employee.service.model.LoginAttempt;
 import com.shew.consulting.eagleeye.msp.employee.service.model.jwttoken.JwtResponse;
-import com.shew.consulting.eagleeye.msp.employee.service.model.jwttoken.JwtTokenUtil;
+import com.shew.consulting.eagleeye.msp.employee.service.model.jwttoken.JwtToken;
 import com.shew.consulting.eagleeye.msp.employee.service.repository.EmployeeRepository;
 import com.shew.consulting.eagleeye.msp.employee.service.repository.LoginAttemptRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +18,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
+/**
+ * Expose endpoints for the employee login service.
+ */
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -26,7 +29,7 @@ public class LoginController {
 
     public static final String ERROR_MESSAGE = "The username and password entered do not match our records.";
 
-    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtToken jwtToken;
     private final EmployeeRepository employeeRepository;
     private final LoginAttemptRepository loginAttemptRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -40,7 +43,7 @@ public class LoginController {
                 Employee employee = optional.get();
                 if (employee.getAccountStatus().isActive()) {
                     if (bCryptPasswordEncoder.matches(login.getPassword(), employee.getPassword())) {
-                        String token = jwtTokenUtil.generateToken(optional.get());
+                        String token = jwtToken.generateToken(optional.get());
                         sessionCache.put(token, optional.get());
                         loginAttemptRepository.save(new LoginAttempt(employee.getId(), 0));
                         return new JwtResponse(token);
@@ -70,7 +73,7 @@ public class LoginController {
             }
             loginAttemptRepository.save(loginAttempt);
         } else {
-            loginAttemptRepository.save(new LoginAttempt(employee.getId(), 0));
+            loginAttemptRepository.save(new LoginAttempt(employee.getId(), 1));
         }
     }
 

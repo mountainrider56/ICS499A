@@ -55,7 +55,7 @@ public class EmployeeTestData {
 
     private EmployeeSave employeeSave1() {
         EmployeeSave employeeSave = new EmployeeSave();
-        employeeSave.setUsername("KennyLovell");
+        employeeSave.setUsername("KLovell");
         employeeSave.setFirstName("Kenny");
         employeeSave.setLastName("Lovell");
         employeeSave.setEmail("Kenny.Lovell@EagleEYE.com");
@@ -68,7 +68,7 @@ public class EmployeeTestData {
 
     private EmployeeSave employeeSave2() {
         EmployeeSave employeeSave = new EmployeeSave();
-        employeeSave.setUsername("KarenCarroll");
+        employeeSave.setUsername("KCarroll");
         employeeSave.setFirstName("Karen");
         employeeSave.setLastName("Carroll");
         employeeSave.setEmail("Karen.Carroll@EagleEYE.com");
@@ -81,7 +81,7 @@ public class EmployeeTestData {
 
     private EmployeeSave employeeSave3() {
         EmployeeSave employeeSave = new EmployeeSave();
-        employeeSave.setUsername("LukasCalhoun");
+        employeeSave.setUsername("LCalhoun");
         employeeSave.setFirstName("Lukas");
         employeeSave.setLastName("Calhoun");
         employeeSave.setEmail("Lukas.Calhoun@EagleEYE.com");
@@ -94,7 +94,7 @@ public class EmployeeTestData {
 
     private EmployeeSave employeeSave4() {
         EmployeeSave employeeSave = new EmployeeSave();
-        employeeSave.setUsername("BrynMcclure");
+        employeeSave.setUsername("BMcclure");
         employeeSave.setFirstName("Bryn");
         employeeSave.setLastName("Mcclure");
         employeeSave.setEmail("Bryn.Mcclure@EagleEYE.com");
@@ -107,7 +107,7 @@ public class EmployeeTestData {
 
     private EmployeeSave employeeSave5() {
         EmployeeSave employeeSave = new EmployeeSave();
-        employeeSave.setUsername("GriffDawe");
+        employeeSave.setUsername("GDawe");
         employeeSave.setFirstName("Griff");
         employeeSave.setLastName("Dawe");
         employeeSave.setEmail("Griff.Dawe@EagleEYE.com");
@@ -120,7 +120,7 @@ public class EmployeeTestData {
 
     private EmployeeSave employeeSave6() {
         EmployeeSave employeeSave = new EmployeeSave();
-        employeeSave.setUsername("AnaRusso");
+        employeeSave.setUsername("ARusso");
         employeeSave.setFirstName("Ana");
         employeeSave.setLastName("Russo");
         employeeSave.setEmail("Ana.Russo@EagleEYE.com");
@@ -133,7 +133,7 @@ public class EmployeeTestData {
 
     private EmployeeSave employeeSave7() {
         EmployeeSave employeeSave = new EmployeeSave();
-        employeeSave.setUsername("ShivMedrano");
+        employeeSave.setUsername("SMedrano");
         employeeSave.setFirstName("Shiv");
         employeeSave.setLastName("Medrano");
         employeeSave.setEmail("Shiv.Medrano@EagleEYE.com");
@@ -146,7 +146,7 @@ public class EmployeeTestData {
 
     private EmployeeSave employeeSave8() {
         EmployeeSave employeeSave = new EmployeeSave();
-        employeeSave.setUsername("ElleanorClarkson");
+        employeeSave.setUsername("EClarkson");
         employeeSave.setFirstName("Elleanor");
         employeeSave.setLastName("Clarkson");
         employeeSave.setEmail("Elleanor.Clarkson@EagleEYE.com");
@@ -159,7 +159,7 @@ public class EmployeeTestData {
 
     private EmployeeSave employeeSave9() {
         EmployeeSave employeeSave = new EmployeeSave();
-        employeeSave.setUsername("SkyeBonilla");
+        employeeSave.setUsername("SBonilla");
         employeeSave.setFirstName("Skye");
         employeeSave.setLastName("Bonilla");
         employeeSave.setEmail("Skye.Bonilla@EagleEYE.com");
@@ -172,7 +172,7 @@ public class EmployeeTestData {
 
     private EmployeeSave employeeSave10() {
         EmployeeSave employeeSave = new EmployeeSave();
-        employeeSave.setUsername("ReaganBurrows");
+        employeeSave.setUsername("RBurrows");
         employeeSave.setFirstName("Reagan");
         employeeSave.setLastName("Burrows");
         employeeSave.setEmail("Reagan.Burrows@EagleEYE.com");

@@ -2,11 +2,14 @@ package com.shew.consulting.eagleeye.msp.employee.service.controllers
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.shew.consulting.eagleeye.msp.employee.service.exception.handling.GlobalExceptionHandling
+import com.shew.consulting.eagleeye.msp.employee.service.model.AccountStatus
 import com.shew.consulting.eagleeye.msp.employee.service.model.Employee
 import com.shew.consulting.eagleeye.msp.employee.service.model.EmployeeSave
 import com.shew.consulting.eagleeye.msp.employee.service.model.EmployeeUpdate
+import com.shew.consulting.eagleeye.msp.employee.service.model.LoginAttempt
 import com.shew.consulting.eagleeye.msp.employee.service.model.SecurityRole
 import com.shew.consulting.eagleeye.msp.employee.service.repository.EmployeeRepository
+import com.shew.consulting.eagleeye.msp.employee.service.repository.LoginAttemptRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
@@ -26,12 +29,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringBootTest
-@ActiveProfiles("test")
+@ActiveProfiles('test')
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class EmployeeControllerIntSpec extends Specification {
 
     @Autowired
     EmployeeRepository employeeRepository
+
+    @Autowired
+    LoginAttemptRepository loginAttemptRepository
 
     @Autowired
     PasswordEncoder passwordEncoder
@@ -45,7 +51,7 @@ class EmployeeControllerIntSpec extends Specification {
     MockMvc mockMvc
 
     def setup() {
-        EmployeeController controller = new EmployeeController(employeeRepository, passwordEncoder)
+        EmployeeController controller = new EmployeeController(employeeRepository, passwordEncoder, loginAttemptRepository)
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setControllerAdvice(new GlobalExceptionHandling())
                 .setValidator(validatorFactory)
@@ -72,7 +78,8 @@ class EmployeeControllerIntSpec extends Specification {
         employeeSave1.firstName == employee.firstName
         employeeSave1.lastName == employee.lastName
         employeeSave1.email == employee.email
-        passwordEncoder.matches(employeeSave1.getPassword(), employee.getPassword())
+        employeeSave1.accountStatus == employee.accountStatus
+        !employee.password
     }
 
     def 'saveEmployee - employee invalid'() {
@@ -88,6 +95,7 @@ class EmployeeControllerIntSpec extends Specification {
         expected['email'] = 'Email is required'
         expected['securityRole'] = 'Security role is required'
         expected['password'] = 'Password is required'
+        expected['accountStatus'] = 'Account status is required'
 
         when:
         ResultActions actions = mockMvc.perform(putBuilder)
@@ -101,7 +109,7 @@ class EmployeeControllerIntSpec extends Specification {
 
     def 'saveEmployee - exception'() {
         setup:
-        EmployeeController controller = new EmployeeController(employeeRepository, null)
+        EmployeeController controller = new EmployeeController(employeeRepository, null, null)
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setControllerAdvice(new GlobalExceptionHandling())
                 .setValidator(validatorFactory)
@@ -144,21 +152,27 @@ class EmployeeControllerIntSpec extends Specification {
         employeeSave1.firstName == employee.firstName
         employeeSave1.lastName == employee.lastName
         employeeSave1.email == employee.email
-        passwordEncoder.matches(employeeSave1.getPassword(), employee.getPassword())
+        employeeSave1.accountStatus == employee.accountStatus
+        !employee.getPassword()
         actions2.andExpect(status().isBadRequest())
     }
 
-    def 'updateEmployee'() {
+    @Unroll
+    def 'updateEmployee - #accountStatus'() {
         setup:
         EmployeeUpdate employeeSave1 = getEmployeeSave1()
+        employeeSave1.accountStatus = accountStatus
         employeeRepository.save(employeeSave1.getEmployee())
-        employeeSave1.id = 1
+        employeeSave1.id = 1 as Long
+        loginAttemptRepository.save(new LoginAttempt(employeeSave1.id, beforeAttempt))
         String request = mapper.writeValueAsString(employeeSave1)
         MockHttpServletRequestBuilder putBuilder = put('/v1/employees')
                 .contentType(MediaType.APPLICATION_JSON).content(request)
 
         when:
+        Optional<LoginAttempt> loginAttemptbefore = loginAttemptRepository.findById(employeeSave1.id)
         ResultActions actions = mockMvc.perform(putBuilder)
+        Optional<LoginAttempt> loginAttemptAfter = loginAttemptRepository.findById(employeeSave1.id)
 
         then:
         actions.andExpect(status().isOk())
@@ -169,7 +183,15 @@ class EmployeeControllerIntSpec extends Specification {
         employeeSave1.firstName == employee.firstName
         employeeSave1.lastName == employee.lastName
         employeeSave1.email == employee.email
-        employeeSave1.password == employee.password
+        employeeSave1.accountStatus == employee.accountStatus
+        !employee.password
+        loginAttemptbefore.get().attempt == beforeAttempt
+        loginAttemptAfter.get().attempt == afterAttempt
+
+        where:
+        accountStatus        | beforeAttempt | afterAttempt
+        AccountStatus.ACTIVE | 4             | 0
+        AccountStatus.LOCKED | 4             | 4
     }
 
     def 'updateEmployee - employee doesn\'t exist'() {
@@ -202,6 +224,7 @@ class EmployeeControllerIntSpec extends Specification {
         expected['lastName'] = 'Last name is required'
         expected['email'] = 'Email is required'
         expected['securityRole'] = 'Security role is required'
+        expected['accountStatus'] = 'Account status is required'
 
         when:
         ResultActions actions = mockMvc.perform(putBuilder)
@@ -215,7 +238,7 @@ class EmployeeControllerIntSpec extends Specification {
 
     def 'updateEmployee - exception'() {
         setup:
-        EmployeeController controller = new EmployeeController(employeeRepository, null)
+        EmployeeController controller = new EmployeeController(employeeRepository, null, null)
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setControllerAdvice(new GlobalExceptionHandling())
                 .setValidator(validatorFactory)
@@ -260,7 +283,8 @@ class EmployeeControllerIntSpec extends Specification {
         employeeSave1.firstName == employee.firstName
         employeeSave1.lastName == employee.lastName
         employeeSave1.email == employee.email
-        employeeSave1.password == employee.password
+        employeeSave1.accountStatus == employee.accountStatus
+        !employee.password
         actions2.andExpect(status().isBadRequest())
     }
 
@@ -293,8 +317,8 @@ class EmployeeControllerIntSpec extends Specification {
         Employee expected2 = employeeRepository.save(getEmployeeSave2().getEmployee())
 
         when:
-        ResultActions actions1 = mockMvc.perform(get("/v1/employees/1"))
-        ResultActions actions2 = mockMvc.perform(get("/v1/employees/2"))
+        ResultActions actions1 = mockMvc.perform(get('/v1/employees/1'))
+        ResultActions actions2 = mockMvc.perform(get('/v1/employees/2'))
 
         then:
         actions1.andExpect(status().isOk())
@@ -321,9 +345,9 @@ class EmployeeControllerIntSpec extends Specification {
         Employee expected2 = employeeRepository.save(getEmployeeSave2().getEmployee())
 
         when:
-        ResultActions actions1 = mockMvc.perform(get("/v1/employees/username")
+        ResultActions actions1 = mockMvc.perform(get('/v1/employees/username')
                 .contentType(MediaType.APPLICATION_JSON).content('username1'))
-        ResultActions actions2 = mockMvc.perform(get("/v1/employees/username")
+        ResultActions actions2 = mockMvc.perform(get('/v1/employees/username')
                 .contentType(MediaType.APPLICATION_JSON).content('username2'))
 
         then:
@@ -375,6 +399,7 @@ class EmployeeControllerIntSpec extends Specification {
         employeeSave.lastName = 'lastName1'
         employeeSave.securityRole = SecurityRole.USER
         employeeSave.email = 'employee1@gmail.com'
+        employeeSave.accountStatus = AccountStatus.ACTIVE
 
         employeeSave
     }
@@ -388,6 +413,7 @@ class EmployeeControllerIntSpec extends Specification {
         employeeSave.lastName = 'lastName2'
         employeeSave.securityRole = SecurityRole.ADMIN
         employeeSave.email = 'employee2@gmail.com'
+        employeeSave.accountStatus = AccountStatus.ACTIVE
 
         employeeSave
     }

@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+/**
+ * A class representation for a failed login.
+ */
 @Data
 @Entity
 @NoArgsConstructor
@@ -15,6 +18,7 @@ public class LoginAttempt {
 
     @Id
     private Long EmployeeId;
+
     private int attempt;
 
 }

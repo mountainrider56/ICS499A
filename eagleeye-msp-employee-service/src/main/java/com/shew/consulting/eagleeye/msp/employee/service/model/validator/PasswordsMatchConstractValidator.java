@@ -5,6 +5,9 @@ import com.shew.consulting.eagleeye.msp.employee.service.model.EmployeeSave;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * Custom Hibernate validator that confirms that two passwords are the same.
+ */
 public class PasswordsMatchConstractValidator implements ConstraintValidator<MatchingPasswords, EmployeeSave> {
 
     @Override

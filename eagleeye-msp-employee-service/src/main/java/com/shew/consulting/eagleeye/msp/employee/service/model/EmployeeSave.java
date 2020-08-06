@@ -5,12 +5,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shew.consulting.eagleeye.msp.employee.service.model.validator.MatchingPasswords;
 import com.shew.consulting.eagleeye.msp.employee.service.model.validator.ValidPassword;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotEmpty;
 
+/**
+ * A Employee class specifically oriented for new employees and updating passwords.
+ */
 @Data
 @MatchingPasswords
-@JsonIgnoreProperties(ignoreUnknown=true)
+@EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EmployeeSave extends EmployeeUpdate {
 
     private String password2;

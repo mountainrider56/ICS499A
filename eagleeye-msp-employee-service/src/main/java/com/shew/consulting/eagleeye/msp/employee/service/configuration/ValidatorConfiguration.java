@@ -6,6 +6,10 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import javax.validation.Validator;
 
+/**
+ * Configuration for overriding the default validator factory. This allows bean definitions in Hibernate custom
+ * contraint validators.
+ */
 @Configuration
 public class ValidatorConfiguration {
 

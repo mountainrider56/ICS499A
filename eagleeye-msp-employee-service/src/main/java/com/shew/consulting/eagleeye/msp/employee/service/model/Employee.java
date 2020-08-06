@@ -20,22 +20,21 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true) // TODO: Test
+    @Column(unique = true, length = 15)
     private String username;
 
-//    @Column(length = 30) // TODO: Test
+    @Column(length = 30)
     private String firstName;
 
-//    @Column(length = 30) // TODO: Test
+    @Column(length = 30)
     private String lastName;
 
-//    @Column(length = 50) // TODO: Test
+    @Column(length = 50)
     private String email;
 
-//    @Column(length = 5) // TODO: Test
     private SecurityRole securityRole;
 
-//    @Column(length = 15) // TODO: Test
+    @Column(length = 200)
     private String password;
 
     private AccountStatus accountStatus;

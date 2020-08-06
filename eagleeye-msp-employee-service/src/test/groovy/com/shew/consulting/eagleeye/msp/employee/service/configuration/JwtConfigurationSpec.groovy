@@ -2,20 +2,29 @@ package com.shew.consulting.eagleeye.msp.employee.service.configuration
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 
+import java.time.Clock
+
 @SpringBootTest
 @ActiveProfiles('test')
-class PasswordEncoderConfigurationIntSpec extends Specification {
+class JwtConfigurationSpec extends Specification {
 
     @Autowired
-    PasswordEncoder passwordEncoder
+    Clock clock
 
-    def 'passwordEncoder'() {
+    @Autowired
+    String jwtSecret
+
+    def 'clock'() {
         expect:
-        passwordEncoder // not null
+        clock == Clock.systemDefaultZone()
+    }
+
+    def 'jwtSecret'() {
+        expect:
+        jwtSecret == 'javainuse'
     }
 
 }
