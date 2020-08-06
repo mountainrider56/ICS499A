@@ -11,3 +11,5 @@
 -  UI Tests
 -  Quote Tests
 -  JavaDoc Comments
+-  Single quotes in spock tests:wq
+-  Where clause unroll and method name

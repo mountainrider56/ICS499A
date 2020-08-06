@@ -1,6 +1,6 @@
 package com.shew.consulting.eagleeye.msp.customer.service.model
 
-
+import net.bytebuddy.utility.RandomString
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -35,11 +35,13 @@ class CustomerValidationSpec extends Specification {
         })
 
         where:
-        name   | message            | errorSize
-        null   | 'Name is required' | 1
-        ''     | 'Name is required' | 1
-        ' '    | 'Name is required' | 1
-        'name' | null               | 0
+        name                  | message                                            | errorSize
+        null                  | 'Name is required'                                 | 1
+        ''                    | 'Name is required'                                 | 1
+        ' '                   | 'Name is required'                                 | 1
+        RandomString.make(51) | 'Name must be equal to or less than 50 characters' | 1
+        RandomString.make(50) | null                                               | 0
+        'name'                | null                                               | 0
     }
 
     @Unroll
@@ -55,12 +57,16 @@ class CustomerValidationSpec extends Specification {
         })
 
         where:
-        telephone   | message                        | errorSize
-        null        | 'Telephone number is required' | 1
-        ''          | 'Invalid telephone number'     | 1
-        ' '         | 'Invalid telephone number'     | 1
-        '123456'    | 'Invalid telephone number'     | 1
-        '123456789' | null                           | 0
+        telephone             | message                        | errorSize
+        null                  | 'Telephone number is required' | 1
+        ''                    | 'Invalid telephone number'     | 1
+        ' '                   | 'Invalid telephone number'     | 1
+        '123456'              | 'Invalid telephone number'     | 1
+        RandomString.make(13) | 'Invalid telephone number'     | 1
+        RandomString.make(18) | 'Invalid telephone number'     | 1
+        RandomString.make(14) | null                           | 0
+        RandomString.make(17) | null                           | 0
+        '(123) 456-7890'      | null                           | 0
     }
 
     @Unroll
@@ -76,12 +82,14 @@ class CustomerValidationSpec extends Specification {
         })
 
         where:
-        email            | message                | errorSize
-        null             | 'Email is required'    | 1
-        ''               | 'Email is required'    | 1
-        ' '              | 'Invalid email format' | 1
-        'test'           | 'Invalid email format' | 1
-        'test@gmail.com' | null                   | 0
+        email                                | message                                             | errorSize
+        null                                 | 'Email is required'                                 | 1
+        ''                                   | 'Email is required'                                 | 1
+        ' '                                  | 'Invalid email format'                              | 1
+        'test'                               | 'Invalid email format'                              | 1
+        "${RandomString.make(41)}@gmail.com" | 'Email must be equal to or less than 50 characters' | 1
+        "${RandomString.make(40)}@gmail.com" | null                                                | 0
+        'test@gmail.com'                     | null                                                | 0
     }
 
     @Unroll
@@ -97,11 +105,13 @@ class CustomerValidationSpec extends Specification {
         })
 
         where:
-        address1 | message               | errorSize
-        null     | 'Address is required' | 1
-        ''       | 'Address is required' | 1
-        ' '      | 'Address is required' | 1
-        'test'   | null                  | 0
+        address1              | message                                               | errorSize
+        null                  | 'Address is required'                                 | 1
+        ''                    | 'Address is required'                                 | 1
+        ' '                   | 'Address is required'                                 | 1
+        RandomString.make(51) | 'Address must be equal to or less than 50 characters' | 1
+        RandomString.make(50) | null                                                  | 0
+        'test'                | null                                                  | 0
     }
 
     @Unroll
@@ -117,11 +127,13 @@ class CustomerValidationSpec extends Specification {
         })
 
         where:
-        city   | message            | errorSize
-        null   | 'City is required' | 1
-        ''     | 'City is required' | 1
-        ' '    | 'City is required' | 1
-        'test' | null               | 0
+        city                  | message                                            | errorSize
+        null                  | 'City is required'                                 | 1
+        ''                    | 'City is required'                                 | 1
+        ' '                   | 'City is required'                                 | 1
+        RandomString.make(51) | 'City must be equal to or less than 50 characters' | 1
+        RandomString.make(50) | null                                               | 0
+        'test'                | null                                               | 0
     }
 
     @Unroll
@@ -156,15 +168,12 @@ class CustomerValidationSpec extends Specification {
         })
 
         where:
-        zipcode      | message               | errorSize
-        null         | 'Zipcode is required' | 1
-        ''           | 'Invalid zipcode'     | 1
-        ' '          | 'Invalid zipcode'     | 1
-        'test'       | 'Invalid zipcode'     | 1
-        '55438'      | null                  | 0
-        '55438-'     | 'Invalid zipcode'     | 1
-        '55438-111'  | 'Invalid zipcode'     | 1
-        '55438-1111' | null                  | 0
+        zipcode | message               | errorSize
+        null    | 'Zipcode is required' | 1
+        ''      | 'Invalid zipcode'     | 1
+        ' '     | 'Invalid zipcode'     | 1
+        'test'  | 'Invalid zipcode'     | 1
+        '55438' | null                  | 0
     }
 
     @Unroll

@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringBootTest
-@ActiveProfiles("test")
+@ActiveProfiles('test')
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class CustomerControllerIntSpec extends Specification {
 
@@ -165,8 +165,8 @@ class CustomerControllerIntSpec extends Specification {
         Customer expected2 = customerRepository.save(getCustomer2())
 
         when:
-        ResultActions actions1 = mockMvc.perform(get("/v1/customers/1"))
-        ResultActions actions2 = mockMvc.perform(get("/v1/customers/2"))
+        ResultActions actions1 = mockMvc.perform(get('/v1/customers/1'))
+        ResultActions actions2 = mockMvc.perform(get('/v1/customers/2'))
 
         then:
         actions1.andExpect(status().isOk())
@@ -216,11 +216,11 @@ class CustomerControllerIntSpec extends Specification {
         representative.firstName = 'Rep'
         representative.lastName = 'User'
         representative.email = 'Rep.User@gmail.com'
-        representative.telephone = '1234567890'
+        representative.telephone = '(123) 456-7890'
 
         Customer customer = new Customer()
         customer.name = 'test1'
-        customer.telephone = '1234567890'
+        customer.telephone = '(123) 456-7890'
         customer.email = 'customer1@gmail.com'
         customer.address1 = '1st Ave'
         customer.city = 'Minneapolis'
@@ -236,11 +236,11 @@ class CustomerControllerIntSpec extends Specification {
         representative.firstName = 'Rep2'
         representative.lastName = 'User'
         representative.email = 'Rep.User@gmail.com'
-        representative.telephone = '1234567890'
+        representative.telephone = '(123) 456-7890'
 
         Customer customer = new Customer()
         customer.name = 'test2'
-        customer.telephone = '1234567890'
+        customer.telephone = '(123) 456-7890'
         customer.email = 'customer2@gmail.com'
         customer.address1 = '2st Ave'
         customer.city = 'Minneapolis'

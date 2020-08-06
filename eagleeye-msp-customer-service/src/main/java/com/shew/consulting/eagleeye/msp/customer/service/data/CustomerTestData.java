@@ -1,5 +1,6 @@
 package com.shew.consulting.eagleeye.msp.customer.service.data;
 
+import com.shew.consulting.eagleeye.msp.customer.service.controllers.CustomerController;
 import com.shew.consulting.eagleeye.msp.customer.service.model.Customer;
 import com.shew.consulting.eagleeye.msp.customer.service.model.Representative;
 import com.shew.consulting.eagleeye.msp.customer.service.model.USState;
@@ -11,8 +12,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Add test data on service startup.
@@ -23,7 +28,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerTestData {
 
-    private final CustomerRepository customerRepository;
+    private final CustomerController customerController;
+    private final Validator validator;
 
     @EventListener
     public void applicationReady(ApplicationReadyEvent event) {
@@ -38,7 +44,13 @@ public class CustomerTestData {
         customers.add(customer8());
         customers.add(customer9());
         customers.add(customer10());
-        customerRepository.saveAll(customers);
+        customers.forEach(customer -> {
+            Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
+            if (!violations.isEmpty()) {
+                throw new ConstraintViolationException(violations);
+            }
+            customerController.saveCustomer(customer);
+        });
         log.info(event.toString());
     }
 

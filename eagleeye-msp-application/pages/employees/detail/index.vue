@@ -4,7 +4,7 @@
       Successfully saved employee.
     </v-alert>
     <v-alert v-if="fail" class="mt-7 mb-7" type="error" outlined>
-      {{ modal.fail.message }}
+      {{ alert.fail.message }}
     </v-alert>
     <h1>{{ displayName }}</h1>
     <EmployeeForm
@@ -56,11 +56,7 @@ export default {
       displayName: '',
       success: false,
       fail: false,
-      modal: {
-        delete: {
-          message:
-            'This will permanently delete this employee. This cannot be undone.'
-        },
+      alert: {
         fail: {
           message: '',
           delete: {
@@ -69,6 +65,12 @@ export default {
           update: {
             message: 'Unable to save employee.'
           }
+        }
+      },
+      modal: {
+        delete: {
+          message:
+            'This will permanently delete this employee. This cannot be undone.'
         }
       }
     }
@@ -92,7 +94,7 @@ export default {
         this.success = true
       } else {
         this.fail = true
-        this.modal.fail.message = this.modal.fail.update.message
+        this.alert.fail.message = this.alert.fail.update.message
       }
       window.scrollTo(0, 0)
     },
@@ -107,7 +109,7 @@ export default {
       } else {
         this.$refs.deleteModal.dialog = false
         this.fail = true
-        this.modal.fail.message = this.modal.fail.delete.message
+        this.alert.fail.message = this.alert.fail.delete.message
         window.scrollTo(0, 0)
       }
     },

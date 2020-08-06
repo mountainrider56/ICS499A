@@ -1,5 +1,6 @@
 package com.shew.consulting.eagleeye.msp.customer.service.model
 
+import net.bytebuddy.utility.RandomString
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -34,11 +35,13 @@ class RepresentativeValidationSpec extends Specification {
         })
 
         where:
-        firstName | message                  | errorSize
-        null      | 'First name is required' | 1
-        ''        | 'First name is required' | 1
-        ' '       | 'First name is required' | 1
-        'name'    | null                     | 0
+        firstName             | message                                                  | errorSize
+        null                  | 'First name is required'                                 | 1
+        ''                    | 'First name is required'                                 | 1
+        ' '                   | 'First name is required'                                 | 1
+        RandomString.make(31) | 'First name must be equal to or less than 30 characters' | 1
+        RandomString.make(30) | null                                                     | 0
+        'name'                | null                                                     | 0
     }
 
     @Unroll
@@ -54,11 +57,13 @@ class RepresentativeValidationSpec extends Specification {
         })
 
         where:
-        lastName | message                 | errorSize
-        null     | 'Last name is required' | 1
-        ''       | 'Last name is required' | 1
-        ' '      | 'Last name is required' | 1
-        'name'   | null                    | 0
+        lastName              | message                                                 | errorSize
+        null                  | 'Last name is required'                                 | 1
+        ''                    | 'Last name is required'                                 | 1
+        ' '                   | 'Last name is required'                                 | 1
+        RandomString.make(31) | 'Last name must be equal to or less than 30 characters' | 1
+        RandomString.make(30) | null                                                    | 0
+        'name'                | null                                                    | 0
     }
 
     @Unroll
@@ -74,12 +79,16 @@ class RepresentativeValidationSpec extends Specification {
         })
 
         where:
-        telephone   | message                        | errorSize
-        null        | 'Telephone number is required' | 1
-        ''          | 'Invalid telephone number'     | 1
-        ' '         | 'Invalid telephone number'     | 1
-        '123456'    | 'Invalid telephone number'     | 1
-        '123456789' | null                           | 0
+        telephone             | message                        | errorSize
+        null                  | 'Telephone number is required' | 1
+        ''                    | 'Invalid telephone number'     | 1
+        ' '                   | 'Invalid telephone number'     | 1
+        '123456'              | 'Invalid telephone number'     | 1
+        RandomString.make(13) | 'Invalid telephone number'     | 1
+        RandomString.make(18) | 'Invalid telephone number'     | 1
+        RandomString.make(14) | null                           | 0
+        RandomString.make(17) | null                           | 0
+        '(123) 456-7890'      | null                           | 0
     }
 
     @Unroll
@@ -95,12 +104,14 @@ class RepresentativeValidationSpec extends Specification {
         })
 
         where:
-        email            | message                | errorSize
-        null             | 'Email is required'    | 1
-        ''               | 'Email is required'    | 1
-        ' '              | 'Invalid email format' | 1
-        'test'           | 'Invalid email format' | 1
-        'test@gmail.com' | null                   | 0
+        email                                | message                                             | errorSize
+        null                                 | 'Email is required'                                 | 1
+        ''                                   | 'Email is required'                                 | 1
+        ' '                                  | 'Invalid email format'                              | 1
+        'test'                               | 'Invalid email format'                              | 1
+        "${RandomString.make(41)}@gmail.com" | 'Email must be equal to or less than 50 characters' | 1
+        "${RandomString.make(40)}@gmail.com" | null                                                | 0
+        'test@gmail.com'                     | null                                                | 0
     }
 
 }
