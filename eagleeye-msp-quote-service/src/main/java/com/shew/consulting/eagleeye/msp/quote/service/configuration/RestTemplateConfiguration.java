@@ -4,6 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Configuration for our rest template to handle http requests to other services.
+ */
 @Configuration
 public class RestTemplateConfiguration {
 

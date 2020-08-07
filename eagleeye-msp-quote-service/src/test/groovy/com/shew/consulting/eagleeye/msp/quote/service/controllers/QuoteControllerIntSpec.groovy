@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
+@ActiveProfiles('test')
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class QuoteControllerIntSpec extends Specification {
 
@@ -54,8 +54,8 @@ class QuoteControllerIntSpec extends Specification {
         Quote quote2 = quoteRepository.save(getQuote2())
 
         when:
-        ResultActions actions1 = mockMvc.perform(get("/v1/quotes/1"))
-        ResultActions actions2 = mockMvc.perform(get("/v1/quotes/2"))
+        ResultActions actions1 = mockMvc.perform(get('/v1/quotes/1'))
+        ResultActions actions2 = mockMvc.perform(get('/v1/quotes/2'))
 
         then:
         actions1.andExpect(status().isOk())

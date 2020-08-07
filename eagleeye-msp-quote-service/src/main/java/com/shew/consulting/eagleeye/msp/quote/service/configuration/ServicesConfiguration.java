@@ -10,6 +10,9 @@ import org.springframework.context.annotation.Configuration;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Configuration for the list of quote services.
+ */
 @Configuration
 @RequiredArgsConstructor
 public class ServicesConfiguration {
