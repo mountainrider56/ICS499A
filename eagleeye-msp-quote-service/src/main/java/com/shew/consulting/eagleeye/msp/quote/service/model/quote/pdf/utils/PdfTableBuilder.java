@@ -6,13 +6,15 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.Quote;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.Selection;
 import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
+import lombok.Getter;
 
 import java.util.Map;
+import java.util.List;
 
-import static com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.utils.PdfFonts.getFont12;
-import static com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.utils.PdfFonts.getFont12Bold;
+import static com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.utils.PdfFonts.*;
 import static com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.utils.PdfFormat.decimal;
 
+@Getter
 public class PdfTableBuilder {
 
     private final PdfPTable table;
@@ -126,7 +128,28 @@ public class PdfTableBuilder {
         table.addCell(titleCell);
     }
 
-    public void build() throws DocumentException {
+    public PdfTableBuilder withTotalRow(String title, double total) throws DocumentException {
+        PdfPCell blankCell = getWhiteCell();
+        blankCell.setColspan(3);
+
+        PdfPCell titleCell = getWhiteCell();
+        titleCell.addElement(new Paragraph(title, getFont14Bold()));
+
+        PdfPCell totalCell = getWhiteCell();
+        totalCell.addElement(new Paragraph(decimal(total), getFont14Bold()));
+
+        table.addCell(blankCell);
+        table.addCell(titleCell);
+        table.addCell(totalCell);
+
+        document.add(table);
+
+        return this;
+    }
+
+    public PdfTableBuilder build(List<Double> totals) throws DocumentException {
+        totals.add(total);
+
         PdfPCell blankCell = getWhiteCell();
         blankCell.setColspan(3);
 
@@ -141,6 +164,8 @@ public class PdfTableBuilder {
         table.addCell(amountTotal);
 
         document.add(table);
+
+        return this;
     }
 
     public static PdfPCell getWhiteCell() {

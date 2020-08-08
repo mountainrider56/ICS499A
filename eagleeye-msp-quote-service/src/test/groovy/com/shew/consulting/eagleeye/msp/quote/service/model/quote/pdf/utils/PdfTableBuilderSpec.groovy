@@ -160,6 +160,8 @@ class PdfTableBuilderSpec extends Specification {
         Paragraph subtotalParagraph = subtotalCompositeElements[0] as Paragraph
         subtotalParagraph.getFont() == getFont12()
         subtotalParagraph.getContent() == '$2.00'
+
+        response.total == 2.00 as double
     }
 
     def 'withQuantitySubRow'() {
@@ -221,6 +223,8 @@ class PdfTableBuilderSpec extends Specification {
         Paragraph subtotalParagraph = subtotalCompositeElements[0] as Paragraph
         subtotalParagraph.getFont() == getFont12()
         subtotalParagraph.getContent() == '$2.00'
+
+        response.total == 2.00 as double
     }
 
     def 'withQuantityRow'() {
@@ -276,6 +280,8 @@ class PdfTableBuilderSpec extends Specification {
         Paragraph subtotalParagraph = subtotalCompositeElements[0] as Paragraph
         subtotalParagraph.getFont() == getFont12()
         subtotalParagraph.getContent() == '$2.00'
+
+        response.total == 2.00 as double
     }
 
     def 'withRow'() {
@@ -300,6 +306,8 @@ class PdfTableBuilderSpec extends Specification {
         Paragraph titleParagraph = titleCompositeElements[0] as Paragraph
         titleParagraph.getFont() == getFont12Bold()
         titleParagraph.getContent() == 'title'
+
+        response.total == 0.00 as double
     }
 
     def 'withSubRow'() {
@@ -330,18 +338,23 @@ class PdfTableBuilderSpec extends Specification {
         Paragraph titleParagraph = titleCompositeElements[0] as Paragraph
         titleParagraph.getFont() == getFont12()
         titleParagraph.getContent() == 'title'
+
+        response.total == 0.00 as double
     }
 
     def 'build'() {
         setup:
         Document document = Mock()
+        List<Double> totals = Mock()
         PdfTableBuilder pdfTableBuilder = new PdfTableBuilder(5).withDocument(document)
 
         when:
-        pdfTableBuilder.build()
+        PdfTableBuilder response = pdfTableBuilder.build(totals)
 
         then:
-        PdfPRow row = pdfTableBuilder.table.getRow(0)
+        response == pdfTableBuilder
+        1 * totals.add(0.0) >> true
+        PdfPRow row = response.table.getRow(0)
         PdfPCell[] cells = row.getCells()
 
         PdfPCell blankCell = cells[0]
@@ -366,6 +379,8 @@ class PdfTableBuilderSpec extends Specification {
         Paragraph totalParagraph = totalCompositeElements[0] as Paragraph
         totalParagraph.getFont() == getFont12()
         totalParagraph.getContent() == '$0.00'
+
+        pdfTableBuilder.total == 0.00 as double
     }
 
     def 'getWhiteCell'() {

@@ -14,31 +14,22 @@ class PdfAdditionalPeriodicPlanningSpec extends Specification {
         Document document = Mock()
         Map<String, Service> services = Mock()
         PdfTableBuilder builder = Mock()
+        List<Double> totals = Mock()
 
         when:
-        new PdfAdditionalPeriodicPlanning(quote, document, services, builder)
+        new PdfAdditionalPeriodicPlanning(quote, document, services, builder, totals)
 
         then:
         1 * builder.withQuote(quote) >> builder
         1 * builder.withServices(services) >> builder
         1 * builder.withDocument(document) >> builder
-        1 * builder.withHeaders("Workstation") >> builder
-        1 * builder.withRow("PeriodicPlanningReviewADDITIONAL") >> builder
-        1 * builder.withQuantitySubRow("PeriodicPlanningReviewMonthlyADDITIONAL") >> builder
-        1 * builder.withQuantitySubRow("PeriodicPlanningReviewQuarterlyADDITIONAL") >> builder
-        1 * builder.withQuantitySubRow("PeriodicPlanningReviewAnnuallyADDITIONAL") >> builder
-        1 * builder.build()
+        1 * builder.withHeaders('Frequency') >> builder
+        1 * builder.withRow('PeriodicPlanningReviewADDITIONAL') >> builder
+        1 * builder.withQuantitySubRow('PeriodicPlanningReviewMonthlyADDITIONAL') >> builder
+        1 * builder.withQuantitySubRow('PeriodicPlanningReviewQuarterlyADDITIONAL') >> builder
+        1 * builder.withQuantitySubRow('PeriodicPlanningReviewAnnuallyADDITIONAL') >> builder
+        1 * builder.build(totals) >> builder
+        0 * _
     }
 
-    /*
-    builder.withQuote(quote)
-               .withServices(services)
-               .withDocument(document)
-               .withHeaders("Workstation")
-               .withRow("PeriodicPlanningReviewADDITIONAL")
-               .withQuantitySubRow("PeriodicPlanningReviewMonthlyADDITIONAL")
-               .withQuantitySubRow("PeriodicPlanningReviewQuarterlyADDITIONAL")
-               .withQuantitySubRow("PeriodicPlanningReviewAnnuallyADDITIONAL")
-               .build();
-     */
 }

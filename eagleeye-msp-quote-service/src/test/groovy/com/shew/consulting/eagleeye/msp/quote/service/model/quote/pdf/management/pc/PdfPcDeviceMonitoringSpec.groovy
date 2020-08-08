@@ -14,21 +14,22 @@ class PdfPcDeviceMonitoringSpec extends Specification {
         Document document = Mock()
         Map<String, Service> services = Mock()
         PdfTableBuilder builder = Mock()
+        List<Double> totals = Mock()
 
         when:
-        new PdfPcDeviceMonitoring(quote, document, services, builder)
+        new PdfPcDeviceMonitoring(quote, document, services, builder, totals)
 
         then:
         1 * builder.withQuote(quote) >> builder
         1 * builder.withServices(services) >> builder
         1 * builder.withDocument(document) >> builder
-        1 * builder.withHeaders("Workstation") >> builder
-        1 * builder.withQuantityRow("DeviceMonitoringPC") >> builder
-        1 * builder.withSubRow("DeviceMonitoringPerformancePC") >> builder
-        1 * builder.withSubRow("DeviceMonitoringSystemLogsPC") >> builder
-        1 * builder.withSubRow("DeviceMonitoringRemoteControlPC") >> builder
-        1 * builder.build()
-
+        1 * builder.withHeaders('Workstation') >> builder
+        1 * builder.withQuantityRow('DeviceMonitoringPC') >> builder
+        1 * builder.withSubRow('DeviceMonitoringPerformancePC') >> builder
+        1 * builder.withSubRow('DeviceMonitoringSystemLogsPC') >> builder
+        1 * builder.withSubRow('DeviceMonitoringRemoteControlPC') >> builder
+        1 * builder.build(totals) >> builder
+        0 * _
     }
 
 }

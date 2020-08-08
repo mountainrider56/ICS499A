@@ -14,19 +14,21 @@ class PdfAdditionalDarkWebMonitoringSpec extends Specification {
         Document document = Mock()
         Map<String, Service> services = Mock()
         PdfTableBuilder builder = Mock()
+        List<Double> totals = Mock()
 
         when:
-        new PdfAdditionalDarkWebMonitoring(quote, document, services, builder)
+        new PdfAdditionalDarkWebMonitoring(quote, document, services, builder, totals)
 
         then:
         1 * builder.withQuote(quote) >> builder
         1 * builder.withServices(services) >> builder
         1 * builder.withDocument(document) >> builder
-        1 * builder.withHeaders("Workstation") >> builder
-        1 * builder.withRow("DarkwebMonitoringADDITIONAL") >> builder
-        1 * builder.withQuantitySubRow("DarkwebMonitoringDomainsADDITIONAL") >> builder
-        1 * builder.withQuantitySubRow("DarkwebMonitoringPersonalEmailAddressesADDITIONAL") >> builder
-        1 * builder.build()
+        1 * builder.withHeaders('Item') >> builder
+        1 * builder.withRow('DarkwebMonitoringADDITIONAL') >> builder
+        1 * builder.withQuantitySubRow('DarkwebMonitoringDomainsADDITIONAL') >> builder
+        1 * builder.withQuantitySubRow('DarkwebMonitoringPersonalEmailAddressesADDITIONAL') >> builder
+        1 * builder.build(totals) >> builder
+        0 * _
     }
 
 }

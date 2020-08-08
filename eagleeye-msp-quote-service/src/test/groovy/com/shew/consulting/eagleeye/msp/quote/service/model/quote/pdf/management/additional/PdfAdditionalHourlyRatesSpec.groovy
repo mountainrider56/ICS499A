@@ -14,20 +14,22 @@ class PdfAdditionalHourlyRatesSpec extends Specification {
         Document document = Mock()
         Map<String, Service> services = Mock()
         PdfTableBuilder builder = Mock()
+        List<Double> totals = Mock()
 
         when:
-        new PdfAdditionalHourlyRates(quote, document, services, builder)
+        new PdfAdditionalHourlyRates(quote, document, services, builder, totals)
 
         then:
         1 * builder.withQuote(quote) >> builder
         1 * builder.withServices(services) >> builder
         1 * builder.withDocument(document) >> builder
-        1 * builder.withHeaders("Workstation") >> builder
-        1 * builder.withRow("HourlyRatesADDITIONAL") >> builder
-        1 * builder.withQuantitySubRow("HourlyRatesOnSiteADDITIONAL") >> builder
-        1 * builder.withQuantitySubRow("HourlyRatesRemoteSupportADDITIONAL") >> builder
-        1 * builder.withQuantitySubRow("HourlyRatesEmergencyResponseADDITIONAL") >> builder
-        1 * builder.build()
+        1 * builder.withHeaders('Hour') >> builder
+        1 * builder.withRow('HourlyRatesADDITIONAL') >> builder
+        1 * builder.withQuantitySubRow('HourlyRatesOnSiteADDITIONAL') >> builder
+        1 * builder.withQuantitySubRow('HourlyRatesRemoteSupportADDITIONAL') >> builder
+        1 * builder.withQuantitySubRow('HourlyRatesEmergencyResponseADDITIONAL') >> builder
+        1 * builder.build(totals) >> builder
+        0 * _
     }
 
 }

@@ -4,25 +4,30 @@ import com.itextpdf.text.Document;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.Quote;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.utils.PdfTableBuilder;
 import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
+import lombok.Getter;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * Additional Reporting PDF table.
  */
+@Getter
 public class PdfAdditionalReporting {
 
     private final Quote quote;
     private final Document document;
     private final Map<String, Service> services;
     private final PdfTableBuilder builder;
+    private final List<Double> totals;
 
     public PdfAdditionalReporting(Quote quote, Document document, Map<String, Service> services,
-                                  PdfTableBuilder builder) throws Exception {
+                                  PdfTableBuilder builder, List<Double> totals) throws Exception {
         this.quote = quote;
         this.document = document;
         this.services = services;
         this.builder = builder;
+        this.totals = totals;
         init();
     }
 
@@ -30,12 +35,12 @@ public class PdfAdditionalReporting {
         builder.withQuote(quote)
                .withServices(services)
                .withDocument(document)
-               .withHeaders("Workstation")
+               .withHeaders("Frequency")
                .withRow("ReportingADDITIONAL")
                .withQuantitySubRow("ReportingMonthlyADDITIONAL")
                .withQuantitySubRow("ReportingQuarterlyADDITIONAL")
                .withQuantitySubRow("ReportingAnnuallyADDITIONAL")
-               .build();
+               .build(totals);
     }
 
 }
