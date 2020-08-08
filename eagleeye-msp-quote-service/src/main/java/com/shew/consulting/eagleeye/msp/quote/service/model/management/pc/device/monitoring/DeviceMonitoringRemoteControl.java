@@ -5,6 +5,9 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 import com.shew.consulting.eagleeye.msp.quote.service.model.services.ServiceDefinition;
 import org.springframework.stereotype.Component;
 
+/**
+ * PC: Device Monitoring: Remote Control
+ */
 @Component
 public class DeviceMonitoringRemoteControl implements ServiceDefinition {
 

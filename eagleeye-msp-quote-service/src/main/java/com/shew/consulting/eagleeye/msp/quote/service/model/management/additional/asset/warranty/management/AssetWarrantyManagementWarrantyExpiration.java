@@ -5,6 +5,9 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 import com.shew.consulting.eagleeye.msp.quote.service.model.services.ServiceDefinition;
 import org.springframework.stereotype.Component;
 
+/**
+ * Additional: Asset/Warranty Management: Warranty Expiration (per device)
+ */
 @Component
 public class AssetWarrantyManagementWarrantyExpiration implements ServiceDefinition {
 

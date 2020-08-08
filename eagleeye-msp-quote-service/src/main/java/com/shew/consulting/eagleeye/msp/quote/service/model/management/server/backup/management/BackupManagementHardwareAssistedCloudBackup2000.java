@@ -5,6 +5,9 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 import com.shew.consulting.eagleeye.msp.quote.service.model.services.ServiceDefinition;
 import org.springframework.stereotype.Component;
 
+/**
+ * Server: Backup Management: Hardware Assisted Cloud Backup (Barracuda via eagleEYE): 2000GB
+ */
 @Component
 public class BackupManagementHardwareAssistedCloudBackup2000 implements ServiceDefinition {
 

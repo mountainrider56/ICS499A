@@ -5,6 +5,9 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 import com.shew.consulting.eagleeye.msp.quote.service.model.services.ServiceDefinition;
 import org.springframework.stereotype.Component;
 
+/**
+ * Additional: Hourly Rates: Remote support
+ */
 @Component
 public class HourlyRatesRemoteSupport implements ServiceDefinition {
 

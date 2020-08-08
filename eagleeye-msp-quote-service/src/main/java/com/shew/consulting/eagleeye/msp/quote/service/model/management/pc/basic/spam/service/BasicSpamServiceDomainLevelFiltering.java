@@ -5,6 +5,9 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 import com.shew.consulting.eagleeye.msp.quote.service.model.services.ServiceDefinition;
 import org.springframework.stereotype.Component;
 
+/**
+ * PC: Basic Spam Service: Domain Level Filtering
+ */
 @Component
 public class BasicSpamServiceDomainLevelFiltering implements ServiceDefinition {
 

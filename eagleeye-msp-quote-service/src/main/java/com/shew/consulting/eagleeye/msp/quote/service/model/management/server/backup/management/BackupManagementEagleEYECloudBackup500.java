@@ -5,6 +5,9 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 import com.shew.consulting.eagleeye.msp.quote.service.model.services.ServiceDefinition;
 import org.springframework.stereotype.Component;
 
+/**
+ * Server: Backup Management: eagleEYE Cloud Backup (500GB)
+ */
 @Component
 public class BackupManagementEagleEYECloudBackup500 implements ServiceDefinition {
 

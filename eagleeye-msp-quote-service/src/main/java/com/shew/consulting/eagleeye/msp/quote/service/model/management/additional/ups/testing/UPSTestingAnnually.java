@@ -5,6 +5,9 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 import com.shew.consulting.eagleeye.msp.quote.service.model.services.ServiceDefinition;
 import org.springframework.stereotype.Component;
 
+/**
+ * Additional: UPS Testing Service: Annually
+ */
 @Component
 public class UPSTestingAnnually implements ServiceDefinition {
 
