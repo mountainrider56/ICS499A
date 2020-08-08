@@ -567,7 +567,7 @@
         :is-sub-row="true"
         :selection="quote.selections.ReportingMonthlyADDITIONAL"
         :service="services.ReportingMonthlyADDITIONAL"
-        cost-type="?"
+        :cost-type="content.month"
         @onQuantityUpdate="setAdditionalTotal"
       ></QuoteInputRow>
       <QuoteInputRow
@@ -575,7 +575,7 @@
         :is-sub-row="true"
         :selection="quote.selections.ReportingQuarterlyADDITIONAL"
         :service="services.ReportingQuarterlyADDITIONAL"
-        cost-type="?"
+        :cost-type="content.quarter"
         @onQuantityUpdate="setAdditionalTotal"
       ></QuoteInputRow>
       <QuoteInputRow
@@ -583,7 +583,7 @@
         :is-sub-row="true"
         :selection="quote.selections.ReportingAnnuallyADDITIONAL"
         :service="services.ReportingAnnuallyADDITIONAL"
-        cost-type="?"
+        :cost-type="content.year"
         @onQuantityUpdate="setAdditionalTotal"
       ></QuoteInputRow>
 
@@ -594,7 +594,7 @@
         :is-sub-row="true"
         :selection="quote.selections.UPSTestingMonthlyADDITIONAL"
         :service="services.UPSTestingMonthlyADDITIONAL"
-        cost-type="?"
+        :cost-type="content.month"
         @onQuantityUpdate="setAdditionalTotal"
       ></QuoteInputRow>
       <QuoteInputRow
@@ -602,7 +602,7 @@
         :is-sub-row="true"
         :selection="quote.selections.UPSTestingQuarterlyADDITIONAL"
         :service="services.UPSTestingQuarterlyADDITIONAL"
-        cost-type="?"
+        :cost-type="content.quarter"
         @onQuantityUpdate="setAdditionalTotal"
       ></QuoteInputRow>
       <QuoteInputRow
@@ -610,7 +610,7 @@
         :is-sub-row="true"
         :selection="quote.selections.UPSTestingAnnuallyADDITIONAL"
         :service="services.UPSTestingAnnuallyADDITIONAL"
-        cost-type="?"
+        :cost-type="content.year"
         @onQuantityUpdate="setAdditionalTotal"
       ></QuoteInputRow>
 
@@ -669,7 +669,7 @@
         :is-sub-row="true"
         :selection="quote.selections.PeriodicPlanningReviewMonthlyADDITIONAL"
         :service="services.PeriodicPlanningReviewMonthlyADDITIONAL"
-        cost-type="?"
+        :cost-type="content.month"
         @onQuantityUpdate="setAdditionalTotal"
       ></QuoteInputRow>
       <QuoteInputRow
@@ -677,7 +677,7 @@
         :is-sub-row="true"
         :selection="quote.selections.PeriodicPlanningReviewQuarterlyADDITIONAL"
         :service="services.PeriodicPlanningReviewQuarterlyADDITIONAL"
-        cost-type="?"
+        :cost-type="content.quarter"
         @onQuantityUpdate="setAdditionalTotal"
       ></QuoteInputRow>
       <QuoteInputRow
@@ -685,7 +685,7 @@
         :is-sub-row="true"
         :selection="quote.selections.PeriodicPlanningReviewAnnuallyADDITIONAL"
         :service="services.PeriodicPlanningReviewAnnuallyADDITIONAL"
-        cost-type="?"
+        :cost-type="content.year"
         @onQuantityUpdate="setAdditionalTotal"
       ></QuoteInputRow>
 
@@ -696,7 +696,7 @@
         :is-sub-row="true"
         :selection="quote.selections.HourlyRatesOnSiteADDITIONAL"
         :service="services.HourlyRatesOnSiteADDITIONAL"
-        cost-type="?"
+        :cost-type="content.hour"
         @onQuantityUpdate="setAdditionalTotal"
       ></QuoteInputRow>
       <QuoteInputRow
@@ -704,7 +704,7 @@
         :is-sub-row="true"
         :selection="quote.selections.HourlyRatesRemoteSupportADDITIONAL"
         :service="services.HourlyRatesRemoteSupportADDITIONAL"
-        cost-type="?"
+        :cost-type="content.hour"
         @onQuantityUpdate="setAdditionalTotal"
       ></QuoteInputRow>
       <QuoteInputRow
@@ -712,7 +712,7 @@
         :is-sub-row="true"
         :selection="quote.selections.HourlyRatesEmergencyResponseADDITIONAL"
         :service="services.HourlyRatesEmergencyResponseADDITIONAL"
-        cost-type="?"
+        :cost-type="content.hour"
         @onQuantityUpdate="setAdditionalTotal"
       ></QuoteInputRow>
 
@@ -726,7 +726,7 @@
       <!-- Total -->
       <v-row align="center" class="mt-10">
         <v-col :offset="9">
-          <strong>Total: ${{ total.toFixed(2) }}</strong>
+          <strong>Overall Total: ${{ total.toFixed(2) }}</strong>
         </v-col>
       </v-row>
 
@@ -753,6 +753,9 @@ export default {
         workstation: 'Workstation',
         server: 'Server',
         month: 'Month',
+        year: 'Year',
+        quarter: 'Quarter',
+        hour: 'Hour',
         domains: 'Domains',
         device: 'Device'
       },
