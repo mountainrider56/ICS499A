@@ -6,7 +6,7 @@
     <v-alert v-if="fail" class="mt-7 mb-7" type="error" outlined>
       {{ alert.fail.message }}
     </v-alert>
-    <h1>{{ displayName }}</h1>
+    <h1>{{ display }}</h1>
     <EmployeeForm
       ref="employeeForm"
       :security-roles="securityRoles"
@@ -44,17 +44,19 @@
 
 <script>
 export default {
+  watchQuery: ['id'],
   middleware: ['must-be-self-or-admin'],
   async asyncData({ $employeeApi, route, $userFlags, $route }) {
     const securityRoles = await $employeeApi.getSecurityRoles()
     const accountStatuses = await $employeeApi.getAccountStatuses()
     const employee = await $employeeApi.getEmployee(route.query.id)
-    return { securityRoles, accountStatuses, employee }
+    const display = `${employee.firstName} ${employee.lastName}`
+    return { securityRoles, accountStatuses, employee, display }
   },
   data() {
     return {
       title: 'Edit a Employee',
-      displayName: '',
+      display: '',
       success: false,
       fail: false,
       alert: {
@@ -82,7 +84,7 @@ export default {
     }
   },
   mounted() {
-    this.displayName = this.name
+    this.display = this.name
     this.success = this.$route.query.success
     this.$routeUtils.removeQueryParam(this, 'success')
   },
@@ -91,7 +93,7 @@ export default {
       const data = await this.$refs.employeeForm.submit('updateEmployee')
       this.reset()
       if (data) {
-        this.displayName = this.name
+        this.display = this.name
         this.success = true
       } else {
         this.fail = true
