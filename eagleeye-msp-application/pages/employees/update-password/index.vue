@@ -25,6 +25,7 @@
 
 <script>
 export default {
+  middleware: ['must-be-self-or-admin'],
   async asyncData({ $employeeApi, route }) {
     const securityRoles = await $employeeApi.getSecurityRoles()
     const accountStatuses = await $employeeApi.getAccountStatuses()

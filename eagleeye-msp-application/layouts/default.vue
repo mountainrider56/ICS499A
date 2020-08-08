@@ -10,7 +10,9 @@
           <v-btn text to="/">Home</v-btn>
           <v-btn text to="/quotes">Quotes</v-btn>
           <v-btn text to="/customers">Customers</v-btn>
-          <v-btn text to="/employees">Employees</v-btn>
+          <v-btn v-if="$userFlags.isAdmin()" text to="/employees">
+            Employees
+          </v-btn>
           <v-btn text @click="logout()">Logout</v-btn>
         </v-layout>
       </v-app-bar>

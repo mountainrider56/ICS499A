@@ -18,7 +18,8 @@
 
 <script>
 export default {
-  async asyncData({ $employeeApi }) {
+  middleware: ['admin-only'],
+  async asyncData({ $employeeApi, $userFlags }) {
     const employees = await $employeeApi.getEmployees()
     return { employees }
   },

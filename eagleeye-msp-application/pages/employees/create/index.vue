@@ -23,7 +23,8 @@
 
 <script>
 export default {
-  async asyncData({ $employeeApi }) {
+  middleware: ['admin-only'],
+  async asyncData({ $employeeApi, $userFlags }) {
     const securityRoles = await $employeeApi.getSecurityRoles()
     const accountStatuses = await $employeeApi.getAccountStatuses()
     return { securityRoles, accountStatuses }
