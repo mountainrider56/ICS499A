@@ -7,6 +7,9 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 
 import java.util.Map;
 
+/**
+ * Server Help Desk PDF table.
+ */
 public class PdfServerHelpDesk {
 
     private final Quote quote;
@@ -14,11 +17,12 @@ public class PdfServerHelpDesk {
     private final Map<String, Service> services;
     private final PdfTableBuilder builder;
 
-    public PdfServerHelpDesk(Quote quote, Document document, Map<String, Service> services) throws Exception {
+    public PdfServerHelpDesk(Quote quote, Document document, Map<String, Service> services,
+                             PdfTableBuilder builder) throws Exception {
         this.quote = quote;
         this.document = document;
         this.services = services;
-        this.builder = new PdfTableBuilder(5);
+        this.builder = builder;
         init();
     }
 

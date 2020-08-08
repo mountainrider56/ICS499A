@@ -4,7 +4,10 @@ import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 
-public final class PdfFonts {
+/**
+ * All available fonts for the PDF.
+ */
+public class PdfFonts {
 
     public static Font getFont14Bold() {
         return FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, BaseColor.BLACK);

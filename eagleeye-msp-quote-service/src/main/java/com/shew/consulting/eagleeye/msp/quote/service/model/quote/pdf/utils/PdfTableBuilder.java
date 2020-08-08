@@ -13,7 +13,7 @@ import static com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.uti
 import static com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.utils.PdfFonts.getFont12Bold;
 import static com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.utils.PdfFormat.decimal;
 
-public final class PdfTableBuilder {
+public class PdfTableBuilder {
 
     private final PdfPTable table;
 
@@ -45,17 +45,17 @@ public final class PdfTableBuilder {
     public PdfTableBuilder withHeaders(String type) {
         PdfPCell blankCell = getWhiteCell();
         PdfPCell quantity = getWhiteCell();
-        PdfPCell workstation = getWhiteCell();
+        PdfPCell item = getWhiteCell();
         PdfPCell subtotal = getWhiteCell();
 
         quantity.addElement(new Paragraph("Quantity", getFont12Bold()));
-        workstation.addElement(new Paragraph(type, getFont12Bold()));
+        item.addElement(new Paragraph(type, getFont12Bold()));
         subtotal.addElement(new Paragraph("Subtotal", getFont12Bold()));
 
         table.addCell(blankCell);
         table.addCell(blankCell);
         table.addCell(quantity);
-        table.addCell(workstation);
+        table.addCell(item);
         table.addCell(subtotal);
 
         return this;
@@ -88,8 +88,8 @@ public final class PdfTableBuilder {
         Paragraph quantityParagraph = new Paragraph(quantity, getFont12());
         quantityCell.addElement(quantityParagraph);
 
-        PdfPCell workstationCell = getWhiteCell();
-        workstationCell.addElement(new Paragraph(decimal(service.getPrice()), getFont12()));
+        PdfPCell itemCell = getWhiteCell();
+        itemCell.addElement(new Paragraph(decimal(service.getPrice()), getFont12()));
 
         PdfPCell subtotalCell = getWhiteCell();
         double subtotal = service.getPrice() * selection.getQuantity();
@@ -99,7 +99,7 @@ public final class PdfTableBuilder {
 
         table.addCell(titleCell);
         table.addCell(quantityCell);
-        table.addCell(workstationCell);
+        table.addCell(itemCell);
         table.addCell(subtotalCell);
 
         return this;

@@ -7,6 +7,9 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 
 import java.util.Map;
 
+/**
+ * Additional Periodic Planning PDF table.
+ */
 public class PdfAdditionalPeriodicPlanning {
 
     private final Quote quote;
@@ -14,12 +17,12 @@ public class PdfAdditionalPeriodicPlanning {
     private final Map<String, Service> services;
     private final PdfTableBuilder builder;
 
-    public PdfAdditionalPeriodicPlanning(Quote quote, Document document, Map<String, Service> services)
-            throws Exception {
+    public PdfAdditionalPeriodicPlanning(Quote quote, Document document, Map<String, Service> services,
+                                         PdfTableBuilder builder) throws Exception {
         this.quote = quote;
         this.document = document;
         this.services = services;
-        this.builder = new PdfTableBuilder(5);
+        this.builder = builder;
         init();
     }
 

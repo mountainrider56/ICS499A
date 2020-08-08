@@ -9,6 +9,7 @@ import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.additional.*;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.pc.*;
 import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.management.server.*;
+import com.shew.consulting.eagleeye.msp.quote.service.model.quote.pdf.utils.PdfTableBuilder;
 import com.shew.consulting.eagleeye.msp.quote.service.model.services.Service;
 import lombok.Data;
 
@@ -40,28 +41,28 @@ public class PdfDocument {
         document.add(new Paragraph("PC Management", getFont14Bold()));
         newLine(document, 1);
 
-        new PdfPcDeviceMonitoring(quote, document, services);
+        new PdfPcDeviceMonitoring(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfPcPatchManagement(quote, document, services);
+        new PdfPcPatchManagement(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfPcHelpDesk(quote, document, services);
+        new PdfPcHelpDesk(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 3);
 
-        new PdfPcPeriodicSystemOptimization(quote, document, services);
+        new PdfPcPeriodicSystemOptimization(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfPcBackupManagement(quote, document, services);
+        new PdfPcBackupManagement(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfPcAntivirusDetection(quote, document, services);
+        new PdfPcAntivirusDetection(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfPcAntiMalwareAntiSpywareDetection(quote, document, services);
+        new PdfPcAntiMalwareAntiSpywareDetection(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfPcBasicSpamService(quote, document, services);
+        new PdfPcBasicSpamService(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
         //FIXME
@@ -70,25 +71,25 @@ public class PdfDocument {
         document.add(new Paragraph("Server Management", getFont14Bold()));
         newLine(document, 1);
 
-        new PdfServerDeviceMonitoring(quote, document, services);
+        new PdfServerDeviceMonitoring(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfServerPatchManagement(quote, document, services);
+        new PdfServerPatchManagement(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfServerHelpDesk(quote, document, services);
+        new PdfServerHelpDesk(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 3);
 
-        new PdfServerPeriodicSystemOptimization(quote, document, services);
+        new PdfServerPeriodicSystemOptimization(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfServerBackupManagement(quote, document, services);
+        new PdfServerBackupManagement(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfServerAntiVirusAntiSpywareDetection(quote, document, services);
+        new PdfServerAntiVirusAntiSpywareDetection(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfServerAdvancedSpamService(quote, document, services);
+        new PdfServerAdvancedSpamService(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
         //FIXME
@@ -96,25 +97,25 @@ public class PdfDocument {
         document.add(new Paragraph("Additional Services", getFont14Bold()));
         newLine(document, 1);
 
-        new PdfAdditionalDarkWebMonitoring(quote, document, services);
+        new PdfAdditionalDarkWebMonitoring(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfAdditionalReporting(quote, document, services);
+        new PdfAdditionalReporting(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfAdditionalUPSTesting(quote, document, services);
+        new PdfAdditionalUPSTesting(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfAdditionalNetworkDevices(quote, document, services);
+        new PdfAdditionalNetworkDevices(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfAdditionalAssetWarrantyManagement(quote, document, services);
+        new PdfAdditionalAssetWarrantyManagement(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfAdditionalPeriodicPlanning(quote, document, services);
+        new PdfAdditionalPeriodicPlanning(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
-        new PdfAdditionalHourlyRates(quote, document, services);
+        new PdfAdditionalHourlyRates(quote, document, services, getPdfTableBuilderWith5Cols());
         newLine(document, 2);
 
         //FIXME
@@ -122,6 +123,10 @@ public class PdfDocument {
         //FIXME
 
         document.close();
+    }
+
+    private PdfTableBuilder getPdfTableBuilderWith5Cols() {
+        return new PdfTableBuilder(5);
     }
 
 }
