@@ -33,6 +33,7 @@
         Cancel
       </v-btn>
       <DeleteModal
+        v-if="$userFlags.isAdmin()"
         ref="deleteModal"
         :message="modal.delete.message"
         :callback="deleteEmployee"
