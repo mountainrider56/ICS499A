@@ -32,7 +32,7 @@
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.10.3",
     "@nuxtjs/proxy": "^2.0.0",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "nuxt": "^2.13.3"
   },
   "devDependencies": {
